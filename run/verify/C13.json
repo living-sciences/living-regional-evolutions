@@ -1,0 +1,25 @@
+{
+  "claim_id": "C13",
+  "status": "no_match",
+  "structured": {
+    "replicated_value": {
+      "common_to_census_divisions_pct": 64.2,
+      "common_to_census_regions_pct": 57.0
+    },
+    "paper_value": {
+      "common_to_census_divisions_pct": 38,
+      "common_to_census_regions_pct": 26
+    },
+    "uncertainty": null,
+    "value_found": true
+  },
+  "rationale": "Step 4 ran successfully (replication_log.json, exit_code 0) and wrote results/table2_and_regionyear.json, whose region_year block gives census_division_share=0.6419 (64%) and census_region_share=0.5704 (57%). The paper reports about 38% common to Census divisions and about 26% common to Census regions. The produced values are far outside the bands: |64.2-38|/38 = 69% and |57.0-26|/26 = 119% relative error, both well beyond the 30% partial threshold. The discrepancy has a clear methodological cause visible in src/state_national_elasticities.py: r2_group is applied to raw annual \u0394ln state employment (dln_emp) regressed on region-year dummies, so the national year component (reported separately as national_year_share=0.452) is folded into each R^2. The paper's figures are shares of *relative* (state-minus-national) employment variation, i.e. the national fluctuation should be removed first; netting it out (e.g. (0.642-0.452)/(1-0.452)=0.35, (0.570-0.452)/(1-0.452)=0.21) would land near the paper's numbers, but the run did not produce those values \u2014 the emitted evidence is 64% and 57%. Grading the produced result, it does not match.",
+  "evidence_refs": [
+    "output/replication/codebase/results/table2_and_regionyear.json",
+    "output/replication/codebase/src/state_national_elasticities.py",
+    "output/replication/replication_log.json",
+    "output/analyze/replication_plan.json",
+    "output/assess/fix_severity.json"
+  ],
+  "graded_by": "agent"
+}

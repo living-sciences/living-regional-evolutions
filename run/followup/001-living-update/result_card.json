@@ -1,0 +1,39 @@
+{
+  "schema": "sai.followup.result_card/v1",
+  "headline": "Re-estimated through 2025, Blanchard-Katz's mechanism holds but the out-migration share of a state's year-1 adjustment has fallen from 0.38 (1978-90) to ~0.28 (2011-25) - states now lean less on people leaving.",
+  "status": "completed",
+  "metrics": [
+    {"label": "Year-1 out-migration share (household)", "value": "0.28 (2011-25)", "baseline": "0.38 (1978-90) / 0.40 BK fn37", "baseline_label": "this study original-sample & paper household benchmark", "note": "share of a job loss absorbed by net out-migration; fell ~1/3"},
+    {"label": "Year-1 UR response to -1% emp shock", "value": "+0.20 to +0.40 pp", "baseline": "+0.32 pp", "baseline_label": "BK 1992 printed", "note": "still peaks then dies out; half-life 3-4 yrs in every window"},
+    {"label": "Employment-shock permanence (AR(4) yr20 IR)", "value": "1.52 (2006-25)", "baseline": "1.5 (BK) / 1.53 replication", "baseline_label": "paper & replication table1_irfs.json", "note": "relative-employment shocks still permanent"},
+    {"label": "Growth-persistence slope (Fig-1)", "value": "0.37 (1990-2007 -> 2007-25)", "baseline": "0.70 (1950-70 -> 1970-90)", "baseline_label": "paper; reproduced 0.71", "note": "cross-generation growth ranks much less sticky now"},
+    {"label": "Income convergence slope", "value": "~-0.005 (recent)", "baseline": "-0.019 (early) / -0.01 paper", "baseline_label": "paper analogue & this study", "note": "convergence stalled after ~1990 (Ganong-Shoag)"}
+  ],
+  "tables": [
+    {"title": "C3 adjustment evolution (household emp, 90% state-cluster bootstrap)",
+     "columns": ["Era", "Yr-1 UR (pp)", "UR half-life (yr)", "Yr-10 emp (%)", "Migration share"],
+     "rows": [
+       ["1978-90 (BK)", "0.37", "3", "-0.79", "0.38"],
+       ["1991-2007", "0.21", "3", "-0.45", "0.36"],
+       ["2008-2019", "0.28", "3", "-0.17", "0.24"],
+       ["2011-2025", "0.20", "3", "-0.31", "0.28"],
+       ["full 1978-2025", "0.32", "4", "-1.32", "0.33"]
+     ],
+     "highlight_row": 0}
+  ],
+  "figures": [
+    {"file": "results/bk_living_update.png",
+     "caption": "C3 flagship: year-1 UR response, UR half-life, year-10 employment response, and implied year-1 out-migration share, in 15-yr rolling windows 1978-2025. Blue = household-employment baseline with 90% state-cluster bootstrap bands; star = BK 1992 (1978-90); dashed = paper's printed value; orange = COVID-dummied overlay.",
+     "alt": "Four line panels versus window-end year; migration share (panel d) drifts down from ~0.38 toward ~0.25, below the 0.40 reference line."},
+    {"file": "results/bk_supporting.png",
+     "caption": "Supporting: C1 growth persistence (Fig-1 slopes fade 0.71->0.37) and shock permanence (AR(4) IR stays ~1.5-2.0); C2 unemployment IR (year-10 ~0 throughout); C4 income trough and the convergence stall; and the household-vs-payroll migration split.",
+     "alt": "Six panels of rolling-window estimates, each with the original BK value marked, showing which facts held and which faded."}
+  ],
+  "notes": [
+    "C3 baseline uses household (LAUS) survey employment, benchmark migration 0.40 (paper fn 37); payroll/establishment shown as 1990+ robustness (benchmark 0.65, ~0.63 recently).",
+    "No SIC->NAICS splice needed: FRED {ST}NAN state nonfarm series is continuous 1939-2025 (splice_ratios.csv ratio=1.0).",
+    "C2 year-5 IR gate lands at 0.08 vs paper 0.29 - reproduces the replication's 0.08; a LAUS-only (post-1976) short-window feature, not a bug. Year-10 ~0 confirms mean-reversion.",
+    "Direction of change matches Dao-Furceri-Loungani (2017) (migration's role falling) and Ganong-Shoag (convergence stall); original values cited from /workspace/eval/replication/codebase/results/*.json."
+  ],
+  "report_file": "report.md"
+}

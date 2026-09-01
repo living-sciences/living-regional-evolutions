@@ -1,0 +1,9 @@
+{
+  "claim_id": "C31",
+  "status": "not_attempted",
+  "structured": {},
+  "rationale": "No plan step targeted this claim; the planner marked it BLOCKED (counts as a reproducibility gap): Boston relative housing prices come from the same proprietary NAR metro median-price series as C25; not reconstructable from reachable public data.",
+  "evidence_refs": [],
+  "not_attempted_reason": "authors_missing",
+  "graded_by": "deterministic"
+}

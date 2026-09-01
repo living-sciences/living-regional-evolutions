@@ -1,0 +1,20 @@
+{
+  "emp_persistence_slope": 0.6976716605958123,
+  "emp_persistence_r2": 0.7542403243498497,
+  "emp_persistence_n": 51,
+  "emp_persistence_r2_ex_AZ_FL_NV": 0.6101290902950444,
+  "emp_persistence_slope_ex_AZ_FL_NV": 0.6819271001525087,
+  "pcinc_convergence_slope": -0.011974930331697917,
+  "pcinc_convergence_t": -7.1303525468542945,
+  "pcinc_convergence_r2": 0.5196333389113378,
+  "pcinc_convergence_n": 49,
+  "mfg_wage_convergence_slope": null,
+  "mfg_wage_convergence_t": null,
+  "mfg_wage_convergence_r2": null,
+  "mfg_wage_convergence_note": "Manufacturing production-worker AHE (1947-1990, SIC basis) is not reconstructable from free modern APIs; per-capita income convergence (pcinc_convergence_*) is the reported reconstructable analogue.",
+  "wage_growth_persistence_corr": 0.4098154872728105,
+  "wage_growth_persistence_note": "proxy: per-capita income growth 1948-70 vs 1970-90 (mfg AHE not reconstructable)",
+  "empgrowth_vs_relwage_slope": 0.0016439828398596584,
+  "empgrowth_vs_relwage_t": 0.16408012286220128,
+  "empgrowth_vs_relwage_note": "proxy: employment growth 1970-90 on mean relative per-capita income 1970-90 (mfg wage not reconstructable)"
+}

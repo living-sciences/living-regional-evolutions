@@ -1,0 +1,33 @@
+{
+  "claim_id": "C12",
+  "status": "no_match",
+  "structured": {
+    "replicated_value": {
+      "AK": 2.27,
+      "IN": 0.77,
+      "MI": 0.71,
+      "ND": 1.14,
+      "SD": 1.0,
+      "avg_adjusted_r_squared": 0.97,
+      "states_beta_ne_1": 50
+    },
+    "paper_value": {
+      "AK": -1.24,
+      "IN": 1.51,
+      "MI": 1.72,
+      "ND": 0.14,
+      "SD": 0.45,
+      "avg_adjusted_r_squared": 0.66,
+      "states_beta_ne_1": 13
+    },
+    "uncertainty": null,
+    "value_found": true
+  },
+  "rationale": "The run produced Table 2 in results/table2_and_regionyear.json, but every quantity is far outside tolerance. Produced avg_adj_r2 = 0.969 vs paper 0.66 (~47% off); n_states_beta_sig_diff_1 = 50 vs paper 13; per-state betas: AK 2.27 vs -1.24, IN 0.77 vs 1.51, MI 0.71 vs 1.72, ND 1.14 vs 0.14, SD 1.00 (not even significantly different from 1) vs 0.45. The mismatch stems from a specification error: the claim and plan step 4 call for regressing state employment GROWTH on national employment growth (log first differences), but src/state_national_elasticities.py:33 and :21 regress LEVELS of log employment (y = np.log(emp_nonfarm) on lnUS = log(emp_us)). Log-level employment series are strongly trending and nearly collinear, yielding near-perfect adjusted R^2 (~0.99 for almost every state), tiny standard errors, betas clustered near 1, and hence 50 of 51 states 'significantly' different from 1 \u2014 none of which reflects the paper's growth-on-growth Table 2. Because a produced result exists and is far outside even the 30% partial band on every dimension, this is a no_match rather than not_attempted.",
+  "evidence_refs": [
+    "output/replication/codebase/results/table2_and_regionyear.json",
+    "output/replication/codebase/src/state_national_elasticities.py",
+    "output/analyze/replication_plan.json"
+  ],
+  "graded_by": "agent"
+}

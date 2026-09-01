@@ -1,0 +1,60 @@
+{
+  "persistence": [
+    {
+      "pair_label": "1985_on_1975",
+      "reconstructable": false,
+      "slope": null,
+      "t": null,
+      "r2": null,
+      "n": 0,
+      "slope_ex_farm": null,
+      "r2_ex_farm": null,
+      "note": "earlier endpoint pre-1976; not reconstructable from LAUS"
+    },
+    {
+      "pair_label": "1990_on_1970",
+      "reconstructable": false,
+      "slope": null,
+      "t": null,
+      "r2": null,
+      "n": 0,
+      "slope_ex_farm": null,
+      "r2_ex_farm": null,
+      "note": "earlier endpoint pre-1976; not reconstructable from LAUS"
+    },
+    {
+      "pair_label": "1986_on_1976",
+      "reconstructable": true,
+      "slope": -0.0882898219702136,
+      "t": -0.5320322216359306,
+      "r2": 0.005743521094465853,
+      "n": 51,
+      "slope_ex_farm": -0.2718903377737496,
+      "r2_ex_farm": 0.03813881742997638
+    },
+    {
+      "pair_label": "1990_on_1980",
+      "reconstructable": true,
+      "slope": 0.4596051358903597,
+      "t": 5.872944846608838,
+      "r2": 0.4131137774468162,
+      "n": 51,
+      "slope_ex_farm": 0.35000226555112046,
+      "r2_ex_farm": 0.3323266041088633
+    }
+  ],
+  "avg_urate_vs_empgrowth": {
+    "slope": -33.30731730118019,
+    "t": -1.705093019549031,
+    "r2": 0.05601023057229737,
+    "n": 51,
+    "window": "1976-1990"
+  },
+  "avg_urate_vs_wage": {
+    "t": -1.1274452171047522,
+    "r2": 0.02528553961005242,
+    "slope": -1.534731146840217,
+    "n": 51,
+    "note": "manufacturing wage not reconstructable; relative per-capita income proxy, 1976-1990"
+  }
+}

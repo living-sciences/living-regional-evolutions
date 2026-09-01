@@ -1,0 +1,805 @@
+[
+  {
+    "claim_id": "C1",
+    "status": "match",
+    "structured": {
+      "replicated_value": {
+        "slope": 0.698,
+        "r_squared": 0.754
+      },
+      "paper_value": {
+        "r_squared": 0.75,
+        "slope": 0.7
+      },
+      "uncertainty": null,
+      "value_found": true
+    },
+    "rationale": "The run produced results/persistence_convergence.json with emp_persistence_slope=0.6976716605958123 and emp_persistence_r2=0.7542403243498497 over emp_persistence_n=51 units (the 50 states + DC), from step 3 (src/persistence_convergence.py) which regresses average annual log nonfarm employment growth 1970-90 on 1950-70 growth. The step-3 stdout in replication_log.json corroborates this: 'emp_persistence slope=0.698 R2=0.754 (paper 0.70/0.75)'. Slope 0.698 vs paper 0.70 is 0.3% relative error, and R^2 0.754 vs paper 0.75 is 0.6% relative error \u2014 both well within the 5% band for a match. The panel was reconstructed from FRED/BLS APIs rather than the paper's archival BLS source, but the persistence estimate is essentially identical. The one 'major' fix in fix_severity.json concerns a duplicated-year indexing bug in the state/national *elasticity* regression, a different analysis path that does not affect this cross-sectional persistence regression.",
+    "evidence_refs": [
+      "output/replication/codebase/results/persistence_convergence.json",
+      "output/replication/replication_log.json",
+      "output/analyze/replication_plan.json",
+      "output/assess/fix_severity.json"
+    ],
+    "graded_by": "agent"
+  },
+  {
+    "claim_id": "C2",
+    "status": "match",
+    "structured": {
+      "replicated_value": {
+        "r_squared": 0.61
+      },
+      "paper_value": {
+        "r_squared": 0.6
+      },
+      "uncertainty": null,
+      "value_found": true
+    },
+    "rationale": "The run re-ran the Figure 1 employment-persistence regression (1970-90 growth on 1950-70 growth) dropping Arizona, Florida, and Nevada. results/persistence_convergence.json reports emp_persistence_r2_ex_AZ_FL_NV = 0.6101290902950444, and the step-3 stdout in replication_log.json confirms 'ex-AZ/FL/NV R2=0.610 (paper 0.60)'. Compared to the paper value of 0.60, this is a relative error of ~1.7%, well within the 5% match band. The fix_severity.json fixes (FRED throttling and an elasticity-regression alignment bug in a different step) do not touch this persistence regression path, so the produced value faithfully reflects the method.",
+    "evidence_refs": [
+      "output/replication/codebase/results/persistence_convergence.json",
+      "output/replication/replication_log.json",
+      "output/assess/fix_severity.json"
+    ],
+    "graded_by": "agent"
+  },
+  {
+    "claim_id": "C3",
+    "status": "partial",
+    "structured": {
+      "observed_behavior": "The run's results/adf_tests.json (employment block) estimates equation (1) state-by-state with four lags and a trend over 1952-1990 and, using a 5% critical value of -3.5, flags FOUR states as rejecting the unit root: MA (t=-3.96), SD (t=-3.80), WY (t=-3.58), and WI (t=-3.98) (n_reject_5pct=4, reject_states=['MA','SD','WI','WY']). The lagged-level coefficient is negative in 50 of 51 states; the exception is Maine (ME), whose coefficient is +0.0208 (t=0.33), so n_negative_coef=50. The three states named in the claim (MA, SD, WY) all appear, all reject at 5%, and all have negative lagged-level coefficients.",
+      "claim_paraphrase": "The ADF unit-root test on relative employment (eq. 1) rejects the unit root at 5% for exactly three states -- Massachusetts, South Dakota, and Wyoming (3 of 51) -- and the coefficient on the lagged level is negative for every state.",
+      "semantic_match": false
+    },
+    "rationale": "Evidence is /workspace/output/replication/codebase/results/adf_tests.json. The three states the claim names (MA, SD, WY) all reject the unit root at 5% and all have negative lagged-level coefficients, matching the paper's substantive finding. However, both literal sub-claims are narrowly violated: (1) the run rejects at 5% for FOUR states, not three -- it additionally flags Wisconsin (t=-3.975, more significant than WY's -3.585; n_reject_5pct=4, reject_states=['MA','SD','WI','WY']); and (2) the lagged-level coefficient is NOT negative in all states -- Maine's coefficient is +0.0208 (n_negative_coef=50 of 51). The extra rejection is not an artifact of a lax critical value (crit_5pct=-3.5; WI's t of -3.975 rejects under any standard Dickey-Fuller tau_tau cutoff near -3.53). fix_severity.json records a 'major' data-alignment fix in the elasticity regression path but nothing touching the ADF routine, so it does not explain these deviations. The core qualitative story (MA/SD/WY reject; coefficients overwhelmingly negative) holds, but the evidence contradicts the precise 'only three' and 'negative in all states' assertions, so this is a partial match.",
+    "evidence_refs": [
+      "output/replication/codebase/results/adf_tests.json",
+      "output/analyze/replication_plan.json",
+      "output/assess/fix_severity.json"
+    ],
+    "graded_by": "agent"
+  },
+  {
+    "claim_id": "C4",
+    "status": "partial",
+    "structured": {
+      "replicated_table": {
+        "Year 1 - Log employment change": 1.5156,
+        "Year 2 - Log employment change": 1.6521,
+        "Year 3 - Log employment change": 1.6825,
+        "Year 4 - Log employment change": 1.628,
+        "Year 5 - Log employment change": 1.5654,
+        "Year 10 - Log employment change": 1.5283,
+        "Year 20 - Log employment change": 1.5306,
+        "Year 1 - Unemployment rate": 1.075,
+        "Year 2 - Unemployment rate": 0.8003,
+        "Year 3 - Unemployment rate": 0.4783,
+        "Year 4 - Unemployment rate": 0.2298,
+        "Year 5 - Unemployment rate": 0.0771,
+        "Year 10 - Unemployment rate": -0.0128,
+        "Year 20 - Unemployment rate": null,
+        "Year 1 - Log wage": 0.8181,
+        "Year 2 - Log wage": 0.7476,
+        "Year 3 - Log wage": 0.7141,
+        "Year 4 - Log wage": 0.6257,
+        "Year 5 - Log wage": 0.5568,
+        "Year 10 - Log wage": 0.3048,
+        "Year 20 - Log wage": 0.0905
+      },
+      "paper_table": {
+        "Year 1 - Log employment change": 1.0,
+        "Year 2 - Log employment change": 1.49,
+        "Year 3 - Log employment change": 1.63,
+        "Year 4 - Log employment change": 1.67,
+        "Year 5 - Log employment change": 1.62,
+        "Year 10 - Log employment change": 1.52,
+        "Year 20 - Log employment change": 1.53,
+        "Year 1 - Unemployment rate": 1.0,
+        "Year 2 - Unemployment rate": 0.9,
+        "Year 3 - Unemployment rate": 0.65,
+        "Year 4 - Unemployment rate": 0.44,
+        "Year 5 - Unemployment rate": 0.29,
+        "Year 10 - Unemployment rate": 0.04,
+        "Year 20 - Unemployment rate": 0.01,
+        "Year 1 - Log wage": 1.0,
+        "Year 2 - Log wage": 1.07,
+        "Year 3 - Log wage": 1.02,
+        "Year 4 - Log wage": 1.01,
+        "Year 5 - Log wage": 0.94,
+        "Year 10 - Log wage": 0.57,
+        "Year 20 - Log wage": 0.19
+      },
+      "value_found": true
+    },
+    "rationale": "The run produced the Table 1 impulse responses in results/table1_irfs.json (the planned output/tables/table1.csv was not written, but the impulse_responses block is the gradeable evidence). Grading per cell by row/column label against paper_value: EMPLOYMENT matches well in shape and level \u2014 produced humps to 1.6825 and plateaus at 1.5306, and Year 3/4/5/10/20 are all within ~3.5% of the paper (e.g. Year 10 1.5283 vs 1.52, Year 20 1.5306 vs 1.53); however produced Year 1 = 1.5156 vs paper 1.0 (~52% off) and Year 2 = 1.6521 vs 1.49 (~11% off), reflecting an off-by-one normalization (produced year1 = 1+phi1 rather than starting from the unit innovation = 1.0). UNEMPLOYMENT captures the qualitative decay toward zero (produced Year 10 = -0.0128 ~ 0, matching 'decays to zero by year 10'), but is numerically off in mid/late years \u2014 Year 3 26%, Year 4 48%, Year 5 73% off, Year 10 sign-flipped, and no Year 20 was produced; its AR(2) coefficients (1.075, -0.355) also differ from the paper's (0.899, -0.159), and the sample window was shortened (1976-90 per plan). WAGE is the weakest column: the code substitutes a 'pcinc proxy' (per-capita income, note in json) for the manufacturing wage, so the series starts at 0.818 and monotonically declines with no hump above 1.0 (paper humps to 1.07 at Year 2); all wage cells are 18-52% off (Year 20 0.0905 vs 0.19). This is a genuinely mixed table \u2014 one column (employment) largely matching within tolerance while unemployment and wage columns land in and beyond the 5-30% band \u2014 so the verdict is partial. The relevant fix_severity 'major' fix touched the state/national elasticity regression, not this IRF path, so it does not change the assessment.",
+    "evidence_refs": [
+      "output/replication/codebase/results/table1_irfs.json",
+      "output/analyze/replication_plan.json",
+      "output/assess/fix_severity.json"
+    ],
+    "graded_by": "agent"
+  },
+  {
+    "claim_id": "C5",
+    "status": "no_match",
+    "structured": {
+      "replicated_value": {
+        "MA": 9.807,
+        "MI": 1.452,
+        "MO": 2.315,
+        "WY": 3.156,
+        "states_in_1_to_2_range": 17
+      },
+      "paper_value": {
+        "MA": 3.3,
+        "MI": 0.95,
+        "MO": 0.86,
+        "WY": 3.15,
+        "states_in_1_to_2_range": 40
+      },
+      "uncertainty": null,
+      "value_found": true
+    },
+    "rationale": "The run produced per-state long-run employment responses in results/table1_irfs.json ('individual_long_run'), computed as the plateau 1/(1-sum_phi) of an AR(4) in relative-employment change. Of the four named outliers, only Wyoming reproduces (replicated 3.156 vs paper 3.15, <1% error). The other three are far off: Massachusetts is 9.807 vs 3.30 (~197% high), Missouri is 2.315 vs 0.86 (~169% high, and it is not even a low outlier here), and Michigan is 1.452 vs 0.95 (~53% high). More decisively, only 17 states fall in [1.0, 2.0] versus the paper's 40 \u2014 the produced distribution is systematically shifted upward (six states, including PA at 13.8 and several near 5-9, are flagged/near-'high'), indicating the univariate specification here does not reproduce the paper's tighter clustering. The employment proxy and specification (per notes/univariate_notes.md: AR(4) in Delta relative-employment, state FE, plateau via sum-phi) diverge enough from the paper's to break the central quantitative claims. No relevant critical code fix in fix_severity.json explains this. With 3 of 4 outliers and the headline count (17 vs 40) outside even the 30% partial band, this is a no_match.",
+    "evidence_refs": [
+      "replication/codebase/results/table1_irfs.json",
+      "replication/codebase/notes/univariate_notes.md",
+      "analyze/replication_plan.json",
+      "assess/fix_severity.json"
+    ],
+    "graded_by": "agent"
+  },
+  {
+    "claim_id": "C6",
+    "status": "not_attempted",
+    "structured": {
+      "replicated_value": null,
+      "paper_value": {
+        "r_squared": 0.0,
+        "slope": 0.03,
+        "t_stat": 0.2
+      },
+      "uncertainty": null,
+      "value_found": false
+    },
+    "rationale": "The claim targets the exact regression of the 1985 relative state unemployment rate on the 1975 rate (Figure 3; slope 0.03, t 0.2, R^2 0.00). This specific regression could NOT be produced by the run: the pipeline reconstructed state unemployment only from LAUS, which begins in 1976, so the 1975 endpoint is unavailable. The original repo was EMPTY (all code written from scratch per replication_log.json), and the pre-1976 archival BLS state-unemployment data the paper used is not reconstructable from free public APIs. Accordingly output/results/unemployment_cross_section.json records the '1985_on_1975' pair with reconstructable=false and slope/t/r2 all null (n=0, note: 'earlier endpoint pre-1976; not reconstructable from LAUS'), corroborated by notes/unemployment_notes.md ('1985_on_1975 (C6): earlier endpoint 1975 is pre-1976 -> NOT reconstructable'). The pipeline reported a nearest-year analogue (1986_on_1976: slope -0.088, t -0.53, R^2 0.006), which qualitatively supports the paper's low-persistence conclusion (R^2 ~ 0, insignificant t), but this is a different regression on different years and its slope/t signs differ from the claimed values, so it cannot stand in as the replicated value for the specific 1985-on-1975 scalar. Because the data required to check this exact claim was never shipped and is not reconstructable, the specific values (slope 0.03, t 0.2, R^2 0.00) could not be produced.",
+    "evidence_refs": [
+      "output/replication/codebase/output/results/unemployment_cross_section.json",
+      "output/replication/codebase/notes/unemployment_notes.md",
+      "output/replication/replication_log.json",
+      "output/analyze/replication_plan.json"
+    ],
+    "not_attempted_reason": "authors_missing",
+    "graded_by": "agent"
+  },
+  {
+    "claim_id": "C7",
+    "status": "not_attempted",
+    "structured": {
+      "replicated_value": {
+        "coef_1970_1990": null,
+        "coef_excl_farm": null,
+        "r_squared": null,
+        "r_squared_excl_farm": null,
+        "t_stat": null
+      },
+      "paper_value": {
+        "coef_1970_1990": 0.41,
+        "coef_excl_farm": 0.24,
+        "r_squared": 0.23,
+        "r_squared_excl_farm": 0.11,
+        "t_stat": 3.8
+      },
+      "uncertainty": null,
+      "value_found": false
+    },
+    "rationale": "The C7 regression requires the relative state unemployment rate at a 1970 endpoint, but reconstructed state unemployment (LAUS-basis) is only available from 1976 onward. The pipeline therefore explicitly recorded the '1990_on_1970' pair as reconstructable=false with null slope, t, r2, slope_ex_farm, and r2_ex_farm (results/unemployment_cross_section.json), and notes/unemployment_notes.md states: '1990_on_1970 (C7): earlier endpoint 1970 is pre-1976 -> NOT reconstructable.' The replication_log step 7 confirms '1985_on_1975 & 1990_on_1970 NOT reconstructable (pre-1976).' The only produced 10-year persistence numbers are for a different pair, '1990_on_1980' (slope=0.46, t=5.87, r2=0.41, ex-farm slope=0.35, r2=0.33), which uses a 1980 endpoint, not the claim's 1970 endpoint, and thus does not grade this claim's specific regression. The underlying pre-1976 archival BLS state unemployment data was never shipped (the provided repo was empty) and cannot be reconstructed from free public APIs, so no evidence bearing on the claim's exact 1970->1990 regression could be produced.",
+    "evidence_refs": [
+      "output/replication/codebase/results/unemployment_cross_section.json",
+      "output/replication/codebase/notes/unemployment_notes.md",
+      "output/replication/replication_log.json",
+      "output/analyze/replication_plan.json"
+    ],
+    "not_attempted_reason": "authors_missing",
+    "graded_by": "agent"
+  },
+  {
+    "claim_id": "C8",
+    "status": "partial",
+    "structured": {
+      "replicated_value": {
+        "fraction_remaining_year10": -0.01,
+        "fraction_remaining_year5": 0.08
+      },
+      "paper_value": {
+        "fraction_remaining_year10": 0.0,
+        "fraction_remaining_year5": 0.29
+      },
+      "uncertainty": null,
+      "value_found": true
+    },
+    "rationale": "Step 6 estimated the pooled AR(2) for relative unemployment and produced the implied impulse response in results/table1_irfs.json: impulse_responses.unemployment = {year1: 1.075, year2: 0.800, year3: 0.478, year4: 0.230, year5: 0.077, ..., year10: -0.013}. Fitted coefficients phi=[1.075, -0.355] (n=663). The YEAR-10 component matches the paper: the response at year 10 is -0.013 (fraction remaining -0.01, i.e. essentially zero, vs paper 0.0) -> match under the near-zero absolute band. The YEAR-5 component does NOT match: the reconstruction has already decayed to 0.077 of the unit shock at year 5 (fraction ~0.07-0.08), whereas the paper reports 0.29 -- a ~73% relative shortfall (0.29 is only crossed between the reconstruction's year 3 (0.478) and year 4 (0.230)). The reconstruction thus shows the low-persistence conclusion even more strongly than the paper: relative unemployment mean-reverts faster. This is attributable to a documented data limitation, not a code defect: notes/univariate_notes.md and evidence_summary.json state the paper used a 1972-1990 (partly pre-1976 backfilled) window, but LAUS only reconstructs state unemployment from 1976, so the AR(2) was fit on the shortened 1978-1990 window, yielding a less-persistent process (implied per-period decay root ~0.60 vs ~0.78 needed for 0.29 at year 5). fix_severity.json shows no fix touched this step. Net: the headline qualitative result (near-zero by ~10 years; low persistence) is confirmed and year-10 matches, but the specific year-5 fraction (0.29) is not reproduced -> partial.",
+    "evidence_refs": [
+      "output/replication/codebase/results/table1_irfs.json",
+      "output/replication/replication_log.json",
+      "output/replication/evidence_summary.json",
+      "output/replication/codebase/notes/univariate_notes.md",
+      "output/assess/fix_severity.json"
+    ],
+    "graded_by": "agent"
+  },
+  {
+    "claim_id": "C9",
+    "status": "match",
+    "structured": {
+      "observed_behavior": "The per-state ADF-style regression (equation 3 spec: 4 lags, no trend, 1952-1990) produces a negative lagged-level coefficient in 48 of the 51 states and rejects the unit root at the 5% level (crit -2.94) for exactly 3 states (NE, WI, WY). Because manufacturing average hourly earnings could not be reconstructed from public sources, relative per-capita income was used as the proxy for the relative-wage series.",
+      "claim_paraphrase": "Relative wages are close to a unit root: the lagged-level ADF coefficient is negative in most (46/51) states and the unit root is rejected at 5% for only 3 states.",
+      "semantic_match": true
+    },
+    "rationale": "results/adf_tests.json (wages block) reports n_states=51, n_negative_coef=48, n_reject_5pct=3 (reject_states=['NE','WI','WY'], crit_5pct=-2.94), which I independently recomputed from the 51 per_state entries. src/adf_tests.py confirms the wage block uses the equation-3 specification (4 lags, no trend, 1952-1990). This reproduces the paper's qualitative behavior: the lagged-level coefficient is negative in the vast majority of states and the unit root is rejected for only 3 states. The rejection count matches the claim exactly (3), and the negative-coefficient count (48/51) closely matches the paper's 46/51. The one substitution is that manufacturing AHE was not reconstructable, so relative per-capita income was used as a proxy (documented in the code's note and comments); this is a transparent data-availability caveat rather than a contradiction, and fix_severity.json records no critical/relevant fix in this code path. The described near-unit-root behavior is demonstrated.",
+    "evidence_refs": [
+      "output/replication/codebase/results/adf_tests.json",
+      "output/replication/codebase/src/adf_tests.py",
+      "output/assess/fix_severity.json",
+      "output/analyze/replication_plan.json"
+    ],
+    "graded_by": "agent"
+  },
+  {
+    "claim_id": "C10",
+    "status": "partial",
+    "structured": {
+      "replicated_value": {
+        "income_r_squared": 0.52,
+        "income_slope": -0.012,
+        "income_t_stat": 7.13,
+        "wage_r_squared": null,
+        "wage_slope": null,
+        "wage_t_stat": null
+      },
+      "paper_value": {
+        "income_r_squared": 0.5,
+        "income_slope": -0.01,
+        "income_t_stat": 6.8,
+        "wage_r_squared": 0.39,
+        "wage_slope": -0.01,
+        "wage_t_stat": 5.4
+      },
+      "uncertainty": null,
+      "value_found": true
+    },
+    "rationale": "The claim has two halves. (1) The personal-income-per-capita convergence regression (avg annual pcinc growth 1948-90 on log 1948 income) WAS reproduced in results/persistence_convergence.json: pcinc_convergence_slope=-0.01197 (paper -0.01; rounds to -0.01 at the paper's reported precision), pcinc_convergence_t=-7.13 i.e. |t|=7.13 (paper 6.8, ~4.9% off, within 5%), pcinc_convergence_r2=0.520 (paper 0.50, ~3.9% off, within 5%). This income half matches well. (2) The primary/named subject of the claim -- the manufacturing-wage convergence regression (slope -0.01, t=5.4, R^2=0.39) -- was NOT reproduced: mfg_wage_convergence_slope/_t/_r2 are all null, with mfg_wage_convergence_note stating 'Manufacturing production-worker AHE (1947-1990, SIC basis) is not reconstructable from free modern APIs' (confirmed in src/persistence_convergence.py lines 104-128, which set these to None and substitute the pcinc regression as the reconstructable analogue). Because half the claim's values (the income analogue) match within tolerance while the headline manufacturing-wage regression produced no value at all due to unavailable source data, the overall verdict is partial. fix_severity.json contained no entry bearing on this code path.",
+    "evidence_refs": [
+      "output/replication/codebase/results/persistence_convergence.json",
+      "output/replication/codebase/src/persistence_convergence.py",
+      "output/replication/codebase/figures/fig4_income_convergence.png",
+      "output/analyze/replication_plan.json",
+      "output/assess/fix_severity.json"
+    ],
+    "graded_by": "agent"
+  },
+  {
+    "claim_id": "C11",
+    "status": "not_attempted",
+    "structured": {
+      "replicated_value": null,
+      "paper_value": {
+        "correlation": 0.13
+      },
+      "uncertainty": null,
+      "value_found": false
+    },
+    "rationale": "C11 concerns the persistence of average MANUFACTURING wage growth: the cross-state correlation of 1950-70 mfg wage growth with 1970-90 mfg wage growth (paper value 0.13). The replication step 3 that targets C11 explicitly did NOT reconstruct the manufacturing wage series. results/persistence_convergence.json records mfg_wage_convergence_slope/_t/_r2 = null with the note 'Manufacturing production-worker AHE (1947-1990, SIC basis) is not reconstructable from free modern APIs', and src/persistence_convergence.py:105-127,150-151 confirms this in code. In place of the required quantity, the pipeline reports wage_growth_persistence_corr = 0.41 flagged as a 'proxy: per-capita income growth 1948-70 vs 1970-90 (mfg AHE not reconstructable)'. That 0.41 is a correlation of a DIFFERENT variable (per-capita personal income growth persistence), not the manufacturing wage growth persistence the claim is about, so it is not evidence bearing on C11's value of 0.13. Because the manufacturing wage series itself was never producible in this run's free-API data environment, no evidence for the actual claim was produced. This is a data-access limitation of the run environment (the paper's underlying BLS SIC manufacturing AHE is not obtainable from the free modern APIs used here), not a flaw in the paper's method, so it is excluded from scoring as blocked_infra rather than graded against the unrelated proxy.",
+    "evidence_refs": [
+      "output/replication/codebase/results/persistence_convergence.json",
+      "output/replication/codebase/src/persistence_convergence.py",
+      "output/analyze/replication_plan.json"
+    ],
+    "not_attempted_reason": "blocked_infra",
+    "graded_by": "agent"
+  },
+  {
+    "claim_id": "C12",
+    "status": "no_match",
+    "structured": {
+      "replicated_value": {
+        "AK": 2.27,
+        "IN": 0.77,
+        "MI": 0.71,
+        "ND": 1.14,
+        "SD": 1.0,
+        "avg_adjusted_r_squared": 0.97,
+        "states_beta_ne_1": 50
+      },
+      "paper_value": {
+        "AK": -1.24,
+        "IN": 1.51,
+        "MI": 1.72,
+        "ND": 0.14,
+        "SD": 0.45,
+        "avg_adjusted_r_squared": 0.66,
+        "states_beta_ne_1": 13
+      },
+      "uncertainty": null,
+      "value_found": true
+    },
+    "rationale": "The run produced Table 2 in results/table2_and_regionyear.json, but every quantity is far outside tolerance. Produced avg_adj_r2 = 0.969 vs paper 0.66 (~47% off); n_states_beta_sig_diff_1 = 50 vs paper 13; per-state betas: AK 2.27 vs -1.24, IN 0.77 vs 1.51, MI 0.71 vs 1.72, ND 1.14 vs 0.14, SD 1.00 (not even significantly different from 1) vs 0.45. The mismatch stems from a specification error: the claim and plan step 4 call for regressing state employment GROWTH on national employment growth (log first differences), but src/state_national_elasticities.py:33 and :21 regress LEVELS of log employment (y = np.log(emp_nonfarm) on lnUS = log(emp_us)). Log-level employment series are strongly trending and nearly collinear, yielding near-perfect adjusted R^2 (~0.99 for almost every state), tiny standard errors, betas clustered near 1, and hence 50 of 51 states 'significantly' different from 1 \u2014 none of which reflects the paper's growth-on-growth Table 2. Because a produced result exists and is far outside even the 30% partial band on every dimension, this is a no_match rather than not_attempted.",
+    "evidence_refs": [
+      "output/replication/codebase/results/table2_and_regionyear.json",
+      "output/replication/codebase/src/state_national_elasticities.py",
+      "output/analyze/replication_plan.json"
+    ],
+    "graded_by": "agent"
+  },
+  {
+    "claim_id": "C13",
+    "status": "no_match",
+    "structured": {
+      "replicated_value": {
+        "common_to_census_divisions_pct": 64.2,
+        "common_to_census_regions_pct": 57.0
+      },
+      "paper_value": {
+        "common_to_census_divisions_pct": 38,
+        "common_to_census_regions_pct": 26
+      },
+      "uncertainty": null,
+      "value_found": true
+    },
+    "rationale": "Step 4 ran successfully (replication_log.json, exit_code 0) and wrote results/table2_and_regionyear.json, whose region_year block gives census_division_share=0.6419 (64%) and census_region_share=0.5704 (57%). The paper reports about 38% common to Census divisions and about 26% common to Census regions. The produced values are far outside the bands: |64.2-38|/38 = 69% and |57.0-26|/26 = 119% relative error, both well beyond the 30% partial threshold. The discrepancy has a clear methodological cause visible in src/state_national_elasticities.py: r2_group is applied to raw annual \u0394ln state employment (dln_emp) regressed on region-year dummies, so the national year component (reported separately as national_year_share=0.452) is folded into each R^2. The paper's figures are shares of *relative* (state-minus-national) employment variation, i.e. the national fluctuation should be removed first; netting it out (e.g. (0.642-0.452)/(1-0.452)=0.35, (0.570-0.452)/(1-0.452)=0.21) would land near the paper's numbers, but the run did not produce those values \u2014 the emitted evidence is 64% and 57%. Grading the produced result, it does not match.",
+    "evidence_refs": [
+      "output/replication/codebase/results/table2_and_regionyear.json",
+      "output/replication/codebase/src/state_national_elasticities.py",
+      "output/replication/replication_log.json",
+      "output/analyze/replication_plan.json",
+      "output/assess/fix_severity.json"
+    ],
+    "graded_by": "agent"
+  },
+  {
+    "claim_id": "C14",
+    "status": "no_match",
+    "structured": {
+      "replicated_value": {
+        "slope": -33.31,
+        "t_stat": -1.71
+      },
+      "paper_value": {
+        "slope": -0.06,
+        "t_stat": 0.04
+      },
+      "uncertainty": null,
+      "value_found": true
+    },
+    "rationale": "The run produced the regression underlying Figure 6 in results/unemployment_cross_section.json under avg_urate_vs_empgrowth: slope = -33.31, t = -1.71, r2 = 0.056, n = 51, over window '1976-1990'. The paper reports slope -0.06 with t-stat 0.04 (essentially no relationship) over 1970-90. Neither number matches: the slope differs by orders of magnitude (partly a units/orientation difference, since the plan regresses average unemployment ON average employment growth), and \u2014 more tellingly \u2014 the t-statistic, which is invariant to regression orientation in a simple bivariate fit, is -1.71 here versus 0.04 in the paper, i.e. this run finds a weakly negative (though still non-significant) relationship rather than the paper's essentially null one. Both values fall far outside the match/partial bands. The deviation traces to a data-coverage limitation documented in notes/unemployment_notes.md: LAUS reconstructs state unemployment only for 1976-1990, so the intended 1970-90 window could not be reproduced. No figure6.pdf was emitted (figures/ contains no fig6 output), but the numeric regression evidence exists and is gradeable. fix_severity.json shows no fix touching this specific regression path.",
+    "evidence_refs": [
+      "output/replication/codebase/results/unemployment_cross_section.json",
+      "output/replication/codebase/notes/unemployment_notes.md",
+      "output/analyze/replication_plan.json",
+      "output/assess/fix_severity.json"
+    ],
+    "graded_by": "agent"
+  },
+  {
+    "claim_id": "C15",
+    "status": "no_match",
+    "structured": {
+      "replicated_value": {
+        "participation_decline_pp": 0.49,
+        "unemployment_rise_pp": 0.2
+      },
+      "paper_value": {
+        "participation_decline_pp": 0.17,
+        "unemployment_rise_pp": 0.32
+      },
+      "uncertainty": null,
+      "value_found": true
+    },
+    "rationale": "The run produced the trivariate VAR impulse responses in results/trivariate_var.json. The reported year-1 responses to the -1% employment shock are year1.unemployment_response = 0.001994520587944889 and year1.participation_response = -0.004916662124750236, in proportion units (src/trivariate_var.py plots these as `*100` to render percent). Converting to percentage points gives an unemployment-rate rise of ~0.20 pp and a participation decline of ~0.49 pp. The paper reports +0.32 pp (unemployment_rise_pp) and -0.17 pp (participation_decline_pp). Both differ well beyond the 30% partial band: unemployment 0.20 vs 0.32 (~38% relative error) and participation 0.49 vs 0.17 (~189% relative error). The code itself notes these are approximations (unemployment proxied by -le, participation by lp, working-age population proxied by resident population), which plausibly explains the mismatch, but the produced numbers do not reproduce the claimed values. The fix_severity.json fixes (a FRED throttling patch and an elasticity-regression index alignment fix) are not in this claim's code path and do not rehabilitate the result.",
+    "evidence_refs": [
+      "output/replication/codebase/results/trivariate_var.json",
+      "output/replication/codebase/src/trivariate_var.py",
+      "output/analyze/replication_plan.json",
+      "output/assess/fix_severity.json"
+    ],
+    "graded_by": "agent"
+  },
+  {
+    "claim_id": "C16",
+    "status": "partial",
+    "structured": {
+      "replicated_value": {
+        "employment_peak_pct": -2.1,
+        "employment_plateau_pct": -1.8,
+        "unemployment_participation_disappear_years": [
+          11,
+          7
+        ]
+      },
+      "paper_value": {
+        "employment_peak_pct": -2.0,
+        "employment_plateau_pct": -1.3,
+        "unemployment_participation_disappear_years": [
+          5,
+          7
+        ]
+      },
+      "uncertainty": null,
+      "value_found": true
+    },
+    "rationale": "The trivariate VAR (step 8) produced results/trivariate_var.json and figures/fig7_trivariate_irf.png from the 1978-1990 LAUS window (n_obs=663). The employment IRF builds to a peak magnitude of -0.02121 (-2.1%) at year 3 (year 4 = -0.02069 = -2.1%), matching the paper's '-2.0 percent after four years' to within ~6% relative error (near the match threshold). The reported employment_plateau (year 12) is -0.01809 (-1.8%) versus the paper's -1.3%, a ~39% relative deviation (no_match on this component); the summary attributes some of this to the documented approximation that the unemployment/participation responses are proxied as -le/lp with working-age population proxied by resident population (see trivariate_var.json 'note' and evidence_summary documented_approximations). For the disappearance horizon, unemp_partic_dieout_year gives participation=7 (within the paper's 5-7 range) and unemployment=11 (beyond it) -- though the raw unemployment IRF is tiny throughout (peak ~0.002 = 0.2pp) and effectively near zero by year 5-6. Overall the qualitative structure and the peak match well and participation dieout matches, but the plateau magnitude and the unemployment horizon deviate, so the composite claim is graded partial. fix_severity.json records no critical fixes in this path (one minor networking patch, one major elasticity-alignment fix in a different step).",
+    "evidence_refs": [
+      "output/replication/codebase/results/trivariate_var.json",
+      "output/replication/codebase/figures/fig7_trivariate_irf.png",
+      "output/replication/evidence_summary.json",
+      "output/analyze/replication_plan.json",
+      "output/assess/fix_severity.json"
+    ],
+    "graded_by": "agent"
+  },
+  {
+    "claim_id": "C17",
+    "status": "no_match",
+    "structured": {
+      "replicated_value": {
+        "net_out_migration": 0.6,
+        "participation": 0.28,
+        "unemployment": 0.12
+      },
+      "paper_value": {
+        "net_out_migration": 0.65,
+        "participation": 0.05,
+        "unemployment": 0.3
+      },
+      "uncertainty": null,
+      "value_found": true
+    },
+    "rationale": "Step 8 produced the year-1 per-worker decomposition in results/trivariate_var.json under 'per_worker' (basis: 'shares of the year-1 employment response'): unemployment=0.1152, participation=0.2841, implied_net_migration=0.6007, derived from year1 responses (unemployment_response=0.001995, participation_response=-0.004917) over the year-1 employment response (-0.017307). Comparing to the claim's paper_value {unemployment:0.3, participation:0.05, net_out_migration:0.65}: net_out_migration (0.60 vs 0.65) is ~7.5% off (partial-band only), but unemployment (0.12 vs 0.30, ~62% error) and participation (0.28 vs 0.05, ~468% error) both fall far outside even the 30% partial band, and their relative magnitudes are essentially reversed versus the paper (the paper attributes the secondary share to unemployment and a negligible share to participation; the replication does the opposite). The qualitative 'mostly migration' finding is partially recovered (migration ~0.60) and the die-out horizon is broadly consistent (unemp_partic_dieout_year: participation=7, unemployment=11, with a persistent employment plateau of -0.0181, so by ~5-7 years the response is nearly all migration), but the core quantitative decomposition the claim specifies is not reproduced. With two of three components badly off, the overall verdict is no_match. Note: the run relied on the reconstructable 1978-1990 LAUS window (paper used a longer sample) and proxied the unemployment response as -le and participation as lp with resident population standing in for working-age population (see the 'note' field), which plausibly contributes to the unemployment/participation misallocation.",
+    "evidence_refs": [
+      "output/replication/codebase/results/trivariate_var.json",
+      "output/analyze/replication_plan.json",
+      "output/assess/fix_severity.json"
+    ],
+    "graded_by": "agent"
+  },
+  {
+    "claim_id": "C18",
+    "status": "no_match",
+    "structured": {
+      "replicated_value": {
+        "farm_states": 14.67,
+        "farm_t_stat": 4.42,
+        "typical_state": 18.27,
+        "typical_t_stat": 14.69
+      },
+      "paper_value": {
+        "farm_states": -0.22,
+        "farm_t_stat": 8.1,
+        "typical_state": -0.32,
+        "typical_t_stat": 17.5
+      },
+      "uncertainty": null,
+      "value_found": true
+    },
+    "rationale": "Step 8 produced results/trivariate_var.json with okun.all_states = {coef: 18.270, t: 14.687, n: 714} and okun.farm_states = {coef: 14.667, t: 4.424, n: 126}. The paper's pooled Okun coefficient is ~-0.32 (t=17.5) and the farm-state coefficient ~-0.22 (t=8.1). The produced coefficients are wrong-signed and off by roughly two orders of magnitude: okun() in src/trivariate_var.py (lines 97-110) regresses Delta(rel_urate) \u2014 in percentage points \u2014 on Delta(rel_emp_logdev) \u2014 a log deviation where 0.01 = 1% \u2014 so the slope is ~100x the paper's per-percentage-point convention. Rescaling by /100 gives ~0.183 (pooled) and ~0.147 (farm), which are still 33-43% away from 0.32 and 0.22 and thus not even within the partial band; and the produced values as reported (18.27, 14.67) are nowhere near -0.32/-0.22. The t-stats also miss: typical t=14.69 vs 17.5 (~16% low) and farm t=4.42 vs 8.1 (~45% low). Additionally the coefficient is computed as a simple bivariate OLS of Delta-urate on Delta-emp rather than extracted from the trivariate VAR system the claim specifies. Only the qualitative ordering matches \u2014 the farm-state coefficient (14.67) is closer to zero than the pooled one (18.27), consistent with the paper \u2014 but the numeric magnitudes and signs do not match, so this is a no_match.",
+    "evidence_refs": [
+      "output/replication/codebase/results/trivariate_var.json",
+      "output/replication/codebase/src/trivariate_var.py",
+      "output/replication/replication_log.json",
+      "output/analyze/replication_plan.json"
+    ],
+    "graded_by": "agent"
+  },
+  {
+    "claim_id": "C19",
+    "status": "no_match",
+    "structured": {
+      "replicated_value": {
+        "slope": 0.0016,
+        "t_stat": 0.16
+      },
+      "paper_value": {
+        "slope": -0.68,
+        "t_stat": 0.6
+      },
+      "uncertainty": null,
+      "value_found": true
+    },
+    "rationale": "The claim concerns Figure 9's regression of average employment growth on relative MANUFACTURING wages, 1950-90 (slope -0.68, t=0.6). The run could not reconstruct this: manufacturing production-worker AHE (SIC basis, 1947-1990) is flagged as not reconstructable from free modern APIs, so results/persistence_convergence.json reports mfg_wage_convergence_* = None and mfg_wage_convergence_note. What was actually produced (empgrowth_vs_relwage_slope=0.00164, empgrowth_vs_relwage_t=0.164, per its note) is a documented PROXY: employment growth 1970-90 regressed on mean relative per-capita income 1970-90 \u2014 a different variable (income, not mfg wages) over a different window (1970-90, not 1950-90). No output/figures/figure9.pdf was generated (only fig1,2,4,7,11,13,14 exist under figures/). Numerically the produced values do not match the paper's: the slope (0.0016) is a different sign and magnitude in incomparable units, and the t-stat (0.16) is ~4x smaller than 0.6 (well outside the 30% partial band). The proxy does qualitatively echo the paper's central point \u2014 'essentially no relationship' (t well below significance) \u2014 but the specific scalar values of the manufacturing-wage regression could not be reproduced.",
+    "evidence_refs": [
+      "output/replication/codebase/results/persistence_convergence.json",
+      "output/replication/replication_log.json",
+      "output/analyze/replication_plan.json",
+      "output/replication/codebase/figures/"
+    ],
+    "graded_by": "agent"
+  },
+  {
+    "claim_id": "C20",
+    "status": "not_attempted",
+    "structured": {
+      "replicated_value": null,
+      "paper_value": {
+        "r_squared": 0.16,
+        "t_stat": 3.1
+      },
+      "uncertainty": null,
+      "value_found": false
+    },
+    "rationale": "Claim C20 requires the regression underlying Figure 10 -- average manufacturing wage on average state unemployment rate (1970-90) -- expecting a positive relationship with t~3.1 and R^2~0.16. The manufacturing production-worker wage series (BLS archival 'Employment and Earnings', SIC-basis AHE) needed for this regression was never available: the provided repo was empty and step 2's notes state the 'manufacturing production-worker AHE 1947-1990 not reconstructable from free modern APIs' (replication_log.json, step_id 2). Consequently the actual claimed quantity was never computed. Step 7 (results/unemployment_cross_section.json, avg_urate_vs_wage) instead ran the regression on a documented per-capita-INCOME proxy over 1976-1990, explicitly flagged: 'manufacturing wage not reconstructable; relative per-capita income proxy, 1976-1990.' That proxy is a different economic variable (income vs. manufacturing wage) and, moreover, contradicts the claim outright: slope=-1.53, t=-1.13, r2=0.025 -- a wrong-signed, insignificant, near-zero relationship rather than the paper's positive t=3.1, R^2=0.16. Because the specific input data required to test this claim was never shipped and cannot be reconstructed, the actual Figure 10 regression could not be produced; only a proxy for a distinct variable exists. This is a genuine data-availability/reproducibility gap (authors_missing), documented in notes/unemployment_notes.md and the step-2/step-7 log notes.",
+    "evidence_refs": [
+      "replication/replication_log.json",
+      "replication/codebase/results/unemployment_cross_section.json",
+      "replication/codebase/notes/unemployment_notes.md",
+      "analyze/replication_plan.json"
+    ],
+    "not_attempted_reason": "authors_missing",
+    "graded_by": "agent"
+  },
+  {
+    "claim_id": "C21",
+    "status": "partial",
+    "structured": {
+      "replicated_value": {
+        "employment_multiple": 1.65,
+        "employment_plateau_pct": -1.17,
+        "unemployment_rise_pct": null,
+        "wage_decrease_pct": -0.83,
+        "wage_min_year": 1,
+        "wage_unemployment_elasticity": null
+      },
+      "paper_value": {
+        "employment_multiple": 1.7,
+        "employment_plateau_pct": -1.2,
+        "unemployment_rise_pct": 0.37,
+        "wage_decrease_pct": -0.4,
+        "wage_min_year": 6,
+        "wage_unemployment_elasticity": 1.0
+      },
+      "uncertainty": null,
+      "value_found": true
+    },
+    "rationale": "Step 9 (src/bivariate_irfs.py) produced results/bivariate_irfs.json and figures/fig11_emp_wage.png, so Figure 11 was generated and is gradeable. The EMPLOYMENT dynamics match the paper well: from a -1.0% initial shock (year 0 = -0.01) employment troughs at year 3 at -1.645% (irf['3'].employment = -0.016449), i.e. 1.65x the initial response vs the paper's 1.7 (3% off), and plateaus at -1.17% (employment_plateau = -0.011717) vs the paper's -1.2 (2.4% off) \u2014 both within 5%. However, the WAGE side does not reproduce the paper. The evidence file explicitly notes 'pcinc proxy for manufacturing wage (not reconstructable)' and step-9 notes state manufacturing production-worker AHE for 1947-1990 could not be obtained; the per-capita-income proxy troughs at YEAR 1 at -0.835% and then reverts toward zero (-0.49% by year 6), whereas the paper reports a wage minimum of -0.4% at ~year 6. Thus wage_min_year (1 vs 6) and wage_decrease_pct (-0.83 vs -0.4) both miss. Furthermore the Figure-11 system is a two-variable emp-wage VAR with NO unemployment variable, so the paper's unemployment_rise (0.37% at year 2) and the implied relative-wage-to-relative-unemployment elasticity (~1.0) are not produced by this run at all (null). Verdict: partial \u2014 the employment trough/plateau are faithfully reproduced, but the wage timing/magnitude and the unemployment/elasticity quantities that are the substantive point of the claim are not, largely owing to the documented manufacturing-wage data gap.",
+    "evidence_refs": [
+      "output/replication/codebase/results/bivariate_irfs.json",
+      "output/replication/codebase/figures/fig11_emp_wage.png",
+      "output/replication/replication_log.json",
+      "output/assess/fix_severity.json"
+    ],
+    "graded_by": "agent"
+  },
+  {
+    "claim_id": "C22",
+    "status": "out_of_scope",
+    "structured": {},
+    "rationale": "No plan step targeted this claim; treated as out_of_scope (excluded from the score, not a failure): The industry/worker-characteristic-controlled CPS wage series is an author-constructed set of annual state earnings-regression residuals (1979-89); reproducing it requires a full CPS ORG microdata earnings-regression pipeline well beyond rebuilding published public series -- deprioritized.",
+    "evidence_refs": [],
+    "graded_by": "deterministic"
+  },
+  {
+    "claim_id": "C23",
+    "status": "partial",
+    "structured": {
+      "replicated_value": {
+        "horizon_years": 2,
+        "income_decrease_pct": -0.81
+      },
+      "paper_value": {
+        "horizon_years": 2,
+        "income_decrease_pct": -0.9
+      },
+      "uncertainty": null,
+      "value_found": true
+    },
+    "rationale": "Step 9 (bivariate employment-personal-income system, Figure 13/C23) produced results/bivariate_irfs.json with emp_income.irf giving the per-capita personal income response to a -1% employment shock over years 0-20. The path is normalized to a -1% employment shock (emp yr0 = -1.000%). The pcincome response reaches its trough of -0.835% at year 1 and is -0.812% at year 2 (irf['2'].pcincome = -0.008121758), then returns slowly toward zero over the 20-year horizon (yr5 -0.564%, yr10 -0.314%, yr20 -0.106%). This qualitatively confirms the paper's description ('decreases by 0.9 percent after two years and returns slowly to zero'): the shape (trough near year 1-2, slow return to zero) matches exactly. The magnitude at year 2, -0.81%, differs from the paper's -0.9% by ~9.8% relative error \u2014 outside the 5% match band but well within the 30% partial band. No relevant critical fix was flagged in fix_severity.json for this code path. Hence a partial match.",
+    "evidence_refs": [
+      "output/replication/codebase/results/bivariate_irfs.json",
+      "output/analyze/replication_plan.json",
+      "output/replication/codebase/figures/fig13_emp_income.png"
+    ],
+    "graded_by": "agent"
+  },
+  {
+    "claim_id": "C24",
+    "status": "partial",
+    "structured": {
+      "replicated_value": {
+        "with_wage_feedback": 1.17,
+        "without_wage_feedback": 1.46
+      },
+      "paper_value": {
+        "with_wage_feedback": 1.2,
+        "without_wage_feedback": 1.6
+      },
+      "uncertainty": null,
+      "value_found": true
+    },
+    "rationale": "The run produced results/bivariate_irfs.json with suppress_feedback = {employment_plateau_with_feedback: -0.011717, employment_plateau_without_feedback: -0.014579}, and the emp_wage IRF at year 0 gives the initial employment change of -0.01 (the -1% shock). Expressing plateaus as multiples of the initial change: with wage feedback -0.011717/-0.01 = 1.17x (paper 1.2, 2.4% relative error -> match) and without wage feedback -0.014579/-0.01 = 1.46x (paper 1.6, 8.9% relative error -> outside the 5% band but well within 30%). Both values reproduce the paper's qualitative finding that suppressing wage feedback raises the long-run employment response only modestly, but the without-feedback value falls in the partial (>5%, <30%) band, so the combined scalar claim is graded partial. The figure figures/fig14_suppress_feedback.png corresponds to this output.",
+    "evidence_refs": [
+      "output/replication/codebase/results/bivariate_irfs.json",
+      "output/replication/codebase/figures/fig14_suppress_feedback.png",
+      "output/analyze/replication_plan.json"
+    ],
+    "graded_by": "agent"
+  },
+  {
+    "claim_id": "C25",
+    "status": "not_attempted",
+    "structured": {},
+    "rationale": "No plan step targeted this claim; the planner marked it BLOCKED (counts as a reproducibility gap): Requires NAR Home Sales Yearbook median metro house prices (39 MSAs, 1969-90) that Poterba supplied privately to the authors; this proprietary historical series is not freely reachable from the container (checked: no data files ship with the empty repo, and NAR historical metro medians are not a free public feed).",
+    "evidence_refs": [],
+    "not_attempted_reason": "authors_missing",
+    "graded_by": "deterministic"
+  },
+  {
+    "claim_id": "C26",
+    "status": "out_of_scope",
+    "structured": {},
+    "rationale": "No plan step targeted this claim; treated as out_of_scope (excluded from the score, not a failure): Reconstructable in principle from BLS metro CPI-U (23 MSAs) plus a matching MSA employment panel, but it is a specialized supporting appendix-level result; deprioritized relative to the headline employment/unemployment/wage claims.",
+    "evidence_refs": [],
+    "graded_by": "deterministic"
+  },
+  {
+    "claim_id": "C27",
+    "status": "not_attempted",
+    "structured": {},
+    "rationale": "No plan step targeted this claim; the planner marked it BLOCKED (counts as a reproducibility gap): The real-consumption-wage calculation is derived from the housing-price (C25) and CPI (C26) impulse responses; it inherits the blocked proprietary housing-price series and cannot be produced without it.",
+    "evidence_refs": [],
+    "not_attempted_reason": "authors_missing",
+    "graded_by": "deterministic"
+  },
+  {
+    "claim_id": "C28",
+    "status": "not_attempted",
+    "structured": {},
+    "rationale": "No plan step targeted this claim; the planner marked it BLOCKED (counts as a reproducibility gap): Requires the Davis-Loungani-Mahidhara defense (military prime contract) series and the Bartik two-digit industry-mix instrument, both privately supplied to the authors and not reconstructable from public sources reachable here (no data ships with the empty repo).",
+    "evidence_refs": [],
+    "not_attempted_reason": "authors_missing",
+    "graded_by": "deterministic"
+  },
+  {
+    "claim_id": "C29",
+    "status": "partial",
+    "structured": {
+      "replicated_value": {
+        "excess_over_national_pp": 0.5,
+        "ma_1980_85_growth_pct": 2.0
+      },
+      "paper_value": {
+        "excess_over_national_pp": 0.6,
+        "ma_1980_85_growth_pct": 2.0
+      },
+      "uncertainty": null,
+      "value_found": true
+    },
+    "rationale": "The run executed step 10 (src/massachusetts_case.py, exit_code 0) and produced results/massachusetts.json with growth_1980_85 = 1.985% and gap_vs_us_1980_85 = 0.495 pp. The MA 1980-85 annual growth of ~1.98% matches the paper's 2.0% almost exactly (0.8% relative error \u2192 match). However the excess over the national average is replicated at 0.50 pp versus the paper's 0.6 pp \u2014 a 17.5% relative error, which falls in the partial band (>5%, <30%). For the descriptive tail, the code counted n_years_below_us_1948_79 = 29 out of 32 years (log stdout '29/32 yrs 1948-79 below US'), i.e. MA growth was below the U.S. rate in all but three years, close to the paper's 'all but four years' (28 of 32). Because the growth figure matches strongly but the headline excess-gap value is only within the partial tolerance (and the below-US year count is off by one), the overall claim is graded partial. Employment series were reconstructed from FRED MANAN/PAYNSA (annual mean of NSA monthly), a reasonable proxy noted in notes/mass_notes.md; no critical fix in fix_severity.json touched this path.",
+    "evidence_refs": [
+      "output/replication/codebase/results/massachusetts.json",
+      "output/replication/codebase/src/massachusetts_case.py",
+      "output/replication/codebase/notes/mass_notes.md",
+      "output/replication/replication_log.json",
+      "output/analyze/replication_plan.json"
+    ],
+    "graded_by": "agent"
+  },
+  {
+    "claim_id": "C30",
+    "status": "partial",
+    "structured": {
+      "replicated_value": {
+        "cps_wage_1979_pct": null,
+        "cps_wage_1985_pct": null,
+        "mfg_wage_below_1979_pct": null,
+        "mfg_wage_below_1985_pct": null,
+        "unemployment_below_national_1985_pp": 3.09
+      },
+      "paper_value": {
+        "cps_wage_1979_pct": -3,
+        "cps_wage_1985_pct": 1,
+        "mfg_wage_below_1979_pct": 11,
+        "mfg_wage_below_1985_pct": 5,
+        "unemployment_below_national_1985_pp": 3.6
+      },
+      "uncertainty": null,
+      "value_found": true
+    },
+    "rationale": "Only the unemployment sub-component of this five-part claim was reconstructable this run. results/massachusetts.json reports unemp_rel_1979 = -0.35 (paper: equal to national, i.e. 0 \u2014 close) and unemp_rel_1985 = -3.0917, i.e. 3.09 pp below the national rate versus the paper's 3.6 pp \u2014 a 14.1% relative error, which falls in the partial band (within 30%, outside 5%). The manufacturing-wage and CPS-controlled-wage components (mfg_wage_rel_1979/1985, cps_wage_rel_1979/1985) are all null, explicitly flagged in results/massachusetts.json ('manufacturing production-worker AHE and CPS-controlled wage not reconstructable (archival)') and in notes/mass_notes.md, consistent with the replication plan step 10 which anticipated the CPS-adjusted-wage sub-part as not reconstructable. Thus four of five components could not be produced (acknowledged archival data limitation) and the one produced component matches only within the partial band, so the overall verdict is partial.",
+    "evidence_refs": [
+      "output/replication/codebase/results/massachusetts.json",
+      "output/replication/codebase/notes/mass_notes.md",
+      "output/analyze/replication_plan.json"
+    ],
+    "graded_by": "agent"
+  },
+  {
+    "claim_id": "C31",
+    "status": "not_attempted",
+    "structured": {},
+    "rationale": "No plan step targeted this claim; the planner marked it BLOCKED (counts as a reproducibility gap): Boston relative housing prices come from the same proprietary NAR metro median-price series as C25; not reconstructable from reachable public data.",
+    "evidence_refs": [],
+    "not_attempted_reason": "authors_missing",
+    "graded_by": "deterministic"
+  },
+  {
+    "claim_id": "C32",
+    "status": "partial",
+    "structured": {
+      "replicated_value": {
+        "avg_growth_1985_91_pct": -0.62,
+        "below_national_pp": 2.38,
+        "growth_1990_pct": -4.27,
+        "growth_1991_pct": -5.62,
+        "unemployment_above_national_1991_pp": 2.07
+      },
+      "paper_value": {
+        "avg_growth_1985_91_pct": -0.1,
+        "below_national_pp": 2.2,
+        "growth_1990_pct": -4,
+        "growth_1991_pct": -6,
+        "unemployment_above_national_1991_pp": 2
+      },
+      "uncertainty": null,
+      "value_found": true
+    },
+    "rationale": "results/massachusetts.json (produced by step 10, src/massachusetts_case.py) reports for the reconstructed MA employment panel: avg_growth_1985_91 = -0.617, gap_vs_us_1985_91 = -2.382 (i.e. ~2.38 pp below national), growth_1990 = -4.269, growth_1991 = -5.618, and unemp_rel_1991 = +2.067 pp. The emp_growth_by_year_1985_91 dict also confirms MA growth was below the U.S. rate in most years 1985-91 (gap negative in 1985, 1988, 1989, 1990, 1991; marginally positive in 1986/1987). Compared to the paper: the unemployment gap (2.07 vs 2.0, 3.4% error) is a clean match; below_national (2.38 vs 2.2, 8.2%), growth_1990 (-4.27 vs -4, 6.7%), and growth_1991 (-5.62 vs -6, 6.4%) are all close but exceed the 5% match band while well within the 30% partial band; the 1985-91 average growth deviates most (-0.62 vs -0.1, a ~0.5 pp absolute miss for a near-zero paper value). The qualitative narrative \u2014 below national every year, particularly sharp declines in 1990 and 1991, ~2 pp higher unemployment by 1991 \u2014 is reproduced faithfully, but the collection of numeric sub-values sits in the partial band overall. No MA-specific critical fix appears in fix_severity.json.",
+    "evidence_refs": [
+      "output/replication/codebase/results/massachusetts.json",
+      "output/analyze/replication_plan.json"
+    ],
+    "graded_by": "agent"
+  },
+  {
+    "claim_id": "C33",
+    "status": "not_attempted",
+    "structured": {},
+    "rationale": "No plan step targeted this claim; the planner marked it BLOCKED (counts as a reproducibility gap): The Massachusetts boom/bust simulation predicts nominal-wage and Boston housing-price growth using the estimated wage/housing system, which depends on the blocked proprietary housing-price data (C25/C31).",
+    "evidence_refs": [],
+    "not_attempted_reason": "authors_missing",
+    "graded_by": "deterministic"
+  },
+  {
+    "claim_id": "C34",
+    "status": "not_attempted",
+    "structured": {},
+    "rationale": "No plan step targeted this claim; the planner marked it BLOCKED (counts as a reproducibility gap): Describes properties (state-income shares, forecast-error volatility) of the Davis-Loungani-Mahidhara military prime-contract-award series, an author-private dataset not reconstructable from public sources reachable in the container.",
+    "evidence_refs": [],
+    "not_attempted_reason": "authors_missing",
+    "graded_by": "deterministic"
+  },
+  {
+    "claim_id": "C35",
+    "status": "partial",
+    "structured": {
+      "file_exists": false,
+      "evidence_found": true,
+      "file_path_checked": [
+        "output/figures/figure2.pdf",
+        "figures/fig2_cumulative_rel_emp.png",
+        "data/cumulative_rel_emp_growth.csv"
+      ],
+      "structural_features_present": [
+        "cumulative relative log-employment paths measured relative to U.S. aggregate, 1947-1990",
+        "regional groupings present (newengland, midatlantic, coal, rustbelt, sunbelt, farm, oil)",
+        "sustained relative declines for New England, Mid-Atlantic, coal country, and Rust Belt groups",
+        "strong sustained Sun Belt growth (sunbelt line reaches ~1.16 log dev)",
+        "farm group fluctuates near zero with no sustained trend",
+        "oil group shows 1970s boom (peak ~0.49 around 1982) and 1980s bust (declines to ~0.35)",
+        "per-state series in CSV match claimed magnitudes: WV log -0.75, NY -0.52, PA -0.57, MA -0.37; NV +1.54, AZ +1.41, FL +1.22"
+      ],
+      "structural_features_missing": [
+        "six separate panels (produced figure is a single combined panel)",
+        "individual state lines within panels (produced figure plots region-group averages, not individual states)",
+        "differing vertical-axis scales across panels (single shared axis instead)"
+      ],
+      "structural_match": false
+    },
+    "rationale": "The exact expected file output/figures/figure2.pdf was not produced, but a relevant figure figures/fig2_cumulative_rel_emp.png was, titled 'Fig 2: cumulative relative employment by region group', plotting cumulative relative log-employment (log dev from 1947) over 1947-1990. It reproduces the entire regional narrative of the claim: newengland/midatlantic/coal/rustbelt lines show sustained relative declines (rustbelt to ~-0.29, coal to ~-0.41, newengland to ~-0.16, midatlantic to ~-0.11), sunbelt shows strong sustained growth (~1.16 log dev by 1990), farm fluctuates near zero with no trend, and oil shows the 1970s boom (peak ~0.49 around 1982) and 1980s bust (falling to ~0.35). The underlying data/cumulative_rel_emp_growth.csv holds per-state series whose 1990 values match the claimed individual-state magnitudes when read as log deviations: WV -0.75, NY -0.52, PA -0.57, MA -0.37 (sustained declines) and NV +1.54, AZ +1.41, FL +1.22 (strong Sun Belt growth). However, the produced figure is structurally different from the claim's described figure: it is a SINGLE combined panel of region-group AVERAGES rather than the six separate panels of INDIVIDUAL states with differing vertical-axis scales that the claim and verification instructions specify. Because the content and computation faithfully reproduce the regional story (and per-state magnitudes) but the figure's panel structure does not match, this is a partial match.",
+    "evidence_refs": [
+      "replication/codebase/figures/fig2_cumulative_rel_emp.png",
+      "replication/codebase/data/cumulative_rel_emp_growth.csv",
+      "analyze/replication_plan.json"
+    ],
+    "graded_by": "agent"
+  }
+]

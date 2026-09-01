@@ -1,0 +1,24 @@
+{
+  "claim_id": "C15",
+  "status": "no_match",
+  "structured": {
+    "replicated_value": {
+      "participation_decline_pp": 0.49,
+      "unemployment_rise_pp": 0.2
+    },
+    "paper_value": {
+      "participation_decline_pp": 0.17,
+      "unemployment_rise_pp": 0.32
+    },
+    "uncertainty": null,
+    "value_found": true
+  },
+  "rationale": "The run produced the trivariate VAR impulse responses in results/trivariate_var.json. The reported year-1 responses to the -1% employment shock are year1.unemployment_response = 0.001994520587944889 and year1.participation_response = -0.004916662124750236, in proportion units (src/trivariate_var.py plots these as `*100` to render percent). Converting to percentage points gives an unemployment-rate rise of ~0.20 pp and a participation decline of ~0.49 pp. The paper reports +0.32 pp (unemployment_rise_pp) and -0.17 pp (participation_decline_pp). Both differ well beyond the 30% partial band: unemployment 0.20 vs 0.32 (~38% relative error) and participation 0.49 vs 0.17 (~189% relative error). The code itself notes these are approximations (unemployment proxied by -le, participation by lp, working-age population proxied by resident population), which plausibly explains the mismatch, but the produced numbers do not reproduce the claimed values. The fix_severity.json fixes (a FRED throttling patch and an elasticity-regression index alignment fix) are not in this claim's code path and do not rehabilitate the result.",
+  "evidence_refs": [
+    "output/replication/codebase/results/trivariate_var.json",
+    "output/replication/codebase/src/trivariate_var.py",
+    "output/analyze/replication_plan.json",
+    "output/assess/fix_severity.json"
+  ],
+  "graded_by": "agent"
+}

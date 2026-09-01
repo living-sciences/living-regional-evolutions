@@ -1,0 +1,23 @@
+{
+  "claim_id": "C23",
+  "status": "partial",
+  "structured": {
+    "replicated_value": {
+      "horizon_years": 2,
+      "income_decrease_pct": -0.81
+    },
+    "paper_value": {
+      "horizon_years": 2,
+      "income_decrease_pct": -0.9
+    },
+    "uncertainty": null,
+    "value_found": true
+  },
+  "rationale": "Step 9 (bivariate employment-personal-income system, Figure 13/C23) produced results/bivariate_irfs.json with emp_income.irf giving the per-capita personal income response to a -1% employment shock over years 0-20. The path is normalized to a -1% employment shock (emp yr0 = -1.000%). The pcincome response reaches its trough of -0.835% at year 1 and is -0.812% at year 2 (irf['2'].pcincome = -0.008121758), then returns slowly toward zero over the 20-year horizon (yr5 -0.564%, yr10 -0.314%, yr20 -0.106%). This qualitatively confirms the paper's description ('decreases by 0.9 percent after two years and returns slowly to zero'): the shape (trough near year 1-2, slow return to zero) matches exactly. The magnitude at year 2, -0.81%, differs from the paper's -0.9% by ~9.8% relative error \u2014 outside the 5% match band but well within the 30% partial band. No relevant critical fix was flagged in fix_severity.json for this code path. Hence a partial match.",
+  "evidence_refs": [
+    "output/replication/codebase/results/bivariate_irfs.json",
+    "output/analyze/replication_plan.json",
+    "output/replication/codebase/figures/fig13_emp_income.png"
+  ],
+  "graded_by": "agent"
+}

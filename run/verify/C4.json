@@ -1,0 +1,60 @@
+{
+  "claim_id": "C4",
+  "status": "partial",
+  "structured": {
+    "replicated_table": {
+      "Year 1 - Log employment change": 1.5156,
+      "Year 2 - Log employment change": 1.6521,
+      "Year 3 - Log employment change": 1.6825,
+      "Year 4 - Log employment change": 1.628,
+      "Year 5 - Log employment change": 1.5654,
+      "Year 10 - Log employment change": 1.5283,
+      "Year 20 - Log employment change": 1.5306,
+      "Year 1 - Unemployment rate": 1.075,
+      "Year 2 - Unemployment rate": 0.8003,
+      "Year 3 - Unemployment rate": 0.4783,
+      "Year 4 - Unemployment rate": 0.2298,
+      "Year 5 - Unemployment rate": 0.0771,
+      "Year 10 - Unemployment rate": -0.0128,
+      "Year 20 - Unemployment rate": null,
+      "Year 1 - Log wage": 0.8181,
+      "Year 2 - Log wage": 0.7476,
+      "Year 3 - Log wage": 0.7141,
+      "Year 4 - Log wage": 0.6257,
+      "Year 5 - Log wage": 0.5568,
+      "Year 10 - Log wage": 0.3048,
+      "Year 20 - Log wage": 0.0905
+    },
+    "paper_table": {
+      "Year 1 - Log employment change": 1.0,
+      "Year 2 - Log employment change": 1.49,
+      "Year 3 - Log employment change": 1.63,
+      "Year 4 - Log employment change": 1.67,
+      "Year 5 - Log employment change": 1.62,
+      "Year 10 - Log employment change": 1.52,
+      "Year 20 - Log employment change": 1.53,
+      "Year 1 - Unemployment rate": 1.0,
+      "Year 2 - Unemployment rate": 0.9,
+      "Year 3 - Unemployment rate": 0.65,
+      "Year 4 - Unemployment rate": 0.44,
+      "Year 5 - Unemployment rate": 0.29,
+      "Year 10 - Unemployment rate": 0.04,
+      "Year 20 - Unemployment rate": 0.01,
+      "Year 1 - Log wage": 1.0,
+      "Year 2 - Log wage": 1.07,
+      "Year 3 - Log wage": 1.02,
+      "Year 4 - Log wage": 1.01,
+      "Year 5 - Log wage": 0.94,
+      "Year 10 - Log wage": 0.57,
+      "Year 20 - Log wage": 0.19
+    },
+    "value_found": true
+  },
+  "rationale": "The run produced the Table 1 impulse responses in results/table1_irfs.json (the planned output/tables/table1.csv was not written, but the impulse_responses block is the gradeable evidence). Grading per cell by row/column label against paper_value: EMPLOYMENT matches well in shape and level \u2014 produced humps to 1.6825 and plateaus at 1.5306, and Year 3/4/5/10/20 are all within ~3.5% of the paper (e.g. Year 10 1.5283 vs 1.52, Year 20 1.5306 vs 1.53); however produced Year 1 = 1.5156 vs paper 1.0 (~52% off) and Year 2 = 1.6521 vs 1.49 (~11% off), reflecting an off-by-one normalization (produced year1 = 1+phi1 rather than starting from the unit innovation = 1.0). UNEMPLOYMENT captures the qualitative decay toward zero (produced Year 10 = -0.0128 ~ 0, matching 'decays to zero by year 10'), but is numerically off in mid/late years \u2014 Year 3 26%, Year 4 48%, Year 5 73% off, Year 10 sign-flipped, and no Year 20 was produced; its AR(2) coefficients (1.075, -0.355) also differ from the paper's (0.899, -0.159), and the sample window was shortened (1976-90 per plan). WAGE is the weakest column: the code substitutes a 'pcinc proxy' (per-capita income, note in json) for the manufacturing wage, so the series starts at 0.818 and monotonically declines with no hump above 1.0 (paper humps to 1.07 at Year 2); all wage cells are 18-52% off (Year 20 0.0905 vs 0.19). This is a genuinely mixed table \u2014 one column (employment) largely matching within tolerance while unemployment and wage columns land in and beyond the 5-30% band \u2014 so the verdict is partial. The relevant fix_severity 'major' fix touched the state/national elasticity regression, not this IRF path, so it does not change the assessment.",
+  "evidence_refs": [
+    "output/replication/codebase/results/table1_irfs.json",
+    "output/analyze/replication_plan.json",
+    "output/assess/fix_severity.json"
+  ],
+  "graded_by": "agent"
+}

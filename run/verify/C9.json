@@ -1,0 +1,17 @@
+{
+  "claim_id": "C9",
+  "status": "match",
+  "structured": {
+    "observed_behavior": "The per-state ADF-style regression (equation 3 spec: 4 lags, no trend, 1952-1990) produces a negative lagged-level coefficient in 48 of the 51 states and rejects the unit root at the 5% level (crit -2.94) for exactly 3 states (NE, WI, WY). Because manufacturing average hourly earnings could not be reconstructed from public sources, relative per-capita income was used as the proxy for the relative-wage series.",
+    "claim_paraphrase": "Relative wages are close to a unit root: the lagged-level ADF coefficient is negative in most (46/51) states and the unit root is rejected at 5% for only 3 states.",
+    "semantic_match": true
+  },
+  "rationale": "results/adf_tests.json (wages block) reports n_states=51, n_negative_coef=48, n_reject_5pct=3 (reject_states=['NE','WI','WY'], crit_5pct=-2.94), which I independently recomputed from the 51 per_state entries. src/adf_tests.py confirms the wage block uses the equation-3 specification (4 lags, no trend, 1952-1990). This reproduces the paper's qualitative behavior: the lagged-level coefficient is negative in the vast majority of states and the unit root is rejected for only 3 states. The rejection count matches the claim exactly (3), and the negative-coefficient count (48/51) closely matches the paper's 46/51. The one substitution is that manufacturing AHE was not reconstructable, so relative per-capita income was used as a proxy (documented in the code's note and comments); this is a transparent data-availability caveat rather than a contradiction, and fix_severity.json records no critical/relevant fix in this code path. The described near-unit-root behavior is demonstrated.",
+  "evidence_refs": [
+    "output/replication/codebase/results/adf_tests.json",
+    "output/replication/codebase/src/adf_tests.py",
+    "output/assess/fix_severity.json",
+    "output/analyze/replication_plan.json"
+  ],
+  "graded_by": "agent"
+}

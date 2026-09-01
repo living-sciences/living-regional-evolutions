@@ -1,0 +1,166 @@
+{
+  "environment": {
+    "language": "Python (3.11+); R acceptable as an alternative for the econometrics",
+    "key_dependencies": [
+      "pandas",
+      "numpy",
+      "statsmodels",
+      "scipy",
+      "requests",
+      "pyarrow",
+      "matplotlib",
+      "fredapi (optional; FRED CSV endpoints also work)",
+      "openpyxl"
+    ],
+    "setup_hints": "The provided repository at /workspace/repo is EMPTY (0 files) and the paper (Blanchard & Katz, BPEA 1992) predates code/data archiving, so there is no author implementation or data to run. Per the reconstruction rules, rebuild the inputs the appendix documents from public sources reachable from this container: (1) state total nonfarm (nonagricultural) employment, annual, 1947-1990 -- BLS CES State & Area Employment, obtainable via FRED state 'Total Nonfarm' NSA series or BLS flat files at download.bls.gov; (2) average hourly earnings of manufacturing production workers by state, ~1947/1950-1990 -- BLS Employment and Earnings / SAE (may require BLS historical flat files; record any state start-date gaps per the appendix table); (3) state personal income and population, 1948-1990 -- BEA Regional accounts (SAINC1/CA1) via the BEA API; (4) state unemployment, labor force, and participation, 1976-1990 -- BLS LAUS via API/FRED plus Census/BEA population (LAUS official state series begin 1976; the paper's pre-1976 unemployment was a privately supplied constructed LMA series that is NOT reconstructable -- note this gap wherever a claim needs pre-1976 unemployment). All analysis is small-panel econometrics (OLS, ADF, low-order VARs on 51 cross-sectional units x ~40 years): it is CPU-bound and fast; the GPU is NOT needed for any step. Internet access is required for the data-acquisition step. Record every data-vintage/definition difference (series revisions, state start dates, annual-average conventions) in a notes file so downstream grading can account for them."
+  },
+  "steps": [
+    {
+      "id": 1,
+      "description": "Create the writable working copy and Python environment. Install pandas, numpy, statsmodels, scipy, requests, pyarrow, matplotlib, openpyxl (and optionally fredapi). Create the output subdirectories data/, results/, figures/, notes/ under the codebase working copy. No analysis is run in this step.",
+      "command_hint": "mkdir -p /workspace/output/replication/codebase/{data,results,figures,notes,src} && cd /workspace/output/replication/codebase && python -m pip install pandas numpy statsmodels scipy requests pyarrow matplotlib openpyxl fredapi",
+      "expected_outcome": "Directories data/, results/, figures/, notes/, src/ exist under /workspace/output/replication/codebase/. `python -c \"import pandas, numpy, statsmodels, scipy\"` runs without error and prints installed versions to stdout.",
+      "verifies": []
+    },
+    {
+      "id": 2,
+      "description": "Reconstruct the state-level panel from public sources per the paper's data appendix. Fetch: (a) annual state total nonfarm employment 1947-1990 (BLS CES/SAE via FRED NSA 'Total Nonfarm' state series or BLS flat files; AK from 1961/1960, HI from 1955/1956 per appendix); (b) state average hourly earnings of manufacturing production workers, annual, 1947/1950-1990 (BLS SAE/Employment and Earnings; honor the per-state start dates in the appendix table); (c) BEA state personal income (SAINC1) and population 1948-1990; (d) BLS LAUS state unemployment rate, labor force, and employment 1976-1990 for participation/unemployment. Also build the U.S. aggregate counterpart for each series. Assemble a tidy panel of the 50 states + DC (51 units). Construct relative variables as log deviations from the national aggregate: relative employment n_it = ln(E_it) - ln(E_US,t); relative manufacturing wage w_it = ln(AHE_it) - ln(AHE_US,t); relative per-capita income; relative unemployment u_it = U-rate_it - U-rate_US,t; the le and lp variables of the trivariate system (le = ln(employment/labor force) minus U.S. counterpart; lp = ln(labor force/working-age population) minus U.S. counterpart, using LAUS labor force normalized to establishment employment as in the appendix). Write a notes/data_sources.md recording each series' source, vintage, units, coverage start date, and any gap (especially the un-reconstructable pre-1976 unemployment).",
+      "command_hint": "python src/build_panel.py --out data/panel.parquet --notes notes/data_sources.md",
+      "expected_outcome": "data/panel.parquet (or panel.csv) with one row per (state, year) covering 51 units and years 1947-1990 where available. Columns include: state, year, emp_nonfarm, emp_us, rel_emp_logdev, mfg_ahe, mfg_ahe_us, rel_wage_logdev, pcinc, pcinc_us, rel_pcinc_logdev, urate, urate_us, rel_urate, labor_force, participation, le, lp. A companion notes/data_sources.md documents source, vintage, and coverage gaps per series (notably no state unemployment before 1976).",
+      "verifies": []
+    },
+    {
+      "id": 3,
+      "description": "Cross-sectional persistence and convergence regressions on the reconstructed levels. (i) Employment persistence (Figure 1 / C1): compute each state's average annual nonfarm employment growth (mean annual change in log employment) for 1950-1970 and for 1970-1990; regress the 1970-90 growth on the 1950-70 growth (OLS with intercept); report slope and R^2. (ii) Repeat excluding Arizona, Florida, Nevada and report the R^2 (C2). (iii) Cumulative relative employment growth (Figure 2 / C35): compute, for each state, the cumulative change in log employment relative to the national aggregate from 1947 to 1990, and save the full annual series so regional groupings (New England, Mid-Atlantic/coal, Rust Belt, Sun Belt, farm, oil) can be inspected. (iv) Manufacturing-wage convergence (Figure 4 / C10): regress each state's average annual manufacturing-wage growth 1950-90 on the log of its 1950 manufacturing wage; report slope, t-stat, R^2. Repeat the analogous regression for personal-income-per-capita growth 1948-90 on log 1948 income (slope, t, R^2). (v) Wage-growth persistence (C11): correlation between average manufacturing-wage growth 1950-70 and 1970-90. (vi) Employment growth vs. relative wages (Figure 9 / C19): regress average manufacturing wage level (1950-90) or average employment growth accordingly; report the slope and t-stat of the employment-growth-on-relative-wage regression.",
+      "command_hint": "python src/persistence_convergence.py --panel data/panel.parquet --out results/persistence_convergence.json --fig figures/",
+      "expected_outcome": "results/persistence_convergence.json with fields: emp_persistence_slope, emp_persistence_r2 (all states); emp_persistence_r2_ex_AZ_FL_NV; mfg_wage_convergence_slope, _t, _r2; pcinc_convergence_slope, _t, _r2; wage_growth_persistence_corr (1950-70 vs 1970-90); empgrowth_vs_relwage_slope, _t. Also data/cumulative_rel_emp_growth.csv (state x year, 1947-1990, cumulative log-employment deviation from national) and figures/fig2_cumulative_rel_emp.png grouped by region. Report structure only; do not hard-code target values.",
+      "verifies": [
+        "C1",
+        "C2",
+        "C10",
+        "C11",
+        "C19",
+        "C35"
+      ]
+    },
+    {
+      "id": 4,
+      "description": "State-national employment elasticities (Table 2, C12) and the region-year variance decomposition (C13). (i) For each of the 51 units, run OLS of log state employment on log U.S. employment using annual data 1948-1990 (Alaska 1961-90, Hawaii 1956-90 per appendix): regression is ln(E_it) = alpha_i + beta_i ln(E_US,t) + error. Record beta_i, its standard error / significance vs 1, and the adjusted R^2 for every state; compute the average adjusted R^2 across states; flag states whose beta differs significantly from 1. (ii) Region-year interaction shares: pool the 51 states over 1948-1990 and regress annual state relative-employment changes on a full set of region-year interaction dummies, once with regions = the 9 Census divisions and once with regions = the 4 Census regions; report the share of variance (R^2) explained in each case.",
+      "command_hint": "python src/state_national_elasticities.py --panel data/panel.parquet --out results/table2_and_regionyear.json",
+      "expected_outcome": "results/table2_and_regionyear.json with: per_state = list of {state, beta, se, sig_diff_from_1 (bool), adj_r2}; avg_adj_r2 (float); n_states_beta_sig_diff_1 (int); and region_year = {census_division_share (float in [0,1]), census_region_share (float in [0,1])}. Structure only.",
+      "verifies": [
+        "C12",
+        "C13"
+      ]
+    },
+    {
+      "id": 5,
+      "description": "Augmented Dickey-Fuller unit-root tests on relative employment and relative wages. (i) Relative employment (equation 1, C3): for each of the 51 states run the regression Delta n_it = a1 + a2(L)Delta n_i,t-1 + a3 n_i,t-1 + a4 t + eta, with four lags of the differenced term and a linear time trend, over 1952-1990; record the coefficient a3 on the lagged level, its sign, and the ADF t-statistic; count how many states reject the unit root at the 5% level and list them. (ii) Relative wages (equation 3 specification, C9): for each state run the analogous regression on relative manufacturing wages with four lags (no trend, matching the paper's relative-wage spec) over 1952-1990; record the sign of the lagged-level coefficient (count states with a negative coefficient) and count states rejecting the unit root at 5%.",
+      "command_hint": "python src/adf_tests.py --panel data/panel.parquet --out results/adf_tests.json",
+      "expected_outcome": "results/adf_tests.json with two blocks. employment: {per_state:[{state, lagged_level_coef, adf_tstat, rejects_5pct(bool)}], n_reject_5pct(int), reject_states(list), n_negative_coef(int)}. wages: {per_state:[...same fields...], n_reject_5pct(int), n_negative_coef(int)}. Structure only; no target counts.",
+      "verifies": [
+        "C3",
+        "C9"
+      ]
+    },
+    {
+      "id": 6,
+      "description": "Pooled univariate models and implied impulse responses (Table 1) plus individual-state long-run employment responses. (i) Pooled, state-fixed-effects estimation of: relative-employment change as AR in Delta n with four lags (1952-1990); relative unemployment as AR(2) in the level (paper uses 1972-90 -- here use the reconstructable 1976-1990 window and record the shortened sample in notes); relative manufacturing wage as AR(4) in the level (1952-1990). Report the estimated lag coefficients and standard errors. (ii) From each estimated process, derive the implied impulse response of the level to a unit innovation and tabulate the response at years 1,2,3,4,5,10,20 for employment and wages, and years 1-10 for unemployment (this covers the C8 unemployment decay path as the unemployment column of Table 1). (iii) Estimate the univariate employment process state-by-state and compute each state's long-run (plateau) employment response to a unit innovation; list the responses and flag high/low outliers (C5).",
+      "command_hint": "python src/univariate_irfs.py --panel data/panel.parquet --out results/table1_irfs.json --notes notes/univariate_notes.md",
+      "expected_outcome": "results/table1_irfs.json with: coefficients = {employment_change:[lag coefs + se], unemployment:[AR2 coefs + se], wage:[lag coefs + se], standard_errors}; impulse_responses = {employment:{year1..year20}, unemployment:{year1..year10}, wage:{year1..year20}}; individual_long_run = [{state, long_run_emp_response}] with high/low outliers flagged. notes/univariate_notes.md records the unemployment sample window actually used. Structure only.",
+      "verifies": [
+        "C4",
+        "C5",
+        "C8"
+      ]
+    },
+    {
+      "id": 7,
+      "description": "Persistence and cross-state correlations of relative unemployment (Figures 3, 6, 10). Using LAUS-based relative state unemployment (available 1976-1990) and the reconstructed panel: (i) Regress the relative state unemployment rate 10 years apart -- the paper's headline pair is 1985 on 1975 (C6) and the alternative pair is 1990 on 1970 (C7). For each pair that is reconstructable from LAUS (1976-1990), report slope, t-stat, R^2; for pairs whose earlier endpoint (1970 or 1975) falls before 1976 and is therefore unavailable from LAUS, record the pair as not reconstructable in notes and, where possible, report the nearest available-year analogue (e.g., 1986-on-1976) clearly labeled. Also report the C7 farm-state-excluded coefficient/R^2 for any reconstructable pair. (ii) Average unemployment vs. employment growth 1970-90 (Figure 6, C14): regress each state's average unemployment rate on its average annual employment growth over the available window; report slope and t-stat. (iii) Average unemployment vs. relative manufacturing wage 1970-90 (Figure 10, C20): regress the state average manufacturing wage on the state average unemployment rate; report t-stat and R^2.",
+      "command_hint": "python src/unemployment_persistence.py --panel data/panel.parquet --out results/unemployment_cross_section.json --notes notes/unemployment_notes.md",
+      "expected_outcome": "results/unemployment_cross_section.json with: persistence = [{pair_label (e.g. '1985_on_1975' or nearest available analogue), reconstructable(bool), slope, t, r2, slope_ex_farm, r2_ex_farm}]; avg_urate_vs_empgrowth = {slope, t}; avg_urate_vs_wage = {t, r2}. notes/unemployment_notes.md documents which endpoint years were unavailable (pre-1976) and any substituted years. Structure only.",
+      "verifies": [
+        "C6",
+        "C7",
+        "C14",
+        "C20"
+      ]
+    },
+    {
+      "id": 8,
+      "description": "Trivariate VAR of employment, unemployment, and labor-force participation (Figure 7) and the Okun coefficient (C18). Estimate the three-equation log-linear system in Delta_e (first difference of log relative employment), le (log employment/labor-force relative to U.S.), and lp (log labor-force/working-age-population relative to U.S.), with two lags of each variable and the paper's recursive lag structure (current Delta_e allowed to affect current le and lp but not vice-versa). Pool all 51 states with state fixed effects over 1978-1990 (the LAUS-based window matching the paper). Compute the impulse responses to a -1% shock to relative employment over years 0-12 for employment, the unemployment rate, and the participation rate; extract the year-1 unemployment and participation responses (C15) and the peak/plateau employment response and the horizon at which the unemployment/participation responses die out (C16); translate the year-1 responses into per-worker terms (unemployment, participation, implied net out-migration) for C17. Then estimate the 'Okun coefficient' (negative of the response of unemployment to current employment) pooled across all states and separately for the farm states (South Dakota, Idaho, Iowa, Montana, North Dakota, Wisconsin, Hawaii, Arkansas, Nebraska per the paper's >4%-farm-earnings definition), reporting the coefficient and its t-stat for each (C18).",
+      "command_hint": "python src/trivariate_var.py --panel data/panel.parquet --out results/trivariate_var.json --fig figures/fig7_trivariate_irf.png",
+      "expected_outcome": "results/trivariate_var.json with: irf = {year: {employment, unemployment, participation}} for years 0-12; year1 = {unemployment_response, participation_response}; employment_peak, employment_plateau, unemp_partic_dieout_year; per_worker = {unemployment, participation, implied_net_migration}; okun = {all_states:{coef, t}, farm_states:{coef, t}}. figures/fig7_trivariate_irf.png shows the three response paths. Structure only.",
+      "verifies": [
+        "C15",
+        "C16",
+        "C17",
+        "C18"
+      ]
+    },
+    {
+      "id": 9,
+      "description": "Bivariate employment-wage and employment-income systems (Figures 11, 13, 14). (i) Employment-manufacturing-wage system (Figure 11, C21): estimate the two-equation system in Delta_e_it and relative manufacturing wage w_it, four lags each, pooled with state fixed effects over 1952-1990; identify the employment innovation as the labor-demand shock (recursive: employment ordered first); compute the impulse response to a -1% employment shock over years 0-20 for employment and wages; report the employment trough/plateau and the wage trough. (ii) Employment-personal-income system (Figure 13, C23): same specification with relative personal income per capita replacing the wage, four lags, 1952-1990; report the per-capita-income response path (trough around year 2). (iii) Suppress wage feedback (Figure 14, C24): re-run the employment-wage system's impulse response with the coefficients on lagged wages in the employment equation set to zero, and compare the long-run employment response (plateau) with and without wage feedback.",
+      "command_hint": "python src/bivariate_irfs.py --panel data/panel.parquet --out results/bivariate_irfs.json --fig figures/",
+      "expected_outcome": "results/bivariate_irfs.json with: emp_wage = {irf:{year:{employment, wage}} years 0-20, employment_plateau, wage_trough}; emp_income = {irf:{year:{employment, pcincome}} years 0-20, pcincome_trough_year2}; suppress_feedback = {employment_plateau_with_feedback, employment_plateau_without_feedback}. figures/fig11_emp_wage.png, figures/fig13_emp_income.png, figures/fig14_suppress_feedback.png. Structure only.",
+      "verifies": [
+        "C21",
+        "C23",
+        "C24"
+      ]
+    },
+    {
+      "id": 10,
+      "description": "Massachusetts case study (descriptive, reconstructable parts). From the reconstructed panel compute for Massachusetts: (i) average annual employment growth 1980-1985 and the difference from the U.S. average; and, over 1948-1979, the count of years in which MA employment growth was below the U.S. rate (C29). (ii) Relative labor-market variables in the mid-1980s where reconstructable: MA unemployment rate relative to the U.S. in 1979 vs 1985 (note: 1979 is pre-1976-only? 1979 IS within LAUS coverage, so reconstructable), and relative manufacturing wage (MA minus U.S., percent) in 1979 vs 1985 (C30; the CPS-adjusted-wage sub-part is not reconstructable and should be recorded as such). (iii) Late-1980s bust (C32): MA employment growth in every year 1985-1991, the 1985-91 average and its gap from the U.S. average, the 1990 and 1991 growth rates, and the MA-minus-U.S. unemployment rate in 1991.",
+      "command_hint": "python src/massachusetts_case.py --panel data/panel.parquet --out results/massachusetts.json --notes notes/mass_notes.md",
+      "expected_outcome": "results/massachusetts.json with: growth_1980_85, gap_vs_us_1980_85, n_years_below_us_1948_79; unemp_rel_1979, unemp_rel_1985; mfg_wage_rel_1979, mfg_wage_rel_1985 (cps_wage_rel fields present but flagged not_reconstructable); emp_growth_by_year_1985_91 (dict), avg_growth_1985_91, gap_vs_us_1985_91, growth_1990, growth_1991, unemp_rel_1991. notes/mass_notes.md records any series/endpoint not reconstructable. Structure only.",
+      "verifies": [
+        "C29",
+        "C30",
+        "C32"
+      ]
+    }
+  ],
+  "claim_coverage": [
+    {
+      "claim_id": "C22",
+      "disposition": "out_of_scope",
+      "reason": "The industry/worker-characteristic-controlled CPS wage series is an author-constructed set of annual state earnings-regression residuals (1979-89); reproducing it requires a full CPS ORG microdata earnings-regression pipeline well beyond rebuilding published public series -- deprioritized."
+    },
+    {
+      "claim_id": "C25",
+      "disposition": "blocked",
+      "reason": "Requires NAR Home Sales Yearbook median metro house prices (39 MSAs, 1969-90) that Poterba supplied privately to the authors; this proprietary historical series is not freely reachable from the container (checked: no data files ship with the empty repo, and NAR historical metro medians are not a free public feed)."
+    },
+    {
+      "claim_id": "C26",
+      "disposition": "out_of_scope",
+      "reason": "Reconstructable in principle from BLS metro CPI-U (23 MSAs) plus a matching MSA employment panel, but it is a specialized supporting appendix-level result; deprioritized relative to the headline employment/unemployment/wage claims."
+    },
+    {
+      "claim_id": "C27",
+      "disposition": "blocked",
+      "reason": "The real-consumption-wage calculation is derived from the housing-price (C25) and CPI (C26) impulse responses; it inherits the blocked proprietary housing-price series and cannot be produced without it."
+    },
+    {
+      "claim_id": "C28",
+      "disposition": "blocked",
+      "reason": "Requires the Davis-Loungani-Mahidhara defense (military prime contract) series and the Bartik two-digit industry-mix instrument, both privately supplied to the authors and not reconstructable from public sources reachable here (no data ships with the empty repo)."
+    },
+    {
+      "claim_id": "C31",
+      "disposition": "blocked",
+      "reason": "Boston relative housing prices come from the same proprietary NAR metro median-price series as C25; not reconstructable from reachable public data."
+    },
+    {
+      "claim_id": "C33",
+      "disposition": "blocked",
+      "reason": "The Massachusetts boom/bust simulation predicts nominal-wage and Boston housing-price growth using the estimated wage/housing system, which depends on the blocked proprietary housing-price data (C25/C31)."
+    },
+    {
+      "claim_id": "C34",
+      "disposition": "blocked",
+      "reason": "Describes properties (state-income shares, forecast-error volatility) of the Davis-Loungani-Mahidhara military prime-contract-award series, an author-private dataset not reconstructable from public sources reachable in the container."
+    }
+  ]
+}

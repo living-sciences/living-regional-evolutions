@@ -1,0 +1,25 @@
+{
+  "claim_id": "C8",
+  "status": "partial",
+  "structured": {
+    "replicated_value": {
+      "fraction_remaining_year10": -0.01,
+      "fraction_remaining_year5": 0.08
+    },
+    "paper_value": {
+      "fraction_remaining_year10": 0.0,
+      "fraction_remaining_year5": 0.29
+    },
+    "uncertainty": null,
+    "value_found": true
+  },
+  "rationale": "Step 6 estimated the pooled AR(2) for relative unemployment and produced the implied impulse response in results/table1_irfs.json: impulse_responses.unemployment = {year1: 1.075, year2: 0.800, year3: 0.478, year4: 0.230, year5: 0.077, ..., year10: -0.013}. Fitted coefficients phi=[1.075, -0.355] (n=663). The YEAR-10 component matches the paper: the response at year 10 is -0.013 (fraction remaining -0.01, i.e. essentially zero, vs paper 0.0) -> match under the near-zero absolute band. The YEAR-5 component does NOT match: the reconstruction has already decayed to 0.077 of the unit shock at year 5 (fraction ~0.07-0.08), whereas the paper reports 0.29 -- a ~73% relative shortfall (0.29 is only crossed between the reconstruction's year 3 (0.478) and year 4 (0.230)). The reconstruction thus shows the low-persistence conclusion even more strongly than the paper: relative unemployment mean-reverts faster. This is attributable to a documented data limitation, not a code defect: notes/univariate_notes.md and evidence_summary.json state the paper used a 1972-1990 (partly pre-1976 backfilled) window, but LAUS only reconstructs state unemployment from 1976, so the AR(2) was fit on the shortened 1978-1990 window, yielding a less-persistent process (implied per-period decay root ~0.60 vs ~0.78 needed for 0.29 at year 5). fix_severity.json shows no fix touched this step. Net: the headline qualitative result (near-zero by ~10 years; low persistence) is confirmed and year-10 matches, but the specific year-5 fraction (0.29) is not reproduced -> partial.",
+  "evidence_refs": [
+    "output/replication/codebase/results/table1_irfs.json",
+    "output/replication/replication_log.json",
+    "output/replication/evidence_summary.json",
+    "output/replication/codebase/notes/univariate_notes.md",
+    "output/assess/fix_severity.json"
+  ],
+  "graded_by": "agent"
+}

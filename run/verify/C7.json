@@ -1,0 +1,31 @@
+{
+  "claim_id": "C7",
+  "status": "not_attempted",
+  "structured": {
+    "replicated_value": {
+      "coef_1970_1990": null,
+      "coef_excl_farm": null,
+      "r_squared": null,
+      "r_squared_excl_farm": null,
+      "t_stat": null
+    },
+    "paper_value": {
+      "coef_1970_1990": 0.41,
+      "coef_excl_farm": 0.24,
+      "r_squared": 0.23,
+      "r_squared_excl_farm": 0.11,
+      "t_stat": 3.8
+    },
+    "uncertainty": null,
+    "value_found": false
+  },
+  "rationale": "The C7 regression requires the relative state unemployment rate at a 1970 endpoint, but reconstructed state unemployment (LAUS-basis) is only available from 1976 onward. The pipeline therefore explicitly recorded the '1990_on_1970' pair as reconstructable=false with null slope, t, r2, slope_ex_farm, and r2_ex_farm (results/unemployment_cross_section.json), and notes/unemployment_notes.md states: '1990_on_1970 (C7): earlier endpoint 1970 is pre-1976 -> NOT reconstructable.' The replication_log step 7 confirms '1985_on_1975 & 1990_on_1970 NOT reconstructable (pre-1976).' The only produced 10-year persistence numbers are for a different pair, '1990_on_1980' (slope=0.46, t=5.87, r2=0.41, ex-farm slope=0.35, r2=0.33), which uses a 1980 endpoint, not the claim's 1970 endpoint, and thus does not grade this claim's specific regression. The underlying pre-1976 archival BLS state unemployment data was never shipped (the provided repo was empty) and cannot be reconstructed from free public APIs, so no evidence bearing on the claim's exact 1970->1990 regression could be produced.",
+  "evidence_refs": [
+    "output/replication/codebase/results/unemployment_cross_section.json",
+    "output/replication/codebase/notes/unemployment_notes.md",
+    "output/replication/replication_log.json",
+    "output/analyze/replication_plan.json"
+  ],
+  "not_attempted_reason": "authors_missing",
+  "graded_by": "agent"
+}

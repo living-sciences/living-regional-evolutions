@@ -1,0 +1,8 @@
+{
+  "claim_id": "C22",
+  "status": "out_of_scope",
+  "structured": {},
+  "rationale": "No plan step targeted this claim; treated as out_of_scope (excluded from the score, not a failure): The industry/worker-characteristic-controlled CPS wage series is an author-constructed set of annual state earnings-regression residuals (1979-89); reproducing it requires a full CPS ORG microdata earnings-regression pipeline well beyond rebuilding published public series -- deprioritized.",
+  "evidence_refs": [],
+  "graded_by": "deterministic"
+}

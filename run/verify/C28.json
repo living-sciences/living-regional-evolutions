@@ -1,0 +1,9 @@
+{
+  "claim_id": "C28",
+  "status": "not_attempted",
+  "structured": {},
+  "rationale": "No plan step targeted this claim; the planner marked it BLOCKED (counts as a reproducibility gap): Requires the Davis-Loungani-Mahidhara defense (military prime contract) series and the Bartik two-digit industry-mix instrument, both privately supplied to the authors and not reconstructable from public sources reachable here (no data ships with the empty repo).",
+  "evidence_refs": [],
+  "not_attempted_reason": "authors_missing",
+  "graded_by": "deterministic"
+}

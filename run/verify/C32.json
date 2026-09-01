@@ -1,0 +1,28 @@
+{
+  "claim_id": "C32",
+  "status": "partial",
+  "structured": {
+    "replicated_value": {
+      "avg_growth_1985_91_pct": -0.62,
+      "below_national_pp": 2.38,
+      "growth_1990_pct": -4.27,
+      "growth_1991_pct": -5.62,
+      "unemployment_above_national_1991_pp": 2.07
+    },
+    "paper_value": {
+      "avg_growth_1985_91_pct": -0.1,
+      "below_national_pp": 2.2,
+      "growth_1990_pct": -4,
+      "growth_1991_pct": -6,
+      "unemployment_above_national_1991_pp": 2
+    },
+    "uncertainty": null,
+    "value_found": true
+  },
+  "rationale": "results/massachusetts.json (produced by step 10, src/massachusetts_case.py) reports for the reconstructed MA employment panel: avg_growth_1985_91 = -0.617, gap_vs_us_1985_91 = -2.382 (i.e. ~2.38 pp below national), growth_1990 = -4.269, growth_1991 = -5.618, and unemp_rel_1991 = +2.067 pp. The emp_growth_by_year_1985_91 dict also confirms MA growth was below the U.S. rate in most years 1985-91 (gap negative in 1985, 1988, 1989, 1990, 1991; marginally positive in 1986/1987). Compared to the paper: the unemployment gap (2.07 vs 2.0, 3.4% error) is a clean match; below_national (2.38 vs 2.2, 8.2%), growth_1990 (-4.27 vs -4, 6.7%), and growth_1991 (-5.62 vs -6, 6.4%) are all close but exceed the 5% match band while well within the 30% partial band; the 1985-91 average growth deviates most (-0.62 vs -0.1, a ~0.5 pp absolute miss for a near-zero paper value). The qualitative narrative \u2014 below national every year, particularly sharp declines in 1990 and 1991, ~2 pp higher unemployment by 1991 \u2014 is reproduced faithfully, but the collection of numeric sub-values sits in the partial band overall. No MA-specific critical fix appears in fix_severity.json.",
+  "evidence_refs": [
+    "output/replication/codebase/results/massachusetts.json",
+    "output/analyze/replication_plan.json"
+  ],
+  "graded_by": "agent"
+}

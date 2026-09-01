@@ -1,0 +1,164 @@
+{
+  "eras": {
+    "BK_printed": {
+      "basis": "paper",
+      "sigma_m": 0.4,
+      "H": 6.0,
+      "emp_lr": -1.3,
+      "ur_cum10": null,
+      "src": "orig row (paper printed: share .40, 5-7y)"
+    },
+    "hh_1978_1990": {
+      "basis": "household",
+      "sigma_m": 0.3831876565783315,
+      "H": 3.0,
+      "emp_lr": -0.7920118639795362,
+      "ur_cum10": 0.3330692828897809,
+      "src": "C3 hh 1978-1990"
+    },
+    "hh_1995_2009_GFC": {
+      "basis": "household",
+      "sigma_m": 0.3212777226001954,
+      "H": 5.0,
+      "emp_lr": -1.0963186600553418,
+      "ur_cum10": 1.5626137190790033,
+      "src": "C3 hh 1995-2009 (GFC-centred, deepest trough)"
+    },
+    "hh_2011_2025": {
+      "basis": "household",
+      "sigma_m": 0.2761393724527858,
+      "H": 3.0,
+      "emp_lr": -0.3093060623405561,
+      "ur_cum10": 0.3296093214931602,
+      "src": "C3 hh 2011-2025"
+    },
+    "hh_2006_2020_COVID": {
+      "basis": "household",
+      "sigma_m": 0.2087802408662443,
+      "H": 3.0,
+      "emp_lr": -0.2228268589487924,
+      "ur_cum10": 0.1041008500606311,
+      "src": "C3 hh 2006-2020 (COVID window)"
+    },
+    "pay_1990_2004": {
+      "basis": "payroll",
+      "sigma_m": 0.7699765499341682,
+      "H": 4.0,
+      "emp_lr": -1.5126422536291009,
+      "ur_cum10": 0.6904125367379021,
+      "src": "C3_payroll 1990-2004"
+    },
+    "pay_2011_2025": {
+      "basis": "payroll",
+      "sigma_m": 0.6300182322297548,
+      "H": 3.0,
+      "emp_lr": -1.0976611663713596,
+      "ur_cum10": 0.6448729496533457,
+      "src": "C3_payroll 2011-2025"
+    }
+  },
+  "calibrated": {
+    "BK_printed": {
+      "m_migration": 0.043640512743864296,
+      "a_jobrecovery": 0.06546076911579643,
+      "S_clearing": 0.10910128185966073,
+      "halflife_model": 5.999999999999998,
+      "t80_model": 13.931568569324169,
+      "lr_emp_loss_model": -0.4000000000000001,
+      "model_cum10": 5.59373084954232
+    },
+    "hh_1978_1990": {
+      "m_migration": 0.0790514120014952,
+      "a_jobrecovery": 0.12724806201440503,
+      "S_clearing": 0.2062994740159002,
+      "halflife_model": 3.000000000000001,
+      "t80_model": 6.965784284662089,
+      "lr_emp_loss_model": -0.38318765657833154,
+      "model_cum10": 3.465619404878202
+    },
+    "hh_1995_2009_GFC": {
+      "m_migration": 0.041589220216099385,
+      "a_jobrecovery": 0.08786021648777649,
+      "S_clearing": 0.12944943670387588,
+      "halflife_model": 4.999999999999999,
+      "t80_model": 11.60964047443681,
+      "lr_emp_loss_model": -0.3212777226001954,
+      "model_cum10": 5.043767969154431
+    },
+    "hh_2011_2025": {
+      "m_migration": 0.056967407292090474,
+      "a_jobrecovery": 0.14933206672380972,
+      "S_clearing": 0.2062994740159002,
+      "halflife_model": 3.000000000000001,
+      "t80_model": 6.965784284662089,
+      "lr_emp_loss_model": -0.2761393724527858,
+      "model_cum10": 3.465619404878202
+    },
+    "hh_2006_2020_COVID": {
+      "m_migration": 0.04307125387561915,
+      "a_jobrecovery": 0.16322822014028107,
+      "S_clearing": 0.2062994740159002,
+      "halflife_model": 3.000000000000001,
+      "t80_model": 6.965784284662089,
+      "lr_emp_loss_model": -0.20878024086624428,
+      "model_cum10": 3.465619404878202
+    },
+    "pay_1990_2004": {
+      "m_migration": 0.12250602926510346,
+      "a_jobrecovery": 0.03659755548118204,
+      "S_clearing": 0.1591035847462855,
+      "halflife_model": 3.9999999999999987,
+      "t80_model": 9.287712379549447,
+      "lr_emp_loss_model": -0.7699765499341682,
+      "model_cum10": 4.350910930022499
+    },
+    "pay_2011_2025": {
+      "m_migration": 0.1299724299294257,
+      "a_jobrecovery": 0.07632704408647452,
+      "S_clearing": 0.2062994740159002,
+      "halflife_model": 3.000000000000001,
+      "t80_model": 6.965784284662089,
+      "lr_emp_loss_model": -0.630018232229755,
+      "model_cum10": 3.465619404878202
+    }
+  },
+  "direct_migration_elasticity": {
+    "LF_paper": [
+      0.0047429828738917,
+      0.0007185638971866
+    ],
+    "LF_2026": [
+      0.0022466492449978,
+      0.0004880701082961
+    ],
+    "POP_paper": [
+      0.0033906984516953,
+      0.0005716068494382
+    ],
+    "POP_2026": [
+      0.0011803567092872,
+      0.0003053202633011
+    ],
+    "LF_decline_pct": 52.6,
+    "POP_decline_pct": 65.2
+  },
+  "counterfactual_slump": {
+    "m_paper": 0.0791,
+    "a_paper": 0.1272,
+    "H_paper": 3.0,
+    "m_2026": 0.057,
+    "a_2026": 0.1493,
+    "H_2026": 3.0,
+    "H_counterfactual_paper_migration_2026_jobs": 2.67,
+    "cum10_2026": 3.466,
+    "cum10_counterfactual": 3.126,
+    "note": "counterfactual holds 2026 job recovery a, restores paper-era migration m"
+  },
+  "held_out": {
+    "m_pre2015": 0.0036972634992384667,
+    "m_2015_2024": 0.0007628120977057892,
+    "rmse_using_pre2015_elasticity": 0.009833546458296361,
+    "rmse_using_heldout_elasticity": 0.009661825048712037,
+    "interpretation": "pre-2015 (stronger) migration elasticity over-fits out-migration in 2015-2024; the lower held-out elasticity fits better -> responsiveness declined out of sample"
+  }
+}

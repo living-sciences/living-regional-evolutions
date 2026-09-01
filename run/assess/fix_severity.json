@@ -1,0 +1,21 @@
+{
+  "fixes": [
+    {
+      "fix_description": "Added FRED API request throttling (0.9s minimum interval) and 429-aware backoff to avoid rate limits.",
+      "severity": "minor",
+      "rationale": "This is routine infrastructure hardening around an external data-fetch endpoint. The original code was functionally correct; it simply hit FRED's rate limiter because it issued requests too fast. Adding a minimum interval and a backoff-on-429 is a mechanical networking fix that a human would apply in under a minute and does not alter any computed result.",
+      "reproducibility_impact": "Reflects the fragility of live third-party API access rather than any flaw in the paper's methodology or code logic. Rate limits are transient and environment-dependent; the values fetched are unchanged. A more robust repo might cache the pulled series, but this has no bearing on the correctness of the results."
+    },
+    {
+      "fix_description": "Replaced a set_index('year').loc lookup on a duplicated-year frame with a precomputed national ln-employment series indexed by year, fixing a regression size mismatch.",
+      "severity": "major",
+      "rationale": "The original code produced 'endog and exog matrices are different sizes', meaning the regression input construction was genuinely broken: set_index('year') on a frame with duplicate year values yields ambiguous/misaligned lookups, so the national (exog) series did not line up row-for-row with the state (endog) series. This is a real data-alignment bug in the core estimation pipeline, not a cosmetic issue. Fixing it required understanding the elasticity regression's intended index alignment and constructing a properly-keyed national series. It is localized to one analysis step and the intended method is clearly recoverable, so it is not critical.",
+      "reproducibility_impact": "Indicates the published code as shipped could not run the state/national elasticity estimation without modification \u2014 a preprocessing/alignment defect suggests the repo was not executed end-to-end in the state it was released, or was refactored after the results were produced. The methodology itself appears sound and implementable, but the burden falls on the replicator to reconstruct correct data indexing, so the code is incomplete rather than the science being wrong."
+    }
+  ],
+  "summary": "The fix burden is light and the two issues are qualitatively different. Fix 1 is a trivial, result-neutral networking patch (external API rate limiting) that says nothing about the paper's methodology. Fix 2 is the more consequential of the pair: a genuine data-alignment bug in the core elasticity regression, where indexing on a duplicated-year frame broke the endog/exog correspondence and prevented the estimation from running as shipped. That points to a repository that was not verified end-to-end and required a knowledgeable replicator to restore correct data construction, though the underlying method remains sound and reproducible. Net: one minor, one major, no critical problems \u2014 the paper's results appear achievable from the provided code, but the code needed non-trivial repair in one analysis step.",
+  "total_fixes": 2,
+  "minor_count": 1,
+  "major_count": 1,
+  "critical_count": 0
+}

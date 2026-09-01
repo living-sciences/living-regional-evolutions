@@ -1,0 +1,16 @@
+{
+  "claim_id": "C3",
+  "status": "partial",
+  "structured": {
+    "observed_behavior": "The run's results/adf_tests.json (employment block) estimates equation (1) state-by-state with four lags and a trend over 1952-1990 and, using a 5% critical value of -3.5, flags FOUR states as rejecting the unit root: MA (t=-3.96), SD (t=-3.80), WY (t=-3.58), and WI (t=-3.98) (n_reject_5pct=4, reject_states=['MA','SD','WI','WY']). The lagged-level coefficient is negative in 50 of 51 states; the exception is Maine (ME), whose coefficient is +0.0208 (t=0.33), so n_negative_coef=50. The three states named in the claim (MA, SD, WY) all appear, all reject at 5%, and all have negative lagged-level coefficients.",
+    "claim_paraphrase": "The ADF unit-root test on relative employment (eq. 1) rejects the unit root at 5% for exactly three states -- Massachusetts, South Dakota, and Wyoming (3 of 51) -- and the coefficient on the lagged level is negative for every state.",
+    "semantic_match": false
+  },
+  "rationale": "Evidence is /workspace/output/replication/codebase/results/adf_tests.json. The three states the claim names (MA, SD, WY) all reject the unit root at 5% and all have negative lagged-level coefficients, matching the paper's substantive finding. However, both literal sub-claims are narrowly violated: (1) the run rejects at 5% for FOUR states, not three -- it additionally flags Wisconsin (t=-3.975, more significant than WY's -3.585; n_reject_5pct=4, reject_states=['MA','SD','WI','WY']); and (2) the lagged-level coefficient is NOT negative in all states -- Maine's coefficient is +0.0208 (n_negative_coef=50 of 51). The extra rejection is not an artifact of a lax critical value (crit_5pct=-3.5; WI's t of -3.975 rejects under any standard Dickey-Fuller tau_tau cutoff near -3.53). fix_severity.json records a 'major' data-alignment fix in the elasticity regression path but nothing touching the ADF routine, so it does not explain these deviations. The core qualitative story (MA/SD/WY reject; coefficients overwhelmingly negative) holds, but the evidence contradicts the precise 'only three' and 'negative in all states' assertions, so this is a partial match.",
+  "evidence_refs": [
+    "output/replication/codebase/results/adf_tests.json",
+    "output/analyze/replication_plan.json",
+    "output/assess/fix_severity.json"
+  ],
+  "graded_by": "agent"
+}

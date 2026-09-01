@@ -1,0 +1,29 @@
+{
+  "claim_id": "C30",
+  "status": "partial",
+  "structured": {
+    "replicated_value": {
+      "cps_wage_1979_pct": null,
+      "cps_wage_1985_pct": null,
+      "mfg_wage_below_1979_pct": null,
+      "mfg_wage_below_1985_pct": null,
+      "unemployment_below_national_1985_pp": 3.09
+    },
+    "paper_value": {
+      "cps_wage_1979_pct": -3,
+      "cps_wage_1985_pct": 1,
+      "mfg_wage_below_1979_pct": 11,
+      "mfg_wage_below_1985_pct": 5,
+      "unemployment_below_national_1985_pp": 3.6
+    },
+    "uncertainty": null,
+    "value_found": true
+  },
+  "rationale": "Only the unemployment sub-component of this five-part claim was reconstructable this run. results/massachusetts.json reports unemp_rel_1979 = -0.35 (paper: equal to national, i.e. 0 \u2014 close) and unemp_rel_1985 = -3.0917, i.e. 3.09 pp below the national rate versus the paper's 3.6 pp \u2014 a 14.1% relative error, which falls in the partial band (within 30%, outside 5%). The manufacturing-wage and CPS-controlled-wage components (mfg_wage_rel_1979/1985, cps_wage_rel_1979/1985) are all null, explicitly flagged in results/massachusetts.json ('manufacturing production-worker AHE and CPS-controlled wage not reconstructable (archival)') and in notes/mass_notes.md, consistent with the replication plan step 10 which anticipated the CPS-adjusted-wage sub-part as not reconstructable. Thus four of five components could not be produced (acknowledged archival data limitation) and the one produced component matches only within the partial band, so the overall verdict is partial.",
+  "evidence_refs": [
+    "output/replication/codebase/results/massachusetts.json",
+    "output/replication/codebase/notes/mass_notes.md",
+    "output/analyze/replication_plan.json"
+  ],
+  "graded_by": "agent"
+}

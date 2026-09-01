@@ -1,0 +1,8 @@
+{
+  "claim_id": "C26",
+  "status": "out_of_scope",
+  "structured": {},
+  "rationale": "No plan step targeted this claim; treated as out_of_scope (excluded from the score, not a failure): Reconstructable in principle from BLS metro CPI-U (23 MSAs) plus a matching MSA employment panel, but it is a specialized supporting appendix-level result; deprioritized relative to the headline employment/unemployment/wage claims.",
+  "evidence_refs": [],
+  "graded_by": "deterministic"
+}

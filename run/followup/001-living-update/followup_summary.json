@@ -1,0 +1,50 @@
+{
+  "instruction_summary": "Re-estimate Blanchard & Katz (1992) 'Regional Evolutions' main claims (C1-C4) on state panels extended through 2025, reusing the replication's VAR/IRF code, and show how each finding evolved from the original sample to now (rolling windows + named eras, COVID handling, state-cluster bootstrap bands).",
+  "completed": true,
+  "steps": [
+    {"description": "Read replication artifacts (log, code, results) and confirmed the ported VAR/IRF engines and that already-downloaded FRED raw CSVs span through mid-2026", "command": "cat replication_log.json; ls codebase/{src,results,data/raw}", "exit_code": 0, "outputs": []},
+    {"description": "Downloaded missing series: state participation LBSSA{FIPS} (x51) + national SA counterparts CE16OV, CLF16OV, CIVPART, UNRATE, PAYEMS from FRED public CSV endpoint", "command": "python (fetch_csv over 56 series)", "exit_code": 0, "outputs": ["workspace/data/raw/LBSSA*.csv", "workspace/data/raw/{CE16OV,CIVPART,UNRATE,PAYEMS,CLF16OV}.csv"]},
+    {"description": "Built the extended annual panel 1939-2025 (51 units) with the instruction's exact household/relative-variable definitions; no SIC/NAICS splice needed ({ST}NAN continuous 1939-2025)", "command": "python build_panel_annual.py", "exit_code": 0, "outputs": ["results/data/panel_annual.csv", "results/data/splice_ratios.csv"]},
+    {"description": "Ran the original-sample sanity gate: C1a 0.71/R2.758, C1b 1.63/1.53, C3 hh ur_yr1 0.37 & migration 0.383, C4a trough -0.83%; all pass except C2 yr5=0.08 (matches replication, LAUS-window feature)", "command": "python (gate checks in estimate_windows)", "exit_code": 0, "outputs": []},
+    {"description": "Ran the full rolling-window + named-era sweep with 200-rep state-cluster bootstrap for C1-C4 (+ C3 COVID-dummied variant and payroll robustness)", "command": "python run_sweep.py", "exit_code": 0, "outputs": ["results/estimates_by_window.csv"]},
+    {"description": "Generated the 2x2 flagship figure and the supporting figure", "command": "python make_figures.py", "exit_code": 0, "outputs": ["results/bk_living_update.png", "results/bk_living_update.pdf", "results/bk_supporting.png"]}
+  ],
+  "key_results": {
+    "C1a_fig1_slope_1950-70_to_1970-90": "0.713 (R2 0.758); vs paper 0.70/0.75",
+    "C1a_slope_fade_across_generations": "0.71 -> 0.64 -> 0.37 (1990-2007 -> 2007-2025)",
+    "C1b_AR4_emp_IR_yr4/yr20_recent_2006-2025": "1.62 / 1.52 (shocks still permanent; paper 1.67/1.5)",
+    "C2_AR2_UR_IR_yr10_all_windows": "~0 (transitory) throughout",
+    "C2_scatter_10yr_2015->2025_raw/demeaned": "0.52 raw / 0.28 demeaned (level-means artifact)",
+    "C3_migration_share_household_1978-90": "0.383 (~paper 0.40 fn37 benchmark)",
+    "C3_migration_share_household_2011-2025": "0.276 (fell ~1/3 from original)",
+    "C3_migration_share_payroll_2011-2025": "0.630 (~paper 0.65 establishment basis)",
+    "C3_UR_halflife_all_windows": "3-4 years (transitory margins still die out fast)",
+    "C3_emp_year10_response_recent": "toward 0 (V-shaped COVID recovery; less permanent recently)",
+    "C4a_income_trough_1952-90": "-0.83% at year ~2 (paper -0.9%); deepened to -1.5% mid-sample",
+    "C4b_convergence_slope_early_vs_recent": "-0.019 -> ~-0.005 (convergence stall, Ganong-Shoag)"
+  },
+  "comparison_to_original": [
+    {"quantity": "C1a Fig-1 persistence slope (1970-90 on 1950-70)", "original": "0.698 (R2 0.754)", "followup": "0.713 (R2 0.758)", "source_file": "/workspace/eval/replication/codebase/results/persistence_convergence.json", "note": "reproduces; but slope fades to 0.37 for the newest 1990-2007->2007-2025 generation"},
+    {"quantity": "C1b AR(4) employment level IR at year 4 / year 20", "original": "1.628 / 1.531", "followup": "1.63/1.53 (1952-90); 1.62/1.52 (2006-2025)", "source_file": "/workspace/eval/replication/codebase/results/table1_irfs.json", "note": "employment-shock permanence holds throughout the sweep"},
+    {"quantity": "C2 AR(2) relative-UR IR at year 5 / year 10", "original": "0.077 / -0.013", "followup": "0.079 / -0.013 (1976-90)", "source_file": "/workspace/eval/replication/codebase/results/table1_irfs.json", "note": "year-10 ~0 in all windows; year-5 gate low vs paper 0.29, a LAUS short-window feature matching the replication"},
+    {"quantity": "C3 year-1 out-migration share of adjustment", "original": "0.601 establishment (replication); 0.40 household / 0.65 establishment (paper fn37)", "followup": "0.383 household (1978-90) -> 0.276 (2011-2025); 0.63 payroll (2011-2025)", "source_file": "/workspace/eval/replication/codebase/results/trivariate_var.json", "note": "migration's share of adjustment fell ~1/3 on household basis; matches Dao-Furceri-Loungani (2017)"},
+    {"quantity": "C4a income (PCPI) trough after -1% employment shock", "original": "-0.83% at year 1", "followup": "-0.83% at year ~2 (1952-90); -1.5% in 1994-2019 windows; -0.85% recent", "source_file": "/workspace/eval/replication/codebase/results/bivariate_irfs.json", "note": "income responds at least as much as originally; always transitory"},
+    {"quantity": "C4b income convergence slope", "original": "-0.012 (pcinc, replication) / -0.01 (paper analogue)", "followup": "-0.019 early -> ~-0.005 recent", "source_file": "/workspace/eval/replication/codebase/results/persistence_convergence.json", "note": "convergence stalled after ~1990 (Ganong-Shoag), reproduced in-spec"}
+  ],
+  "artifacts": [
+    "/workspace/eval/followup/001-living-update/results/estimates_by_window.csv",
+    "/workspace/eval/followup/001-living-update/results/bk_living_update.png",
+    "/workspace/eval/followup/001-living-update/results/bk_living_update.pdf",
+    "/workspace/eval/followup/001-living-update/results/bk_supporting.png",
+    "/workspace/eval/followup/001-living-update/results/findings.md",
+    "/workspace/eval/followup/001-living-update/results/data/panel_annual.csv",
+    "/workspace/eval/followup/001-living-update/results/data/splice_ratios.csv"
+  ],
+  "deviations": [
+    "No SIC->NAICS splice: FRED {ST}NAN is a continuous 1939-2025 state total-nonfarm series, so C1's long window uses one series (splice_ratios.csv ratio=1.0). Avoids the download.bls.gov 403 path; no effect on C1 (Fig-1 slope reproduces 0.70).",
+    "C2 year-5 IR gate lands at 0.08 (vs target [0.15,0.45]); reproduces the replication's 0.08 exactly, attributable to LAUS starting only in 1976 and revised/smoother LAUS data. Qualitative claim (year-10 ~0) unaffected.",
+    "C3 baseline uses household (LAUS) employment (migration benchmark 0.40) as instructed; the household year-1 UR response (0.37 pp) and shallower year-10 employment (-0.79%) differ in level from the paper's establishment-basis printed 0.32 pp / -1.3% by design (fn 37). Payroll robustness rows reproduce the deeper establishment plateau.",
+    "Optional C4b house-price VAR not run (conserved scope after all four required claims and mandatory outputs were complete).",
+    "Out of scope as in the replication: composition-adjusted CPS wage, manufacturing production-worker AHE (per-capita income used as the wage-side proxy, per the paper's Fig 13), pre-1976 state unemployment, and the defense-contract Bartik IV."
+  ]
+}

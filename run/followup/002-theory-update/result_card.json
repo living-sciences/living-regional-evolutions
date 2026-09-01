@@ -1,0 +1,41 @@
+{
+  "schema": "sai.followup.result_card/v1",
+  "headline": "Recalibrating Blanchard–Katz (1992) to 2026: the structural migration response to local unemployment has roughly halved (labor-force elasticity 0.0047→0.0022), and the model's fix is one declining migration parameter — the footprint of rising moving costs.",
+  "status": "completed",
+  "metrics": [
+    {"label": "Migration elasticity to rel. unemployment (labor force)", "value": "0.00225", "baseline": "0.00474",
+     "baseline_label": "paper-era 1976–90 (this study, direct FE estimate)", "note": "−53%, ~7σ paper-era; independent structural confirmation of a weaker channel [ESTIMATED]"},
+    {"label": "Year-1 out-migration share of adjustment (household)", "value": "0.276", "baseline": "0.383",
+     "baseline_label": "001 C3 mig_yr1, 1978–90", "note": "adjustment rotated from migration toward job recovery [ESTIMATED]"},
+    {"label": "Local-slump half-life, one-off shock", "value": "3.0 yr", "baseline": "3.0 yr",
+     "baseline_label": "001 C3 ur_halflife, 1978–90", "note": "unchanged: falling migration m offset by rising job-recovery a [CALIBRATED]"},
+    {"label": "Slump half-life, severe/persistent shock (GFC window)", "value": "5.0 yr", "baseline": "3.0 yr",
+     "baseline_label": "paper-era one-off", "note": "80%-recovery ~11.6 yr; cumulative 10-yr excess UR 1.56 vs 0.33 [ESTIMATED/CALIBRATED]"},
+    {"label": "Out-of-sample migration elasticity (fit pre-2015, test 2015–24)", "value": "0.00076", "baseline": "0.00370",
+     "baseline_label": "pre-2015 fit", "note": "5× smaller out of sample; the decline is not an estimation-window artifact [ESTIMATED]"}
+  ],
+  "tables": [
+    {"title": "Calibration: paper-era vs 2026 (household basis)",
+     "columns": ["Parameter", "Symbol", "Paper-era 1978–90", "2026 (2011–25)", "Label"],
+     "rows": [
+       ["Year-1 migration share", "σ_m", "0.383", "0.276", "[ESTIMATED]"],
+       ["UR-gap half-life (yr)", "H", "3.0", "3.0", "[ESTIMATED]"],
+       ["Migration clearing rate", "m", "0.079", "0.057", "[CALIBRATED]"],
+       ["Job-recovery clearing rate", "a", "0.127", "0.149", "[CALIBRATED]"],
+       ["Long-run rel-employment loss", "−m/S", "−0.383", "−0.276", "[CALIBRATED]"]
+     ],
+     "highlight_row": 2}
+  ],
+  "figures": [
+    {"file": "results/fig1_bk_theory_update.png",
+     "caption": "BK (1992) migration-adjustment model, original vs updated to 2026. A: direct FE migration responsiveness to local unemployment halved (labor force & population, rolling windows, paper-era stars). B: year-1 adjustment shifted away from out-migration (household 0.38→0.28, payroll 0.77→0.63). C: calibrated model UR impulse-response vs empirical AR(2) — the one-off half-life is unchanged (3 yr), but the GFC-window calibration lengthens it to 5 yr; the counterfactual restoring paper-era migration shortens it to 2.7 yr. D: empirical UR half-life is stable except a spike to 5 yr and deep cumulative troughs in the Great-Recession windows.",
+     "alt": "Four-panel figure: (A) two declining lines of migration responsiveness vs window-end year with a star at 1990; (B) stacked bars of adjustment shares for four era/basis groups; (C) decaying impulse-response curves with empirical points and a longer-decaying GFC curve; (D) a stable green half-life line with a GFC spike and a pink cumulative-unemployment line peaking around 2009."}
+  ],
+  "notes": [
+    "The directly-estimated migration elasticity is [ESTIMATED]; the two-margin (m,a) split is a stylized single-mode calibration ([CALIBRATED]) to the VAR migration share and UR half-life, used for the slump-duration counterfactual — not a newly estimated multi-equation IRF.",
+    "Honest tension with the premise: the one-off UR half-life did NOT lengthen — it resolves as a composition rotation (migration↓, job recovery↑); genuine lengthening is confined to severe/persistent shocks (GFC).",
+    "Minimal amendment = one declining migration-responsiveness parameter g_t (reduced-form of rising real moving costs / housing); an explicit house-price moving-cost margin was considered and rejected (needs unavailable state HPI; over-parameterized; observationally equivalent).",
+    "No new data downloaded; reused 001's panel and moments and the replication's AR→IRF engine. Baseline numbers read from paper.pdf and 001/results/estimates_by_window.csv."
+  ],
+  "report_file": "report.md"
+}

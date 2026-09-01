@@ -1,0 +1,20 @@
+{
+  "claim_id": "C11",
+  "status": "not_attempted",
+  "structured": {
+    "replicated_value": null,
+    "paper_value": {
+      "correlation": 0.13
+    },
+    "uncertainty": null,
+    "value_found": false
+  },
+  "rationale": "C11 concerns the persistence of average MANUFACTURING wage growth: the cross-state correlation of 1950-70 mfg wage growth with 1970-90 mfg wage growth (paper value 0.13). The replication step 3 that targets C11 explicitly did NOT reconstruct the manufacturing wage series. results/persistence_convergence.json records mfg_wage_convergence_slope/_t/_r2 = null with the note 'Manufacturing production-worker AHE (1947-1990, SIC basis) is not reconstructable from free modern APIs', and src/persistence_convergence.py:105-127,150-151 confirms this in code. In place of the required quantity, the pipeline reports wage_growth_persistence_corr = 0.41 flagged as a 'proxy: per-capita income growth 1948-70 vs 1970-90 (mfg AHE not reconstructable)'. That 0.41 is a correlation of a DIFFERENT variable (per-capita personal income growth persistence), not the manufacturing wage growth persistence the claim is about, so it is not evidence bearing on C11's value of 0.13. Because the manufacturing wage series itself was never producible in this run's free-API data environment, no evidence for the actual claim was produced. This is a data-access limitation of the run environment (the paper's underlying BLS SIC manufacturing AHE is not obtainable from the free modern APIs used here), not a flaw in the paper's method, so it is excluded from scoring as blocked_infra rather than graded against the unrelated proxy.",
+  "evidence_refs": [
+    "output/replication/codebase/results/persistence_convergence.json",
+    "output/replication/codebase/src/persistence_convergence.py",
+    "output/analyze/replication_plan.json"
+  ],
+  "not_attempted_reason": "blocked_infra",
+  "graded_by": "agent"
+}

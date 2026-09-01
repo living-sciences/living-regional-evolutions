@@ -1,0 +1,23 @@
+{
+  "claim_id": "C6",
+  "status": "not_attempted",
+  "structured": {
+    "replicated_value": null,
+    "paper_value": {
+      "r_squared": 0.0,
+      "slope": 0.03,
+      "t_stat": 0.2
+    },
+    "uncertainty": null,
+    "value_found": false
+  },
+  "rationale": "The claim targets the exact regression of the 1985 relative state unemployment rate on the 1975 rate (Figure 3; slope 0.03, t 0.2, R^2 0.00). This specific regression could NOT be produced by the run: the pipeline reconstructed state unemployment only from LAUS, which begins in 1976, so the 1975 endpoint is unavailable. The original repo was EMPTY (all code written from scratch per replication_log.json), and the pre-1976 archival BLS state-unemployment data the paper used is not reconstructable from free public APIs. Accordingly output/results/unemployment_cross_section.json records the '1985_on_1975' pair with reconstructable=false and slope/t/r2 all null (n=0, note: 'earlier endpoint pre-1976; not reconstructable from LAUS'), corroborated by notes/unemployment_notes.md ('1985_on_1975 (C6): earlier endpoint 1975 is pre-1976 -> NOT reconstructable'). The pipeline reported a nearest-year analogue (1986_on_1976: slope -0.088, t -0.53, R^2 0.006), which qualitatively supports the paper's low-persistence conclusion (R^2 ~ 0, insignificant t), but this is a different regression on different years and its slope/t signs differ from the claimed values, so it cannot stand in as the replicated value for the specific 1985-on-1975 scalar. Because the data required to check this exact claim was never shipped and is not reconstructable, the specific values (slope 0.03, t 0.2, R^2 0.00) could not be produced.",
+  "evidence_refs": [
+    "output/replication/codebase/output/results/unemployment_cross_section.json",
+    "output/replication/codebase/notes/unemployment_notes.md",
+    "output/replication/replication_log.json",
+    "output/analyze/replication_plan.json"
+  ],
+  "not_attempted_reason": "authors_missing",
+  "graded_by": "agent"
+}

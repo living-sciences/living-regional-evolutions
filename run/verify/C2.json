@@ -1,0 +1,21 @@
+{
+  "claim_id": "C2",
+  "status": "match",
+  "structured": {
+    "replicated_value": {
+      "r_squared": 0.61
+    },
+    "paper_value": {
+      "r_squared": 0.6
+    },
+    "uncertainty": null,
+    "value_found": true
+  },
+  "rationale": "The run re-ran the Figure 1 employment-persistence regression (1970-90 growth on 1950-70 growth) dropping Arizona, Florida, and Nevada. results/persistence_convergence.json reports emp_persistence_r2_ex_AZ_FL_NV = 0.6101290902950444, and the step-3 stdout in replication_log.json confirms 'ex-AZ/FL/NV R2=0.610 (paper 0.60)'. Compared to the paper value of 0.60, this is a relative error of ~1.7%, well within the 5% match band. The fix_severity.json fixes (FRED throttling and an elasticity-regression alignment bug in a different step) do not touch this persistence regression path, so the produced value faithfully reflects the method.",
+  "evidence_refs": [
+    "output/replication/codebase/results/persistence_convergence.json",
+    "output/replication/replication_log.json",
+    "output/assess/fix_severity.json"
+  ],
+  "graded_by": "agent"
+}

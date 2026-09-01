@@ -1,0 +1,32 @@
+{
+  "claim_id": "C21",
+  "status": "partial",
+  "structured": {
+    "replicated_value": {
+      "employment_multiple": 1.65,
+      "employment_plateau_pct": -1.17,
+      "unemployment_rise_pct": null,
+      "wage_decrease_pct": -0.83,
+      "wage_min_year": 1,
+      "wage_unemployment_elasticity": null
+    },
+    "paper_value": {
+      "employment_multiple": 1.7,
+      "employment_plateau_pct": -1.2,
+      "unemployment_rise_pct": 0.37,
+      "wage_decrease_pct": -0.4,
+      "wage_min_year": 6,
+      "wage_unemployment_elasticity": 1.0
+    },
+    "uncertainty": null,
+    "value_found": true
+  },
+  "rationale": "Step 9 (src/bivariate_irfs.py) produced results/bivariate_irfs.json and figures/fig11_emp_wage.png, so Figure 11 was generated and is gradeable. The EMPLOYMENT dynamics match the paper well: from a -1.0% initial shock (year 0 = -0.01) employment troughs at year 3 at -1.645% (irf['3'].employment = -0.016449), i.e. 1.65x the initial response vs the paper's 1.7 (3% off), and plateaus at -1.17% (employment_plateau = -0.011717) vs the paper's -1.2 (2.4% off) \u2014 both within 5%. However, the WAGE side does not reproduce the paper. The evidence file explicitly notes 'pcinc proxy for manufacturing wage (not reconstructable)' and step-9 notes state manufacturing production-worker AHE for 1947-1990 could not be obtained; the per-capita-income proxy troughs at YEAR 1 at -0.835% and then reverts toward zero (-0.49% by year 6), whereas the paper reports a wage minimum of -0.4% at ~year 6. Thus wage_min_year (1 vs 6) and wage_decrease_pct (-0.83 vs -0.4) both miss. Furthermore the Figure-11 system is a two-variable emp-wage VAR with NO unemployment variable, so the paper's unemployment_rise (0.37% at year 2) and the implied relative-wage-to-relative-unemployment elasticity (~1.0) are not produced by this run at all (null). Verdict: partial \u2014 the employment trough/plateau are faithfully reproduced, but the wage timing/magnitude and the unemployment/elasticity quantities that are the substantive point of the claim are not, largely owing to the documented manufacturing-wage data gap.",
+  "evidence_refs": [
+    "output/replication/codebase/results/bivariate_irfs.json",
+    "output/replication/codebase/figures/fig11_emp_wage.png",
+    "output/replication/replication_log.json",
+    "output/assess/fix_severity.json"
+  ],
+  "graded_by": "agent"
+}

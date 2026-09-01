@@ -1,0 +1,744 @@
+{
+  "employment": {
+    "per_state": [
+      {
+        "state": "AL",
+        "lagged_level_coef": -0.25700192896700536,
+        "adf_tstat": -2.65922058817367,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "AK",
+        "lagged_level_coef": -0.16535428409220554,
+        "adf_tstat": -0.8623509418782055,
+        "rejects_5pct": false,
+        "n": 26
+      },
+      {
+        "state": "AZ",
+        "lagged_level_coef": -0.13135866914895789,
+        "adf_tstat": -1.7809779987030474,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "AR",
+        "lagged_level_coef": -0.20075681641010967,
+        "adf_tstat": -2.3580409730100467,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "CA",
+        "lagged_level_coef": -0.11948284693460626,
+        "adf_tstat": -2.809477376072633,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "CO",
+        "lagged_level_coef": -0.22433411081078156,
+        "adf_tstat": -2.25771413592897,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "CT",
+        "lagged_level_coef": -0.2790967139989823,
+        "adf_tstat": -2.4791323434465546,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "DE",
+        "lagged_level_coef": -0.24710217003659687,
+        "adf_tstat": -2.5066631914441846,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "DC",
+        "lagged_level_coef": -0.2783879545529074,
+        "adf_tstat": -2.6440772217802415,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "FL",
+        "lagged_level_coef": -0.137716312893721,
+        "adf_tstat": -2.4037211675609957,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "GA",
+        "lagged_level_coef": -0.3607793364859078,
+        "adf_tstat": -2.853127381651132,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "HI",
+        "lagged_level_coef": -0.19770829892375041,
+        "adf_tstat": -2.0368569560301646,
+        "rejects_5pct": false,
+        "n": 28
+      },
+      {
+        "state": "ID",
+        "lagged_level_coef": -0.23866472642738948,
+        "adf_tstat": -3.207983383455746,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "IL",
+        "lagged_level_coef": -0.1291144861932973,
+        "adf_tstat": -2.174502043803111,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "IN",
+        "lagged_level_coef": -0.18546702501644785,
+        "adf_tstat": -1.8841032911663804,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "IA",
+        "lagged_level_coef": -0.14475302995038808,
+        "adf_tstat": -2.160481339396945,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "KS",
+        "lagged_level_coef": -0.2099702503006561,
+        "adf_tstat": -2.46215099100366,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "KY",
+        "lagged_level_coef": -0.19307778371137518,
+        "adf_tstat": -2.5859666965415427,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "LA",
+        "lagged_level_coef": -0.2814018236433348,
+        "adf_tstat": -2.8384160853794698,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "ME",
+        "lagged_level_coef": 0.020775211539504634,
+        "adf_tstat": 0.33158957623470237,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "MD",
+        "lagged_level_coef": -0.20417430056435654,
+        "adf_tstat": -2.1426468751042638,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "MA",
+        "lagged_level_coef": -0.27019838471359986,
+        "adf_tstat": -3.9615793990737207,
+        "rejects_5pct": true,
+        "n": 39
+      },
+      {
+        "state": "MI",
+        "lagged_level_coef": -0.2604025859435621,
+        "adf_tstat": -2.0967162001830935,
+        "rejects_5pct": false,
+        "n": 30
+      },
+      {
+        "state": "MN",
+        "lagged_level_coef": -0.29683353257324563,
+        "adf_tstat": -2.6099606146811616,
+        "rejects_5pct": false,
+        "n": 36
+      },
+      {
+        "state": "MS",
+        "lagged_level_coef": -0.07871007613342111,
+        "adf_tstat": -1.0581307479968782,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "MO",
+        "lagged_level_coef": -0.3438696383123457,
+        "adf_tstat": -1.8573461577739312,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "MT",
+        "lagged_level_coef": -0.20088129643147876,
+        "adf_tstat": -2.5611904354472186,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "NE",
+        "lagged_level_coef": -0.3697506564643295,
+        "adf_tstat": -3.000638592822295,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "NV",
+        "lagged_level_coef": -0.13350527528665118,
+        "adf_tstat": -1.4649052583243476,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "NH",
+        "lagged_level_coef": -0.11411711276099662,
+        "adf_tstat": -2.194025281759929,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "NJ",
+        "lagged_level_coef": -0.17996896651272443,
+        "adf_tstat": -2.461626267580386,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "NM",
+        "lagged_level_coef": -0.17978109653898436,
+        "adf_tstat": -3.1722279382797574,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "NY",
+        "lagged_level_coef": -0.16687680533683522,
+        "adf_tstat": -3.442580716099763,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "NC",
+        "lagged_level_coef": -0.14413209912794742,
+        "adf_tstat": -1.799653141698204,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "ND",
+        "lagged_level_coef": -0.24837690342591714,
+        "adf_tstat": -2.5360262596383256,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "OH",
+        "lagged_level_coef": -0.27400416315461623,
+        "adf_tstat": -3.1138836544031716,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "OK",
+        "lagged_level_coef": -0.2146566515890661,
+        "adf_tstat": -2.477730833455771,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "OR",
+        "lagged_level_coef": -0.26835265504420497,
+        "adf_tstat": -3.4353018988081865,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "PA",
+        "lagged_level_coef": -0.2865281483320992,
+        "adf_tstat": -2.3895669719401904,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "RI",
+        "lagged_level_coef": -0.2232701117982423,
+        "adf_tstat": -2.786843298270991,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "SC",
+        "lagged_level_coef": -0.304815140243691,
+        "adf_tstat": -2.5638715134910433,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "SD",
+        "lagged_level_coef": -0.42907242763597037,
+        "adf_tstat": -3.8004578407931153,
+        "rejects_5pct": true,
+        "n": 39
+      },
+      {
+        "state": "TN",
+        "lagged_level_coef": -0.13986040295635344,
+        "adf_tstat": -1.9008451506436876,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "TX",
+        "lagged_level_coef": -0.1746230032382701,
+        "adf_tstat": -2.3968524430440117,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "UT",
+        "lagged_level_coef": -0.3064670185067632,
+        "adf_tstat": -3.2204176012249,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "VT",
+        "lagged_level_coef": -0.17528357429496902,
+        "adf_tstat": -2.748265660236768,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "VA",
+        "lagged_level_coef": -0.35671611199464776,
+        "adf_tstat": -3.2331258834960384,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "WA",
+        "lagged_level_coef": -0.10762358331902092,
+        "adf_tstat": -1.4179885839250133,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "WV",
+        "lagged_level_coef": -0.14329475177576206,
+        "adf_tstat": -2.6840430387080847,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "WI",
+        "lagged_level_coef": -0.32375797060976674,
+        "adf_tstat": -3.975238654058353,
+        "rejects_5pct": true,
+        "n": 39
+      },
+      {
+        "state": "WY",
+        "lagged_level_coef": -0.18549942778925044,
+        "adf_tstat": -3.5846647711221813,
+        "rejects_5pct": true,
+        "n": 39
+      }
+    ],
+    "n_reject_5pct": 4,
+    "reject_states": [
+      "MA",
+      "SD",
+      "WI",
+      "WY"
+    ],
+    "n_negative_coef": 50,
+    "n_states": 51,
+    "crit_5pct": -3.5
+  },
+  "wages": {
+    "per_state": [
+      {
+        "state": "AL",
+        "lagged_level_coef": -0.03459111549846418,
+        "adf_tstat": -1.2147994143284189,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "AK",
+        "lagged_level_coef": -0.1969894248887194,
+        "adf_tstat": -1.7587882758929176,
+        "rejects_5pct": false,
+        "n": 36
+      },
+      {
+        "state": "AZ",
+        "lagged_level_coef": -0.2603874775405628,
+        "adf_tstat": -2.5929941025178525,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "AR",
+        "lagged_level_coef": -0.07152370746882261,
+        "adf_tstat": -2.3894964797620473,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "CA",
+        "lagged_level_coef": 0.002560949509738522,
+        "adf_tstat": 0.071720099576471,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "CO",
+        "lagged_level_coef": -0.23209870634790983,
+        "adf_tstat": -2.3392625012203228,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "CT",
+        "lagged_level_coef": -0.11476610199887091,
+        "adf_tstat": -1.0841588525999295,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "DE",
+        "lagged_level_coef": -0.051032724450873264,
+        "adf_tstat": -1.1293033842268716,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "DC",
+        "lagged_level_coef": -0.2581171599211313,
+        "adf_tstat": -2.447009278829951,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "FL",
+        "lagged_level_coef": -0.05672940904513753,
+        "adf_tstat": -1.472624180693564,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "GA",
+        "lagged_level_coef": -0.020611534848823186,
+        "adf_tstat": -0.7685902488219363,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "HI",
+        "lagged_level_coef": -0.11037535552163283,
+        "adf_tstat": -1.4626910319855135,
+        "rejects_5pct": false,
+        "n": 36
+      },
+      {
+        "state": "ID",
+        "lagged_level_coef": -0.22843920178819171,
+        "adf_tstat": -1.6630371168418092,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "IL",
+        "lagged_level_coef": -0.04044821230483576,
+        "adf_tstat": -1.002933471247753,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "IN",
+        "lagged_level_coef": -0.1740885283990114,
+        "adf_tstat": -1.7701649702345483,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "IA",
+        "lagged_level_coef": -0.48575090177147023,
+        "adf_tstat": -2.633532011973873,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "KS",
+        "lagged_level_coef": -0.2859950569327067,
+        "adf_tstat": -1.7323870135908452,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "KY",
+        "lagged_level_coef": -0.08496111186311417,
+        "adf_tstat": -1.9413550141777958,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "LA",
+        "lagged_level_coef": -0.09382475820321046,
+        "adf_tstat": -1.875925789624891,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "ME",
+        "lagged_level_coef": -0.08413558714629243,
+        "adf_tstat": -0.5291767230972132,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "MD",
+        "lagged_level_coef": -0.11273130092468048,
+        "adf_tstat": -1.4539533319744478,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "MA",
+        "lagged_level_coef": -0.18652036980728273,
+        "adf_tstat": -2.6794218284541262,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "MI",
+        "lagged_level_coef": -0.14842183627276734,
+        "adf_tstat": -1.5133343345275017,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "MN",
+        "lagged_level_coef": -0.03386658728921756,
+        "adf_tstat": -0.455624448013972,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "MS",
+        "lagged_level_coef": -0.05974201652873661,
+        "adf_tstat": -1.8975022623787128,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "MO",
+        "lagged_level_coef": -0.26262453208875625,
+        "adf_tstat": -1.2888376460832176,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "MT",
+        "lagged_level_coef": -0.1383036663630792,
+        "adf_tstat": -1.6877882107739373,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "NE",
+        "lagged_level_coef": -0.8463483916415598,
+        "adf_tstat": -3.7508579293287627,
+        "rejects_5pct": true,
+        "n": 39
+      },
+      {
+        "state": "NV",
+        "lagged_level_coef": 0.017012561127325715,
+        "adf_tstat": 0.5049583755782315,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "NH",
+        "lagged_level_coef": -0.124963289490467,
+        "adf_tstat": -2.0560418337971442,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "NJ",
+        "lagged_level_coef": -0.09071902284506793,
+        "adf_tstat": -0.8655878251046736,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "NM",
+        "lagged_level_coef": -0.25495008829790006,
+        "adf_tstat": -2.4892857124314007,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "NY",
+        "lagged_level_coef": -0.09375105572191496,
+        "adf_tstat": -1.9013688401579008,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "NC",
+        "lagged_level_coef": 0.00015744881988571761,
+        "adf_tstat": 0.004861297603258945,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "ND",
+        "lagged_level_coef": -0.4934298629482342,
+        "adf_tstat": -2.5113916548281896,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "OH",
+        "lagged_level_coef": -0.061078796702720206,
+        "adf_tstat": -1.1880553144640658,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "OK",
+        "lagged_level_coef": -0.11749944002129156,
+        "adf_tstat": -1.8628877792069993,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "OR",
+        "lagged_level_coef": -0.10392765995628993,
+        "adf_tstat": -2.1789475657220065,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "PA",
+        "lagged_level_coef": -0.3292525299494978,
+        "adf_tstat": -2.3301690652371128,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "RI",
+        "lagged_level_coef": -0.16842842902990318,
+        "adf_tstat": -2.128846436133526,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "SC",
+        "lagged_level_coef": -0.0009357945534949064,
+        "adf_tstat": -0.03511829421815977,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "SD",
+        "lagged_level_coef": -0.45762621116133095,
+        "adf_tstat": -2.2625745189502497,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "TN",
+        "lagged_level_coef": -0.038661782914821655,
+        "adf_tstat": -1.5279173075548664,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "TX",
+        "lagged_level_coef": -0.09710774471835634,
+        "adf_tstat": -1.7493586322421293,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "UT",
+        "lagged_level_coef": -0.003863964126082744,
+        "adf_tstat": -0.08996224095949919,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "VT",
+        "lagged_level_coef": -0.07168332267602177,
+        "adf_tstat": -1.2330574161080174,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "VA",
+        "lagged_level_coef": -0.012726039738108324,
+        "adf_tstat": -0.4851881586212713,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "WA",
+        "lagged_level_coef": -0.09924085924997963,
+        "adf_tstat": -1.4899234529995717,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "WV",
+        "lagged_level_coef": -0.13573530419224641,
+        "adf_tstat": -2.111276205335387,
+        "rejects_5pct": false,
+        "n": 39
+      },
+      {
+        "state": "WI",
+        "lagged_level_coef": -0.31428973599769,
+        "adf_tstat": -2.9669448432032426,
+        "rejects_5pct": true,
+        "n": 39
+      },
+      {
+        "state": "WY",
+        "lagged_level_coef": -0.22811513139279693,
+        "adf_tstat": -3.695951098486551,
+        "rejects_5pct": true,
+        "n": 39
+      }
+    ],
+    "n_reject_5pct": 3,
+    "reject_states": [
+      "NE",
+      "WI",
+      "WY"
+    ],
+    "n_negative_coef": 48,
+    "n_states": 51,
+    "crit_5pct": -2.94,
+    "note": "Manufacturing AHE not reconstructable; relative per-capita income used as proxy for the relative-wage ADF spec."
+  }
+}

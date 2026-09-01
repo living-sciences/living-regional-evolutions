@@ -1,0 +1,9 @@
+{
+  "claim_id": "C33",
+  "status": "not_attempted",
+  "structured": {},
+  "rationale": "No plan step targeted this claim; the planner marked it BLOCKED (counts as a reproducibility gap): The Massachusetts boom/bust simulation predicts nominal-wage and Boston housing-price growth using the estimated wage/housing system, which depends on the blocked proprietary housing-price data (C25/C31).",
+  "evidence_refs": [],
+  "not_attempted_reason": "authors_missing",
+  "graded_by": "deterministic"
+}

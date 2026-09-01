@@ -1,0 +1,25 @@
+{
+  "claim_id": "C17",
+  "status": "no_match",
+  "structured": {
+    "replicated_value": {
+      "net_out_migration": 0.6,
+      "participation": 0.28,
+      "unemployment": 0.12
+    },
+    "paper_value": {
+      "net_out_migration": 0.65,
+      "participation": 0.05,
+      "unemployment": 0.3
+    },
+    "uncertainty": null,
+    "value_found": true
+  },
+  "rationale": "Step 8 produced the year-1 per-worker decomposition in results/trivariate_var.json under 'per_worker' (basis: 'shares of the year-1 employment response'): unemployment=0.1152, participation=0.2841, implied_net_migration=0.6007, derived from year1 responses (unemployment_response=0.001995, participation_response=-0.004917) over the year-1 employment response (-0.017307). Comparing to the claim's paper_value {unemployment:0.3, participation:0.05, net_out_migration:0.65}: net_out_migration (0.60 vs 0.65) is ~7.5% off (partial-band only), but unemployment (0.12 vs 0.30, ~62% error) and participation (0.28 vs 0.05, ~468% error) both fall far outside even the 30% partial band, and their relative magnitudes are essentially reversed versus the paper (the paper attributes the secondary share to unemployment and a negligible share to participation; the replication does the opposite). The qualitative 'mostly migration' finding is partially recovered (migration ~0.60) and the die-out horizon is broadly consistent (unemp_partic_dieout_year: participation=7, unemployment=11, with a persistent employment plateau of -0.0181, so by ~5-7 years the response is nearly all migration), but the core quantitative decomposition the claim specifies is not reproduced. With two of three components badly off, the overall verdict is no_match. Note: the run relied on the reconstructable 1978-1990 LAUS window (paper used a longer sample) and proxied the unemployment response as -le and participation as lp with resident population standing in for working-age population (see the 'note' field), which plausibly contributes to the unemployment/participation misallocation.",
+  "evidence_refs": [
+    "output/replication/codebase/results/trivariate_var.json",
+    "output/analyze/replication_plan.json",
+    "output/assess/fix_severity.json"
+  ],
+  "graded_by": "agent"
+}

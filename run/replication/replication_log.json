@@ -1,0 +1,187 @@
+{
+  "paper": "Blanchard & Katz (1992), 'Regional Evolutions', Brookings Papers on Economic Activity 1:1992",
+  "note": "Provided repo was EMPTY; all code written from scratch. Panel reconstructed from public FRED/BLS APIs (paper used archival BLS 'Employment and Earnings').",
+  "step_outcomes": [
+    {
+      "step_id": 1,
+      "description": "Create working copy, venv, install deps, make output dirs.",
+      "command_executed": "uv venv; uv pip install pandas numpy statsmodels scipy requests pyarrow matplotlib openpyxl fredapi; mkdir data results figures notes src",
+      "exit_code": 0,
+      "stdout": "pandas 3.0.5 numpy 2.5.2 statsmodels 0.14.6 scipy 1.18.1",
+      "stderr": "",
+      "output_files": [
+        "data/",
+        "results/",
+        "figures/",
+        "notes/",
+        "src/"
+      ],
+      "duration_seconds": 40,
+      "fixes_applied": [],
+      "code_modified": false,
+      "notes": "Also installed pymupdf to read the paper's data appendix."
+    },
+    {
+      "step_id": 2,
+      "description": "Reconstruct 51-unit state panel 1947-1990 from FRED/BLS.",
+      "command_executed": "python src/build_panel.py --out data/panel.parquet --notes notes/data_sources.md",
+      "exit_code": 0,
+      "stdout": "panel: 2244 rows, 51 units, years (1947, 1990); emp non-null 2208; pcinc 2238; urate 765 (1976-1990)",
+      "stderr": "",
+      "output_files": [
+        "data/panel.parquet",
+        "data/panel.csv",
+        "notes/data_sources.md"
+      ],
+      "duration_seconds": 113,
+      "fixes_applied": [
+        {
+          "file_path": "src/fred_util.py",
+          "description": "Added request throttling (0.9s min interval) and 429-aware backoff to avoid FRED rate limits.",
+          "original_error": "429 Client Error: Too Many Requests for url .../series/observations?series_id=OKNAN",
+          "diff_snippet": "+ MIN_INTERVAL=0.9; if 429 in err: wait=20s"
+        }
+      ],
+      "code_modified": true,
+      "notes": "Employment=FRED {POSTAL}NAN (BLS SM statewide, 1939+, AK 1960/HI 1958); pcinc={POSTAL}PCPI (1929+); pop={POSTAL}POP; urate/LF={POSTAL}UR/LF (LAUS 1976+). GAPS documented: (1) manufacturing production-worker AHE 1947-1990 not reconstructable from free modern APIs (SIC-basis archival); per-capita income used as proxy. (2) State unemployment pre-1976 not reconstructable (LMA-based)."
+    },
+    {
+      "step_id": 3,
+      "description": "Persistence & convergence regressions (Figs 1,2,4,9).",
+      "command_executed": "python src/persistence_convergence.py --panel data/panel.parquet --out results/persistence_convergence.json --fig figures/",
+      "exit_code": 0,
+      "stdout": "emp_persistence slope=0.698 R2=0.754 (paper 0.70/0.75); ex-AZ/FL/NV R2=0.610 (paper 0.60); pcinc convergence slope=-0.012 t=-7.1 R2=0.52",
+      "stderr": "",
+      "output_files": [
+        "results/persistence_convergence.json",
+        "data/cumulative_rel_emp_growth.csv",
+        "figures/fig1_persistence.png",
+        "figures/fig2_cumulative_rel_emp.png",
+        "figures/fig4_income_convergence.png"
+      ],
+      "duration_seconds": 4,
+      "fixes_applied": [],
+      "code_modified": false,
+      "notes": "VALIDATION: Figure 1 reconstruction matches paper almost exactly (slope 0.698 vs 0.70; R2 0.754 vs 0.75; ex-AZ/FL/NV 0.610 vs 0.60). Manufacturing-wage convergence/persistence/Fig9 use per-capita income as documented proxy (mfg AHE not reconstructable); each field flagged."
+    },
+    {
+      "step_id": 4,
+      "description": "State-national employment elasticities (Table 2) + region-year variance decomposition.",
+      "command_executed": "python src/state_national_elasticities.py --panel data/panel.parquet --out results/table2_and_regionyear.json",
+      "exit_code": 0,
+      "stdout": "n_states=51 avg_adj_r2=0.969 n_beta_sig_diff_1=50; shares national-year=0.452 4-region-year=0.570 9-division-year=0.642; beta median 1.15",
+      "stderr": "",
+      "output_files": [
+        "results/table2_and_regionyear.json"
+      ],
+      "duration_seconds": 3,
+      "fixes_applied": [
+        {
+          "file_path": "src/state_national_elasticities.py",
+          "description": "Used precomputed national ln-employment series indexed by year instead of set_index on duplicated-year frame.",
+          "original_error": "ValueError: endog and exog matrices are different sizes",
+          "diff_snippet": "- x=np.log(df.set_index('year').loc[...])\n+ x=lnUS.loc[s['year'].values].values"
+        }
+      ],
+      "code_modified": true,
+      "notes": "avg adj R2 0.969 matches paper 'aggregate fluctuations account for most year-to-year movement'; betas centered on 1 (median 1.15). Region-year share rises from 0.45 (national) to 0.57 (4 regions) to 0.64 (9 divisions)."
+    },
+    {
+      "step_id": 5,
+      "description": "ADF unit-root tests on relative employment (trend, 4 lags) and relative wages (no trend, pcinc proxy), 1952-1990.",
+      "command_executed": "python src/adf_tests.py --panel data/panel.parquet --out results/adf_tests.json",
+      "exit_code": 0,
+      "stdout": "EMPLOYMENT: n=51 reject5%=4 [MA,SD,WI,WY] negative-coef=50; WAGES(pcinc proxy): n=51 reject5%=3 negative-coef=48",
+      "stderr": "",
+      "output_files": [
+        "results/adf_tests.json"
+      ],
+      "duration_seconds": 3,
+      "fixes_applied": [],
+      "code_modified": false,
+      "notes": "Relative employment consistent with a unit root (only 4/51 reject at 5%, 50/51 negative level coef) as the paper concludes. Wage ADF uses per-capita income proxy (mfg AHE not reconstructable)."
+    },
+    {
+      "step_id": 6,
+      "description": "Pooled univariate models & implied impulse responses (Table 1) + per-state long-run employment responses.",
+      "command_executed": "python src/univariate_irfs.py --panel data/panel.parquet --out results/table1_irfs.json --notes notes/univariate_notes.md",
+      "exit_code": 0,
+      "stdout": "emp AR4 sum_phi=0.347 plateau=1.531; level IRF y1=1.52 y3=1.68 y20=1.53; unemp AR2 IRF y1=1.08 y5=0.08 y10=-0.01; per-state LR median 2.32",
+      "stderr": "",
+      "output_files": [
+        "results/table1_irfs.json",
+        "notes/univariate_notes.md"
+      ],
+      "duration_seconds": 3,
+      "fixes_applied": [],
+      "code_modified": false,
+      "notes": "Employment level response permanent (~1.5x shock), matching Table 1. Unemployment effect dies out by ~year 5-7 as paper reports. Unemployment window shortened to 1978-1990 (pre-1976 gap). Wage process uses pcinc proxy."
+    },
+    {
+      "step_id": 7,
+      "description": "Unemployment persistence & cross-state correlations (Figs 3,6,10), LAUS 1976-1990.",
+      "command_executed": "python src/unemployment_persistence.py --panel data/panel.parquet --out results/unemployment_cross_section.json --notes notes/unemployment_notes.md",
+      "exit_code": 0,
+      "stdout": "1985_on_1975 & 1990_on_1970 NOT reconstructable (pre-1976). Analogues: 1986_on_1976 slope=-0.09 r2=0.006; 1990_on_1980 slope=0.46 r2=0.41. avg_urate_vs_empgrowth slope=-33.3 t=-1.7; avg_urate_vs_wage(pcinc) t=-1.1 r2=0.025",
+      "stderr": "",
+      "output_files": [
+        "results/unemployment_cross_section.json",
+        "notes/unemployment_notes.md"
+      ],
+      "duration_seconds": 3,
+      "fixes_applied": [],
+      "code_modified": false,
+      "notes": "10-year unemployment persistence much weaker than employment persistence (R2 <=0.41 vs 0.75), matching paper's 'only transitory departures'. Pre-1976 endpoints flagged not reconstructable; nearest analogues reported. Fig 10 uses pcinc proxy."
+    },
+    {
+      "step_id": 8,
+      "description": "Trivariate VAR (emp, unemployment, participation) Fig 7 + Okun coefficient (C18).",
+      "command_executed": "python src/trivariate_var.py --panel data/panel.parquet --out results/trivariate_var.json --fig figures/fig7_trivariate_irf.png",
+      "exit_code": 0,
+      "stdout": "emp -1%->peak -2.1%(y3) plateau -1.8%; unemp +0.2% dies out ~y6-7; partic -0.5% recovers ~y7. per-worker shares: unemployment 0.115 participation 0.284 migration 0.601. Okun all coef=18.3 t=14.7; farm coef=14.7 t=4.4",
+      "stderr": "",
+      "output_files": [
+        "results/trivariate_var.json",
+        "figures/fig7_trivariate_irf.png"
+      ],
+      "duration_seconds": 3,
+      "fixes_applied": [],
+      "code_modified": true,
+      "notes": "Central paper result reproduced: adjustment to an employment shock is dominated by out-migration (~60%), then participation (~28%), then unemployment (~12%); unemployment/participation effects die out in 6-7 years while employment loss is permanent. Farm-state Okun coef < all-state, as paper finds. Window 1978-1990 (LAUS). Working-age pop proxied by resident population; unemployment response approximated by -le (documented)."
+    },
+    {
+      "step_id": 9,
+      "description": "Bivariate emp-wage & emp-income systems (Figs 11,13,14).",
+      "command_executed": "python src/bivariate_irfs.py --panel data/panel.parquet --out results/bivariate_irfs.json --fig figures/",
+      "exit_code": 0,
+      "stdout": "emp-income: emp -1%->trough -1.64%(y3) plateau -1.17%; income trough -0.83% ~y1-2 then reverts. suppress feedback: plateau with=-1.17% without=-1.46%",
+      "stderr": "",
+      "output_files": [
+        "results/bivariate_irfs.json",
+        "figures/fig11_emp_wage.png",
+        "figures/fig13_emp_income.png",
+        "figures/fig14_suppress_feedback.png"
+      ],
+      "duration_seconds": 3,
+      "fixes_applied": [],
+      "code_modified": false,
+      "notes": "Emp-income (Fig 13) genuine: income troughs ~year 2 and recovers. Suppressing wage/income feedback deepens the permanent employment loss (-1.46 vs -1.17), the Fig 14 point that wage/price adjustment aids recovery. Emp-wage (Fig 11) reported with pcinc proxy (mfg AHE not reconstructable); QCEW/ASM/BEA-industry all start >=1990 or need a key, confirming no source for the 1947-1990 window."
+    },
+    {
+      "step_id": 10,
+      "description": "Massachusetts case study (descriptive reconstructable parts).",
+      "command_executed": "python src/massachusetts_case.py --out results/massachusetts.json --notes notes/mass_notes.md",
+      "exit_code": 0,
+      "stdout": "growth_1980_85=1.99% (gap +0.50 vs US); 29/32 yrs 1948-79 below US; unemp_rel 1979=-0.35 1985=-3.09 1991=+2.07; 1990 growth=-4.27% 1991=-5.62%; avg 1985-91=-0.62% (gap -2.38)",
+      "stderr": "",
+      "output_files": [
+        "results/massachusetts.json",
+        "notes/mass_notes.md"
+      ],
+      "duration_seconds": 6,
+      "fixes_applied": [],
+      "code_modified": false,
+      "notes": "VALIDATION: matches paper's opening facts -- MA unemployment ~3pp below US in mid-80s and ~2pp above in 1991 (paper: '3 points below... more than 2 points above'); miracle (1980-85 above US) is a blip on a chronic below-US trend (29/32 years below); late-80s bust reproduced. Manufacturing/CPS wage relative fields null & flagged (not reconstructable)."
+    }
+  ]
+}

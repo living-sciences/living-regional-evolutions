@@ -1,0 +1,35 @@
+{
+  "claim_id": "C35",
+  "status": "partial",
+  "structured": {
+    "file_exists": false,
+    "evidence_found": true,
+    "file_path_checked": [
+      "output/figures/figure2.pdf",
+      "figures/fig2_cumulative_rel_emp.png",
+      "data/cumulative_rel_emp_growth.csv"
+    ],
+    "structural_features_present": [
+      "cumulative relative log-employment paths measured relative to U.S. aggregate, 1947-1990",
+      "regional groupings present (newengland, midatlantic, coal, rustbelt, sunbelt, farm, oil)",
+      "sustained relative declines for New England, Mid-Atlantic, coal country, and Rust Belt groups",
+      "strong sustained Sun Belt growth (sunbelt line reaches ~1.16 log dev)",
+      "farm group fluctuates near zero with no sustained trend",
+      "oil group shows 1970s boom (peak ~0.49 around 1982) and 1980s bust (declines to ~0.35)",
+      "per-state series in CSV match claimed magnitudes: WV log -0.75, NY -0.52, PA -0.57, MA -0.37; NV +1.54, AZ +1.41, FL +1.22"
+    ],
+    "structural_features_missing": [
+      "six separate panels (produced figure is a single combined panel)",
+      "individual state lines within panels (produced figure plots region-group averages, not individual states)",
+      "differing vertical-axis scales across panels (single shared axis instead)"
+    ],
+    "structural_match": false
+  },
+  "rationale": "The exact expected file output/figures/figure2.pdf was not produced, but a relevant figure figures/fig2_cumulative_rel_emp.png was, titled 'Fig 2: cumulative relative employment by region group', plotting cumulative relative log-employment (log dev from 1947) over 1947-1990. It reproduces the entire regional narrative of the claim: newengland/midatlantic/coal/rustbelt lines show sustained relative declines (rustbelt to ~-0.29, coal to ~-0.41, newengland to ~-0.16, midatlantic to ~-0.11), sunbelt shows strong sustained growth (~1.16 log dev by 1990), farm fluctuates near zero with no trend, and oil shows the 1970s boom (peak ~0.49 around 1982) and 1980s bust (falling to ~0.35). The underlying data/cumulative_rel_emp_growth.csv holds per-state series whose 1990 values match the claimed individual-state magnitudes when read as log deviations: WV -0.75, NY -0.52, PA -0.57, MA -0.37 (sustained declines) and NV +1.54, AZ +1.41, FL +1.22 (strong Sun Belt growth). However, the produced figure is structurally different from the claim's described figure: it is a SINGLE combined panel of region-group AVERAGES rather than the six separate panels of INDIVIDUAL states with differing vertical-axis scales that the claim and verification instructions specify. Because the content and computation faithfully reproduce the regional story (and per-state magnitudes) but the figure's panel structure does not match, this is a partial match.",
+  "evidence_refs": [
+    "replication/codebase/figures/fig2_cumulative_rel_emp.png",
+    "replication/codebase/data/cumulative_rel_emp_growth.csv",
+    "analyze/replication_plan.json"
+  ],
+  "graded_by": "agent"
+}

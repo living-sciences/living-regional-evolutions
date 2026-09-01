@@ -1,0 +1,22 @@
+{
+  "claim_id": "C20",
+  "status": "not_attempted",
+  "structured": {
+    "replicated_value": null,
+    "paper_value": {
+      "r_squared": 0.16,
+      "t_stat": 3.1
+    },
+    "uncertainty": null,
+    "value_found": false
+  },
+  "rationale": "Claim C20 requires the regression underlying Figure 10 -- average manufacturing wage on average state unemployment rate (1970-90) -- expecting a positive relationship with t~3.1 and R^2~0.16. The manufacturing production-worker wage series (BLS archival 'Employment and Earnings', SIC-basis AHE) needed for this regression was never available: the provided repo was empty and step 2's notes state the 'manufacturing production-worker AHE 1947-1990 not reconstructable from free modern APIs' (replication_log.json, step_id 2). Consequently the actual claimed quantity was never computed. Step 7 (results/unemployment_cross_section.json, avg_urate_vs_wage) instead ran the regression on a documented per-capita-INCOME proxy over 1976-1990, explicitly flagged: 'manufacturing wage not reconstructable; relative per-capita income proxy, 1976-1990.' That proxy is a different economic variable (income vs. manufacturing wage) and, moreover, contradicts the claim outright: slope=-1.53, t=-1.13, r2=0.025 -- a wrong-signed, insignificant, near-zero relationship rather than the paper's positive t=3.1, R^2=0.16. Because the specific input data required to test this claim was never shipped and cannot be reconstructed, the actual Figure 10 regression could not be produced; only a proxy for a distinct variable exists. This is a genuine data-availability/reproducibility gap (authors_missing), documented in notes/unemployment_notes.md and the step-2/step-7 log notes.",
+  "evidence_refs": [
+    "replication/replication_log.json",
+    "replication/codebase/results/unemployment_cross_section.json",
+    "replication/codebase/notes/unemployment_notes.md",
+    "analyze/replication_plan.json"
+  ],
+  "not_attempted_reason": "authors_missing",
+  "graded_by": "agent"
+}

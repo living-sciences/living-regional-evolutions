@@ -1,0 +1,48 @@
+{
+  "instruction_summary": "Recalibrate Blanchard & Katz (1992)'s migration-adjustment model on state data through 2025: re-estimate its central migration elasticity, make the minimal amendment (a declining migration-responsiveness parameter) that reconciles the 1992 and 2026 evidence, validate out-of-sample and on the Great-Recession/COVID windows, and quantify what slower adjustment implies for the duration of local slumps.",
+  "completed": true,
+  "steps": [
+    {"description": "Read replication artifacts, 001 report/summary/CSVs, and re-read the paper's model section (eq. 4-7, pp. 15-22; closed form p. 18)", "command": "pdf extract + read 001 results", "exit_code": 0, "outputs": []},
+    {"description": "Rebuilt the venv (pandas 3.0.5, numpy 2.5.2, statsmodels 0.14.6 per evidence_summary) and installed pymupdf", "command": "uv venv /workspace/.venv && uv pip install numpy pandas scipy statsmodels matplotlib pyarrow pymupdf", "exit_code": 0, "outputs": []},
+    {"description": "Directly estimated BK's migration equation (rel. labor-force & population growth on lagged rel. unemployment, +/- income; state FE, state-clustered SE) per era and in rolling windows -- reusing 001's panel", "command": "python estimate_migration_elasticity.py", "exit_code": 0, "outputs": ["results/data/migration_elasticity.csv"]},
+    {"description": "Calibrated the two-margin adjustment model (m,a) from 001's estimated moments (VAR migration share, UR half-life) per era; built paper-vs-2026 calibration table; ran slump-duration counterfactual; held-out (pre-2015 vs 2015-24) and COVID-episode validation", "command": "python calibrate_model.py", "exit_code": 0, "outputs": ["results/calibration_table.csv", "results/data/calibration_full.csv", "results/data/model_summary.json"]},
+    {"description": "Built the 4-panel original-vs-updated figure (migration responsiveness, adjustment composition, model fit + counterfactual, slump duration over time), reusing the replication's AR->IRF engine for the empirical UR IRFs", "command": "python make_figure.py", "exit_code": 0, "outputs": ["results/fig1_bk_theory_update.png", "results/fig1_bk_theory_update.pdf"]},
+    {"description": "Wrote the theory section, report, and cards", "command": "write theory_update.md / report.md / result_card.json", "exit_code": 0, "outputs": ["results/theory_update.md", "report.md", "result_card.json"]}
+  ],
+  "key_results": {
+    "migration_elasticity_LF_paper_vs_2026": "0.00474 (se .00072) -> 0.00225 (se .00049), -53% [ESTIMATED]",
+    "migration_elasticity_POP_paper_vs_2026": "0.00339 -> 0.00118, -65% [ESTIMATED]",
+    "migration_share_household_paper_vs_2026": "0.383 -> 0.276 (001 C3 mig_yr1)",
+    "migration_share_payroll_paper_vs_2026": "0.77 -> 0.63 (001 C3_payroll mig_yr1)",
+    "calibrated_m_paper_vs_2026": "0.079 -> 0.057 (migration clearing rate) [CALIBRATED]",
+    "calibrated_a_paper_vs_2026": "0.127 -> 0.149 (job-recovery clearing rate rose) [CALIBRATED]",
+    "UR_halflife_oneoff_paper_vs_2026": "3.0 -> 3.0 yr (unchanged; composition rotation) [ESTIMATED]",
+    "UR_halflife_GFC_window_1995_2009": "5.0 yr; time-to-80%-recovery 11.6 yr; cum10 UR 1.56 vs 0.33 paper-era [ESTIMATED/CALIBRATED]",
+    "counterfactual_price_of_immobility": "restoring paper-era migration cuts one-off half-life 3.0->2.7 yr and cumulative slump -10% [CALIBRATED]",
+    "held_out_elasticity_pre2015_vs_2015_2024": "0.00370 -> 0.00076 (5x lower out of sample); pre-2015 m over-predicts out-migration [ESTIMATED]",
+    "COVID_episode": "emp_lr -0.22 (V-shaped); updated model (m=0.043,a=0.163) reproduces small non-permanent loss -0.21; original high-migration model cannot [CALIBRATED]",
+    "amendment": "declining time-varying migration-responsiveness parameter g_t = footprint of rising real moving costs (housing); alternative explicit HPI moving-cost margin considered and rejected [PROPOSED]"
+  },
+  "comparison_to_original": [
+    {"quantity": "year-1 migration share of adjustment (household)", "original": "0.40 (paper fn.37); 0.383 (001 same-pipeline 1978-90)", "followup": "0.276 (2011-25)", "source_file": "inputs/paper.pdf fn.37; /workspace/eval/followup/001-living-update/results/estimates_by_window.csv (C3 mig_yr1)", "note": "-28%; second (structural) confirmation via direct elasticity"},
+    {"quantity": "year-1 migration share (payroll/establishment)", "original": "0.65 (paper); 0.77 (001 1990-2004)", "followup": "0.630 (2011-25)", "source_file": "/workspace/eval/followup/001-living-update/results/estimates_by_window.csv (C3_payroll mig_yr1)", "note": "-18%"},
+    {"quantity": "structural migration elasticity m = -d(rel labor force)/d(rel unemployment)", "original": "not estimated by the paper or 001", "followup": "0.00474 (1976-90) -> 0.00225 (2010-25), state-clustered", "source_file": "results/data/migration_elasticity.csv (this study)", "note": "new direct structural estimate of BK eq.7; ~halved, ~7-sigma paper-era"},
+    {"quantity": "UR-gap half-life / duration of a local slump (one-off shock)", "original": "5-7 yr (paper p.20); 3 yr (001 1978-90)", "followup": "3 yr (2011-25); 5 yr in GFC window", "source_file": "inputs/paper.pdf; /workspace/eval/followup/001-living-update/results/estimates_by_window.csv (C3 ur_halflife)", "note": "one-off unchanged (composition rotates m->a); genuine lengthening only for severe persistent shocks"},
+    {"quantity": "long-run relative-employment loss (permanence)", "original": "-0.38 to -1.3 (paper/001)", "followup": "-0.28 (2026); -0.21 (COVID window)", "source_file": "/workspace/eval/followup/001-living-update/results/estimates_by_window.csv (C3 emp_lr)", "note": "permanence weakened as migration share fell (-m/S)"}
+  ],
+  "artifacts": [
+    "/workspace/eval/followup/002-theory-update/results/theory_update.md",
+    "/workspace/eval/followup/002-theory-update/results/calibration_table.csv",
+    "/workspace/eval/followup/002-theory-update/results/fig1_bk_theory_update.png",
+    "/workspace/eval/followup/002-theory-update/results/fig1_bk_theory_update.pdf",
+    "/workspace/eval/followup/002-theory-update/results/data/migration_elasticity.csv",
+    "/workspace/eval/followup/002-theory-update/results/data/calibration_full.csv",
+    "/workspace/eval/followup/002-theory-update/results/data/model_summary.json"
+  ],
+  "deviations": [
+    "The two-margin (m,a) adjustment model is a stylized single-mode reduction of BK's richer dynamics, exactly-identified from two moments; it is a calibration device for the slump-duration counterfactual, labelled [CALIBRATED]. The directly estimated migration elasticity is the genuine [ESTIMATED] structural quantity.",
+    "One-off UR half-life did NOT lengthen (honest tension with the instruction's premise): it resolves as a composition rotation (migration m down, job-recovery a up), with genuine lengthening confined to the severe/persistent GFC window (H 3->5). Reported as found.",
+    "Housing/cost-of-moving margin is modelled as the reduced-form declining parameter g_t, not estimated from a state house-price panel (out of reuse scope; 001 did not build HPI). The explicit-HPI alternative was considered and rejected for identification/parsimony.",
+    "Data scope unchanged from 001/replication: LAUS state coverage from 1976; relative per-capita income as BK's Fig-13 wage proxy (composition-adjusted CPS wages and SIC manufacturing AHE unreconstructable). No new data downloaded; compute was estimation + calibration only, per the brief."
+  ]
+}

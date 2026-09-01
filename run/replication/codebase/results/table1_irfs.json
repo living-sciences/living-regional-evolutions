@@ -1,0 +1,389 @@
+{
+  "coefficients": {
+    "employment_change": {
+      "phi": [
+        0.5155712468286456,
+        -0.12927863754658855,
+        0.026612806401023977,
+        -0.06622579563184729
+      ],
+      "se": [
+        0.022430221789447997,
+        0.02487054919436481,
+        0.024265551201087098,
+        0.0220084007455408
+      ],
+      "n": 1953,
+      "sum_phi": 0.34667962005123376
+    },
+    "unemployment": {
+      "phi": [
+        1.07498904955526,
+        -0.35531904786125046
+      ],
+      "se": [
+        0.03670838451671088,
+        0.03357375691278038
+      ],
+      "n": 663
+    },
+    "wage": {
+      "phi": [
+        0.8181388466769686,
+        0.07824593580005657,
+        0.03849157709292797,
+        -0.048575496439344064
+      ],
+      "se": [
+        0.022169378207159973,
+        0.028155994309721995,
+        0.02691079204733509,
+        0.020328717212669788
+      ],
+      "n": 1985,
+      "note": "pcinc proxy"
+    }
+  },
+  "impulse_responses": {
+    "employment": {
+      "year1": 1.5155712468286455,
+      "year2": 1.6521063198385013,
+      "year3": 1.6824603357188535,
+      "year4": 1.627953927462443,
+      "year5": 1.5654173302192853,
+      "year10": 1.528265352192311,
+      "year20": 1.5306326969874586,
+      "plateau": 1.5306425923502043
+    },
+    "unemployment": {
+      "year1": 1.07498904955526,
+      "year2": 0.8002824088024709,
+      "year3": 0.47833074046511675,
+      "year4": 0.22984472454985766,
+      "year5": 0.07712053872430985,
+      "year6": 0.001235525941448684,
+      "year7": -0.026074219532569682,
+      "year8": -0.028468506374335702,
+      "year9": -0.02133866575156712,
+      "year10": -0.012823429436093619
+    },
+    "wage": {
+      "year1": 0.8181388466769686,
+      "year2": 0.7475971082419769,
+      "year3": 0.7141458526816742,
+      "year4": 0.6256828576581765,
+      "year5": 0.5568091531835173,
+      "year10": 0.30484943489617594,
+      "year20": 0.09050420468775457
+    }
+  },
+  "individual_long_run": [
+    {
+      "state": "AL",
+      "sum_phi": 0.3595325522707771,
+      "long_run_emp_response": 1.561359603123468,
+      "flag": ""
+    },
+    {
+      "state": "AK",
+      "sum_phi": 0.4040832571837101,
+      "long_run_emp_response": 1.6780867664063626,
+      "flag": ""
+    },
+    {
+      "state": "AZ",
+      "sum_phi": 0.8782065711196197,
+      "long_run_emp_response": 8.210623587764761,
+      "flag": "high"
+    },
+    {
+      "state": "AR",
+      "sum_phi": 0.52340553291476,
+      "long_run_emp_response": 2.098219910348115,
+      "flag": ""
+    },
+    {
+      "state": "CA",
+      "sum_phi": 0.8647984432519646,
+      "long_run_emp_response": 7.396364539378954,
+      "flag": "high"
+    },
+    {
+      "state": "CO",
+      "sum_phi": 0.6814270318956033,
+      "long_run_emp_response": 3.1389982833455563,
+      "flag": ""
+    },
+    {
+      "state": "CT",
+      "sum_phi": 0.5117396182342473,
+      "long_run_emp_response": 2.0480875314593083,
+      "flag": ""
+    },
+    {
+      "state": "DE",
+      "sum_phi": 0.31371767951549295,
+      "long_run_emp_response": 1.4571262731844996,
+      "flag": ""
+    },
+    {
+      "state": "DC",
+      "sum_phi": 0.6698655874405676,
+      "long_run_emp_response": 3.0290692577223375,
+      "flag": ""
+    },
+    {
+      "state": "FL",
+      "sum_phi": 0.891429849487536,
+      "long_run_emp_response": 9.210634739658012,
+      "flag": "high"
+    },
+    {
+      "state": "GA",
+      "sum_phi": 0.7982597526412486,
+      "long_run_emp_response": 4.956869108134463,
+      "flag": ""
+    },
+    {
+      "state": "HI",
+      "sum_phi": 0.7372193314785518,
+      "long_run_emp_response": 3.8054549660238033,
+      "flag": ""
+    },
+    {
+      "state": "ID",
+      "sum_phi": 0.5180972823188768,
+      "long_run_emp_response": 2.0751076167653064,
+      "flag": ""
+    },
+    {
+      "state": "IL",
+      "sum_phi": 0.8130156033189674,
+      "long_run_emp_response": 5.348039824445086,
+      "flag": ""
+    },
+    {
+      "state": "IN",
+      "sum_phi": 0.28167641329610354,
+      "long_run_emp_response": 1.3921302578808605,
+      "flag": ""
+    },
+    {
+      "state": "IA",
+      "sum_phi": 0.5591556979847644,
+      "long_run_emp_response": 2.2683745608794097,
+      "flag": ""
+    },
+    {
+      "state": "KS",
+      "sum_phi": 0.29269116745333745,
+      "long_run_emp_response": 1.413809575089716,
+      "flag": ""
+    },
+    {
+      "state": "KY",
+      "sum_phi": 0.38920699343386767,
+      "long_run_emp_response": 1.6372158640485794,
+      "flag": ""
+    },
+    {
+      "state": "LA",
+      "sum_phi": 0.4999671500297543,
+      "long_run_emp_response": 1.9998686087514141,
+      "flag": ""
+    },
+    {
+      "state": "ME",
+      "sum_phi": 0.5860929060821751,
+      "long_run_emp_response": 2.4160011140049105,
+      "flag": ""
+    },
+    {
+      "state": "MD",
+      "sum_phi": 0.5695074246690848,
+      "long_run_emp_response": 2.3229204341824254,
+      "flag": ""
+    },
+    {
+      "state": "MA",
+      "sum_phi": 0.8980324854396877,
+      "long_run_emp_response": 9.80704496242786,
+      "flag": "high"
+    },
+    {
+      "state": "MI",
+      "sum_phi": 0.3110962928762421,
+      "long_run_emp_response": 1.451581679208986,
+      "flag": ""
+    },
+    {
+      "state": "MN",
+      "sum_phi": 0.46740728961073724,
+      "long_run_emp_response": 1.8776073733136855,
+      "flag": ""
+    },
+    {
+      "state": "MS",
+      "sum_phi": 0.563250651707407,
+      "long_run_emp_response": 2.2896427983449823,
+      "flag": ""
+    },
+    {
+      "state": "MO",
+      "sum_phi": 0.5680403692878881,
+      "long_run_emp_response": 2.3150311485159825,
+      "flag": ""
+    },
+    {
+      "state": "MT",
+      "sum_phi": 0.4623352268101351,
+      "long_run_emp_response": 1.859894956604998,
+      "flag": ""
+    },
+    {
+      "state": "NE",
+      "sum_phi": 0.18423604508626845,
+      "long_run_emp_response": 1.2258447973540971,
+      "flag": ""
+    },
+    {
+      "state": "NV",
+      "sum_phi": 0.780040835740189,
+      "long_run_emp_response": 4.546298415731484,
+      "flag": ""
+    },
+    {
+      "state": "NH",
+      "sum_phi": 0.6622112769123902,
+      "long_run_emp_response": 2.960430386365022,
+      "flag": ""
+    },
+    {
+      "state": "NJ",
+      "sum_phi": 0.6270108310387855,
+      "long_run_emp_response": 2.681042998607784,
+      "flag": ""
+    },
+    {
+      "state": "NM",
+      "sum_phi": 0.7403222783854704,
+      "long_run_emp_response": 3.8509271946109354,
+      "flag": ""
+    },
+    {
+      "state": "NY",
+      "sum_phi": 0.8791898941418699,
+      "long_run_emp_response": 8.27745322211969,
+      "flag": "high"
+    },
+    {
+      "state": "NC",
+      "sum_phi": 0.805824479298096,
+      "long_run_emp_response": 5.149979752263357,
+      "flag": ""
+    },
+    {
+      "state": "ND",
+      "sum_phi": 0.4080899576968898,
+      "long_run_emp_response": 1.6894459099038428,
+      "flag": ""
+    },
+    {
+      "state": "OH",
+      "sum_phi": 0.7479945772601235,
+      "long_run_emp_response": 3.968168577992125,
+      "flag": ""
+    },
+    {
+      "state": "OK",
+      "sum_phi": 0.42184558790421894,
+      "long_run_emp_response": 1.7296417342471704,
+      "flag": ""
+    },
+    {
+      "state": "OR",
+      "sum_phi": 0.5506693763658598,
+      "long_run_emp_response": 2.2255327088817185,
+      "flag": ""
+    },
+    {
+      "state": "PA",
+      "sum_phi": 0.9277220138306701,
+      "long_run_emp_response": 13.835471254791758,
+      "flag": "high"
+    },
+    {
+      "state": "RI",
+      "sum_phi": 0.7503317930143476,
+      "long_run_emp_response": 4.0053157431353155,
+      "flag": ""
+    },
+    {
+      "state": "SC",
+      "sum_phi": 0.43428703227222176,
+      "long_run_emp_response": 1.7676808859739648,
+      "flag": ""
+    },
+    {
+      "state": "SD",
+      "sum_phi": 0.2763135412812664,
+      "long_run_emp_response": 1.3818138890846068,
+      "flag": ""
+    },
+    {
+      "state": "TN",
+      "sum_phi": 0.5390817998666722,
+      "long_run_emp_response": 2.169582367783989,
+      "flag": ""
+    },
+    {
+      "state": "TX",
+      "sum_phi": 0.6441168236001534,
+      "long_run_emp_response": 2.8099108536574002,
+      "flag": ""
+    },
+    {
+      "state": "UT",
+      "sum_phi": 0.6766737803610985,
+      "long_run_emp_response": 3.092851551342864,
+      "flag": ""
+    },
+    {
+      "state": "VT",
+      "sum_phi": 0.3979207326228864,
+      "long_run_emp_response": 1.6609108703516409,
+      "flag": ""
+    },
+    {
+      "state": "VA",
+      "sum_phi": 0.6707683207478623,
+      "long_run_emp_response": 3.037374782012284,
+      "flag": ""
+    },
+    {
+      "state": "WA",
+      "sum_phi": 0.3581592363575103,
+      "long_run_emp_response": 1.5580188368294536,
+      "flag": ""
+    },
+    {
+      "state": "WV",
+      "sum_phi": 0.8276271283769804,
+      "long_run_emp_response": 5.8013769254074115,
+      "flag": ""
+    },
+    {
+      "state": "WI",
+      "sum_phi": 0.6054981738673962,
+      "long_run_emp_response": 2.53484251214561,
+      "flag": ""
+    },
+    {
+      "state": "WY",
+      "sum_phi": 0.6831531356717432,
+      "long_run_emp_response": 3.1560987738353914,
+      "flag": ""
+    }
+  ],
+  "individual_median": 2.3229204341824254
+}

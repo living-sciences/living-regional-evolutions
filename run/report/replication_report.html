@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Replication Report</title>
+<style>
+  :root {
+    --match: #1a7f37; --partial: #9a6700; --nomatch: #cf222e;
+    --na: #57606a; --bg: #f6f8fa; --card: #ffffff; --ink: #1f2328;
+    --muted: #57606a; --line: #d0d7de; --accent: #0969da;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    color: var(--ink); background: var(--bg); margin: 0; line-height: 1.55;
+    font-size: 15px;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 28px 22px 60px; }
+  h1 { font-size: 22px; margin: 0 0 2px; }
+  h2 { font-size: 17px; margin: 28px 0 10px; padding-bottom: 6px; border-bottom: 1px solid var(--line); }
+  h3 { font-size: 14px; margin: 16px 0 4px; color: var(--ink); }
+  p { margin: 6px 0; }
+  .sub { color: var(--muted); font-size: 13px; }
+  a { color: var(--accent); text-decoration: none; }
+  code { background: var(--bg); border: 1px solid var(--line); border-radius: 5px; padding: 1px 5px; font-size: 12.5px; }
+
+  /* Verdict card */
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 20px 22px; margin-top: 14px; box-shadow: 0 1px 2px rgba(0,0,0,.04); }
+  .hero { display: flex; gap: 22px; align-items: center; }
+  .gauge { flex: 0 0 auto; }
+  .hero-body { flex: 1 1 auto; }
+  .badge { display: inline-block; font-weight: 600; font-size: 12px; letter-spacing: .02em; padding: 3px 10px; border-radius: 999px; color: #fff; }
+  .bottomline { font-size: 16px; font-weight: 500; margin: 8px 0 10px; }
+  .stats { display: flex; flex-wrap: wrap; gap: 8px 18px; color: var(--muted); font-size: 13px; }
+  .stats b { color: var(--ink); }
+
+  /* Tier bar */
+  .bar { display: flex; height: 12px; border-radius: 6px; overflow: hidden; border: 1px solid var(--line); margin: 4px 0 2px; }
+  .bar > span { display: block; }
+  .legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12px; color: var(--muted); margin-top: 6px; }
+  .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 5px; vertical-align: -1px; }
+
+  /* Claim chips */
+  .chips { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 6px; }
+  .chip { font-size: 12px; padding: 3px 9px; border-radius: 999px; border: 1px solid var(--line); color: #fff; font-weight: 500; }
+
+  /* Tables */
+  table { border-collapse: collapse; width: 100%; font-size: 13px; margin: 8px 0; }
+  th, td { text-align: left; padding: 7px 9px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; }
+  .st { font-weight: 600; }
+
+  details { margin: 8px 0; border: 1px solid var(--line); border-radius: 8px; background: var(--card); }
+  details > summary { cursor: pointer; padding: 9px 12px; font-weight: 600; font-size: 13.5px; }
+  details[open] > summary { border-bottom: 1px solid var(--line); }
+  details .inner { padding: 4px 14px 12px; }
+  .refs { font-size: 12.5px; color: var(--muted); }
+  .refs code { font-size: 12px; }
+  footer { margin-top: 34px; color: var(--muted); font-size: 12px; text-align: center; }
+  @media print { body { background: #fff; } .card { box-shadow: none; } details { border: none; } details > summary { display: none; } details .inner { padding: 0; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Replication Report</h1>
+  <div class="sub">Mode: full · Generated 2026-08-24 22:12</div>
+
+  <!-- VERDICT CARD -->
+  <div class="card">
+    <div class="hero">
+      <div class="gauge">
+        <svg width="104" height="104" viewBox="0 0 104 104" role="img" aria-label="Replication score 30%">
+          <circle cx="52" cy="52" r="46" fill="none" stroke="#eaeef2" stroke-width="10"/>
+          
+          <circle cx="52" cy="52" r="46" fill="none" stroke="#cf222e" stroke-width="10"
+                  stroke-linecap="round" stroke-dasharray="85.5 289.0"
+                  transform="rotate(-90 52 52)"/>
+          <text x="52" y="50" text-anchor="middle" font-size="22" font-weight="700" fill="#1f2328">30%</text>
+          <text x="52" y="68" text-anchor="middle" font-size="10" fill="#57606a">score</text>
+          
+        </svg>
+      </div>
+      <div class="hero-body">
+        <span class="badge" style="background: #cf222e">Not reproduced</span>
+        
+        <div class="stats">
+          <span><b>3/32</b> claims reproduced</span>
+          <span><b>12</b> partial</span>
+          <span><b>8</b> did not reproduce</span>
+          
+          <span><b>2</b> fixes applied</span>
+          
+        </div>
+      </div>
+    </div>
+
+    
+    <h3 style="margin-top:16px">Claims at a glance</h3>
+    <div class="bar" aria-hidden="true">
+      <span style="width: 8.57%; background: var(--match)"></span>
+      <span style="width: 34.29%; background: var(--partial)"></span>
+      <span style="width: 22.86%; background: var(--nomatch)"></span>
+      <span style="width: 28.57%; background: var(--na)"></span>
+    </div>
+    <div class="legend">
+      <span><i style="background: var(--match)"></i>match 3</span>
+      <span><i style="background: var(--partial)"></i>partial 12</span>
+      <span><i style="background: var(--nomatch)"></i>no match 8</span>
+      <span><i style="background: var(--na)"></i>other 10</span>
+    </div>
+    
+    <div class="chips">
+      <span class="chip" style="background: #1a7f37" title="scalar · match">C1</span><span class="chip" style="background: #1a7f37" title="scalar · match">C2</span><span class="chip" style="background: #9a6700" title="qualitative · partial">C3</span><span class="chip" style="background: #9a6700" title="table · partial">C4</span><span class="chip" style="background: #cf222e" title="scalar · no_match">C5</span><span class="chip" style="background: #57606a" title="scalar · not_attempted">C6</span><span class="chip" style="background: #57606a" title="scalar · not_attempted">C7</span><span class="chip" style="background: #9a6700" title="scalar · partial">C8</span><span class="chip" style="background: #1a7f37" title="qualitative · match">C9</span><span class="chip" style="background: #9a6700" title="scalar · partial">C10</span><span class="chip" style="background: #57606a" title="scalar · not_attempted">C11</span><span class="chip" style="background: #cf222e" title="scalar · no_match">C12</span><span class="chip" style="background: #cf222e" title="scalar · no_match">C13</span><span class="chip" style="background: #cf222e" title="scalar · no_match">C14</span><span class="chip" style="background: #cf222e" title="scalar · no_match">C15</span><span class="chip" style="background: #9a6700" title="scalar · partial">C16</span><span class="chip" style="background: #cf222e" title="scalar · no_match">C17</span><span class="chip" style="background: #cf222e" title="scalar · no_match">C18</span><span class="chip" style="background: #cf222e" title="scalar · no_match">C19</span><span class="chip" style="background: #57606a" title="scalar · not_attempted">C20</span><span class="chip" style="background: #9a6700" title="scalar · partial">C21</span><span class="chip" style="background: #8250df" title="scalar · out_of_scope">C22</span><span class="chip" style="background: #9a6700" title="scalar · partial">C23</span><span class="chip" style="background: #9a6700" title="scalar · partial">C24</span><span class="chip" style="background: #57606a" title="scalar · not_attempted">C25</span><span class="chip" style="background: #8250df" title="scalar · out_of_scope">C26</span><span class="chip" style="background: #57606a" title="scalar · not_attempted">C27</span><span class="chip" style="background: #57606a" title="figure · not_attempted">C28</span><span class="chip" style="background: #9a6700" title="scalar · partial">C29</span><span class="chip" style="background: #9a6700" title="scalar · partial">C30</span><span class="chip" style="background: #57606a" title="scalar · not_attempted">C31</span><span class="chip" style="background: #9a6700" title="scalar · partial">C32</span><span class="chip" style="background: #57606a" title="scalar · not_attempted">C33</span><span class="chip" style="background: #57606a" title="scalar · not_attempted">C34</span><span class="chip" style="background: #9a6700" title="figure · partial">C35</span>
+    </div>
+    
+    
+  </div>
+
+  
+  <div class="card" style="border-color: #d4a72c; background: #fff8c5">
+    <b>Flags</b>
+    <ul style="margin:6px 0 0"><li>1 not_attempted claim(s) excluded from the denominator as run/tooling-limited (blocked_infra / no_evidence), not counted against the paper.</li><li>2 claim(s) marked out_of_scope (planner did not target them) — excluded from the score, not counted as failures. Score is over the 32 attempted/blocked claim(s).</li></ul>
+  </div>
+  
+
+  <!-- NARRATIVE (summary-first) -->
+  
+
+  <!-- LIMITATIONS -->
+  
+  <h2>Limitations &amp; code quality</h2>
+  
+  
+  <p class="sub">2 fixes were needed to run the provided code (1 minor, 1 major, 0 critical). These describe the code, not the replication.</p>
+  <table>
+    <thead><tr><th>#</th><th>Fix</th><th>Severity</th></tr></thead>
+    <tbody><tr><td>1</td><td>Added FRED API request throttling (0.9s minimum interval) and 429-aware backoff to avoid rate limits.</td><td class="st" style="color: #1a7f37">minor</td></tr><tr><td>2</td><td>Replaced a set_index(&#39;year&#39;).loc lookup on a duplicated-year frame with a precomputed national ln-employment series indexed by year, fixing a regression size mismatch.</td><td class="st" style="color: #9a6700">major</td></tr></tbody>
+  </table>
+  
+  
+
+  <!-- CITATION CHECK (advisory; a plain section so it also lands in the PDF) -->
+  
+
+  <!-- DETAILS (collapsible) -->
+  <h2>Details</h2>
+
+  <details>
+    <summary>Per-claim verdicts (35)</summary>
+    <div class="inner">
+      <table>
+        <thead><tr><th>ID</th><th>Tier</th><th>Type</th><th>Status</th><th>How graded</th><th>Why</th></tr></thead>
+        <tbody>
+        
+          <tr>
+            <td><code>C1</code></td><td>headline</td><td>scalar</td>
+            <td class="st" style="color: #1a7f37">match</td>
+            <td>agent</td>
+            <td>The run produced results/persistence_convergence.json with emp_persistence_slope=0.6976716605958123 and emp_persistence_r2=0.7542403243498497 over emp_persistence_n=51 units (the 50 states + DC), from step 3 (src/persistence_convergence....</td>
+          </tr>
+        
+          <tr>
+            <td><code>C2</code></td><td>supporting</td><td>scalar</td>
+            <td class="st" style="color: #1a7f37">match</td>
+            <td>agent</td>
+            <td>The run re-ran the Figure 1 employment-persistence regression (1970-90 growth on 1950-70 growth) dropping Arizona, Florida, and Nevada. results/persistence_convergence.json reports emp_persistence_r2_ex_AZ_FL_NV = 0.6101290902950444, and...</td>
+          </tr>
+        
+          <tr>
+            <td><code>C3</code></td><td>supporting</td><td>qualitative</td>
+            <td class="st" style="color: #9a6700">partial</td>
+            <td>agent</td>
+            <td>Evidence is /workspace/output/replication/codebase/results/adf_tests.json. The three states the claim names (MA, SD, WY) all reject the unit root at 5% and all have negative lagged-level coefficients, matching the paper&#39;s substantive fin...</td>
+          </tr>
+        
+          <tr>
+            <td><code>C4</code></td><td>headline</td><td>table</td>
+            <td class="st" style="color: #9a6700">partial</td>
+            <td>agent</td>
+            <td>The run produced the Table 1 impulse responses in results/table1_irfs.json (the planned output/tables/table1.csv was not written, but the impulse_responses block is the gradeable evidence). Grading per cell by row/column label against pa...</td>
+          </tr>
+        
+          <tr>
+            <td><code>C5</code></td><td>supporting</td><td>scalar</td>
+            <td class="st" style="color: #cf222e">no match</td>
+            <td>agent</td>
+            <td>The run produced per-state long-run employment responses in results/table1_irfs.json (&#39;individual_long_run&#39;), computed as the plateau 1/(1-sum_phi) of an AR(4) in relative-employment change. Of the four named outliers, only Wyoming repro...</td>
+          </tr>
+        
+          <tr>
+            <td><code>C6</code></td><td>supporting</td><td>scalar</td>
+            <td class="st" style="color: #57606a">not attempted</td>
+            <td>agent</td>
+            <td>The claim targets the exact regression of the 1985 relative state unemployment rate on the 1975 rate (Figure 3; slope 0.03, t 0.2, R^2 0.00). This specific regression could NOT be produced by the run: the pipeline reconstructed state une...</td>
+          </tr>
+        
+          <tr>
+            <td><code>C7</code></td><td>supporting</td><td>scalar</td>
+            <td class="st" style="color: #57606a">not attempted</td>
+            <td>agent</td>
+            <td>The C7 regression requires the relative state unemployment rate at a 1970 endpoint, but reconstructed state unemployment (LAUS-basis) is only available from 1976 onward. The pipeline therefore explicitly recorded the &#39;1990_on_1970&#39; pair ...</td>
+          </tr>
+        
+          <tr>
+            <td><code>C8</code></td><td>headline</td><td>scalar</td>
+            <td class="st" style="color: #9a6700">partial</td>
+            <td>agent</td>
+            <td>Step 6 estimated the pooled AR(2) for relative unemployment and produced the implied impulse response in results/table1_irfs.json: impulse_responses.unemployment = {year1: 1.075, year2: 0.800, year3: 0.478, year4: 0.230, year5: 0.077, .....</td>
+          </tr>
+        
+          <tr>
+            <td><code>C9</code></td><td>supporting</td><td>qualitative</td>
+            <td class="st" style="color: #1a7f37">match</td>
+            <td>agent</td>
+            <td>results/adf_tests.json (wages block) reports n_states=51, n_negative_coef=48, n_reject_5pct=3 (reject_states=[&#39;NE&#39;,&#39;WI&#39;,&#39;WY&#39;], crit_5pct=-2.94), which I independently recomputed from the 51 per_state entries. src/adf_tests.py confirms th...</td>
+          </tr>
+        
+          <tr>
+            <td><code>C10</code></td><td>headline</td><td>scalar</td>
+            <td class="st" style="color: #9a6700">partial</td>
+            <td>agent</td>
+            <td>The claim has two halves. (1) The personal-income-per-capita convergence regression (avg annual pcinc growth 1948-90 on log 1948 income) WAS reproduced in results/persistence_convergence.json: pcinc_convergence_slope=-0.01197 (paper -0.0...</td>
+          </tr>
+        
+          <tr>
+            <td><code>C11</code></td><td>supporting</td><td>scalar</td>
+            <td class="st" style="color: #57606a">not attempted</td>
+            <td>agent</td>
+            <td>C11 concerns the persistence of average MANUFACTURING wage growth: the cross-state correlation of 1950-70 mfg wage growth with 1970-90 mfg wage growth (paper value 0.13). The replication step 3 that targets C11 explicitly did NOT reconst...</td>
+          </tr>
+        
+          <tr>
+            <td><code>C12</code></td><td>supporting</td><td>scalar</td>
+            <td class="st" style="color: #cf222e">no match</td>
+            <td>agent</td>
+            <td>The run produced Table 2 in results/table2_and_regionyear.json, but every quantity is far outside tolerance. Produced avg_adj_r2 = 0.969 vs paper 0.66 (~47% off); n_states_beta_sig_diff_1 = 50 vs paper 13; per-state betas: AK 2.27 vs -1....</td>
+          </tr>
+        
+          <tr>
+            <td><code>C13</code></td><td>supporting</td><td>scalar</td>
+            <td class="st" style="color: #cf222e">no match</td>
+            <td>agent</td>
+            <td>Step 4 ran successfully (replication_log.json, exit_code 0) and wrote results/table2_and_regionyear.json, whose region_year block gives census_division_share=0.6419 (64%) and census_region_share=0.5704 (57%). The paper reports about 38% ...</td>
+          </tr>
+        
+          <tr>
+            <td><code>C14</code></td><td>supporting</td><td>scalar</td>
+            <td class="st" style="color: #cf222e">no match</td>
+            <td>agent</td>
+            <td>The run produced the regression underlying Figure 6 in results/unemployment_cross_section.json under avg_urate_vs_empgrowth: slope = -33.31, t = -1.71, r2 = 0.056, n = 51, over window &#39;1976-1990&#39;. The paper reports slope -0.06 with t-sta...</td>
+          </tr>
+        
+          <tr>
+            <td><code>C15</code></td><td>headline</td><td>scalar</td>
+            <td class="st" style="color: #cf222e">no match</td>
+            <td>agent</td>
+            <td>The run produced the trivariate VAR impulse responses in results/trivariate_var.json. The reported year-1 responses to the -1% employment shock are year1.unemployment_response = 0.001994520587944889 and year1.participation_response = -0....</td>
+          </tr>
+        
+          <tr>
+            <td><code>C16</code></td><td>headline</td><td>scalar</td>
+            <td class="st" style="color: #9a6700">partial</td>
+            <td>agent</td>
+            <td>The trivariate VAR (step 8) produced results/trivariate_var.json and figures/fig7_trivariate_irf.png from the 1978-1990 LAUS window (n_obs=663). The employment IRF builds to a peak magnitude of -0.02121 (-2.1%) at year 3 (year 4 = -0.020...</td>
+          </tr>
+        
+          <tr>
+            <td><code>C17</code></td><td>headline</td><td>scalar</td>
+            <td class="st" style="color: #cf222e">no match</td>
+            <td>agent</td>
+            <td>Step 8 produced the year-1 per-worker decomposition in results/trivariate_var.json under &#39;per_worker&#39; (basis: &#39;shares of the year-1 employment response&#39;): unemployment=0.1152, participation=0.2841, implied_net_migration=0.6007, derived f...</td>
+          </tr>
+        
+          <tr>
+            <td><code>C18</code></td><td>supporting</td><td>scalar</td>
+            <td class="st" style="color: #cf222e">no match</td>
+            <td>agent</td>
+            <td>Step 8 produced results/trivariate_var.json with okun.all_states = {coef: 18.270, t: 14.687, n: 714} and okun.farm_states = {coef: 14.667, t: 4.424, n: 126}. The paper&#39;s pooled Okun coefficient is ~-0.32 (t=17.5) and the farm-state coeff...</td>
+          </tr>
+        
+          <tr>
+            <td><code>C19</code></td><td>supporting</td><td>scalar</td>
+            <td class="st" style="color: #cf222e">no match</td>
+            <td>agent</td>
+            <td>The claim concerns Figure 9&#39;s regression of average employment growth on relative MANUFACTURING wages, 1950-90 (slope -0.68, t=0.6). The run could not reconstruct this: manufacturing production-worker AHE (SIC basis, 1947-1990) is flagge...</td>
+          </tr>
+        
+          <tr>
+            <td><code>C20</code></td><td>supporting</td><td>scalar</td>
+            <td class="st" style="color: #57606a">not attempted</td>
+            <td>agent</td>
+            <td>Claim C20 requires the regression underlying Figure 10 -- average manufacturing wage on average state unemployment rate (1970-90) -- expecting a positive relationship with t~3.1 and R^2~0.16. The manufacturing production-worker wage seri...</td>
+          </tr>
+        
+          <tr>
+            <td><code>C21</code></td><td>supporting</td><td>scalar</td>
+            <td class="st" style="color: #9a6700">partial</td>
+            <td>agent</td>
+            <td>Step 9 (src/bivariate_irfs.py) produced results/bivariate_irfs.json and figures/fig11_emp_wage.png, so Figure 11 was generated and is gradeable. The EMPLOYMENT dynamics match the paper well: from a -1.0% initial shock (year 0 = -0.01) em...</td>
+          </tr>
+        
+          <tr>
+            <td><code>C22</code></td><td>supporting</td><td>scalar</td>
+            <td class="st" style="color: #8250df">out of scope</td>
+            <td>deterministic</td>
+            <td>No plan step targeted this claim; treated as out_of_scope (excluded from the score, not a failure): The industry/worker-characteristic-controlled CPS wage series is an author-constructed set of annual state earnings-regression residuals ...</td>
+          </tr>
+        
+          <tr>
+            <td><code>C23</code></td><td>supporting</td><td>scalar</td>
+            <td class="st" style="color: #9a6700">partial</td>
+            <td>agent</td>
+            <td>Step 9 (bivariate employment-personal-income system, Figure 13/C23) produced results/bivariate_irfs.json with emp_income.irf giving the per-capita personal income response to a -1% employment shock over years 0-20. The path is normalized...</td>
+          </tr>
+        
+          <tr>
+            <td><code>C24</code></td><td>supporting</td><td>scalar</td>
+            <td class="st" style="color: #9a6700">partial</td>
+            <td>agent</td>
+            <td>The run produced results/bivariate_irfs.json with suppress_feedback = {employment_plateau_with_feedback: -0.011717, employment_plateau_without_feedback: -0.014579}, and the emp_wage IRF at year 0 gives the initial employment change of -0...</td>
+          </tr>
+        
+          <tr>
+            <td><code>C25</code></td><td>supporting</td><td>scalar</td>
+            <td class="st" style="color: #57606a">not attempted</td>
+            <td>deterministic</td>
+            <td>No plan step targeted this claim; the planner marked it BLOCKED (counts as a reproducibility gap): Requires NAR Home Sales Yearbook median metro house prices (39 MSAs, 1969-90) that Poterba supplied privately to the authors; this proprie...</td>
+          </tr>
+        
+          <tr>
+            <td><code>C26</code></td><td>supporting</td><td>scalar</td>
+            <td class="st" style="color: #8250df">out of scope</td>
+            <td>deterministic</td>
+            <td>No plan step targeted this claim; treated as out_of_scope (excluded from the score, not a failure): Reconstructable in principle from BLS metro CPI-U (23 MSAs) plus a matching MSA employment panel, but it is a specialized supporting appe...</td>
+          </tr>
+        
+          <tr>
+            <td><code>C27</code></td><td>supporting</td><td>scalar</td>
+            <td class="st" style="color: #57606a">not attempted</td>
+            <td>deterministic</td>
+            <td>No plan step targeted this claim; the planner marked it BLOCKED (counts as a reproducibility gap): The real-consumption-wage calculation is derived from the housing-price (C25) and CPI (C26) impulse responses; it inherits the blocked pro...</td>
+          </tr>
+        
+          <tr>
+            <td><code>C28</code></td><td>supporting</td><td>figure</td>
+            <td class="st" style="color: #57606a">not attempted</td>
+            <td>deterministic</td>
+            <td>No plan step targeted this claim; the planner marked it BLOCKED (counts as a reproducibility gap): Requires the Davis-Loungani-Mahidhara defense (military prime contract) series and the Bartik two-digit industry-mix instrument, both priv...</td>
+          </tr>
+        
+          <tr>
+            <td><code>C29</code></td><td>supporting</td><td>scalar</td>
+            <td class="st" style="color: #9a6700">partial</td>
+            <td>agent</td>
+            <td>The run executed step 10 (src/massachusetts_case.py, exit_code 0) and produced results/massachusetts.json with growth_1980_85 = 1.985% and gap_vs_us_1980_85 = 0.495 pp. The MA 1980-85 annual growth of ~1.98% matches the paper&#39;s 2.0% almo...</td>
+          </tr>
+        
+          <tr>
+            <td><code>C30</code></td><td>supporting</td><td>scalar</td>
+            <td class="st" style="color: #9a6700">partial</td>
+            <td>agent</td>
+            <td>Only the unemployment sub-component of this five-part claim was reconstructable this run. results/massachusetts.json reports unemp_rel_1979 = -0.35 (paper: equal to national, i.e. 0 — close) and unemp_rel_1985 = -3.0917, i.e. 3.09 pp bel...</td>
+          </tr>
+        
+          <tr>
+            <td><code>C31</code></td><td>supporting</td><td>scalar</td>
+            <td class="st" style="color: #57606a">not attempted</td>
+            <td>deterministic</td>
+            <td>No plan step targeted this claim; the planner marked it BLOCKED (counts as a reproducibility gap): Boston relative housing prices come from the same proprietary NAR metro median-price series as C25; not reconstructable from reachable pub...</td>
+          </tr>
+        
+          <tr>
+            <td><code>C32</code></td><td>supporting</td><td>scalar</td>
+            <td class="st" style="color: #9a6700">partial</td>
+            <td>agent</td>
+            <td>results/massachusetts.json (produced by step 10, src/massachusetts_case.py) reports for the reconstructed MA employment panel: avg_growth_1985_91 = -0.617, gap_vs_us_1985_91 = -2.382 (i.e. ~2.38 pp below national), growth_1990 = -4.269, ...</td>
+          </tr>
+        
+          <tr>
+            <td><code>C33</code></td><td>supporting</td><td>scalar</td>
+            <td class="st" style="color: #57606a">not attempted</td>
+            <td>deterministic</td>
+            <td>No plan step targeted this claim; the planner marked it BLOCKED (counts as a reproducibility gap): The Massachusetts boom/bust simulation predicts nominal-wage and Boston housing-price growth using the estimated wage/housing system, whic...</td>
+          </tr>
+        
+          <tr>
+            <td><code>C34</code></td><td>supporting</td><td>scalar</td>
+            <td class="st" style="color: #57606a">not attempted</td>
+            <td>deterministic</td>
+            <td>No plan step targeted this claim; the planner marked it BLOCKED (counts as a reproducibility gap): Describes properties (state-income shares, forecast-error volatility) of the Davis-Loungani-Mahidhara military prime-contract-award series...</td>
+          </tr>
+        
+          <tr>
+            <td><code>C35</code></td><td>supporting</td><td>figure</td>
+            <td class="st" style="color: #9a6700">partial</td>
+            <td>agent</td>
+            <td>The exact expected file output/figures/figure2.pdf was not produced, but a relevant figure figures/fig2_cumulative_rel_emp.png was, titled &#39;Fig 2: cumulative relative employment by region group&#39;, plotting cumulative relative log-employme...</td>
+          </tr>
+        
+        </tbody>
+      </table>
+    </div>
+  </details>
+
+  
+  <details>
+    <summary>Replication run (10/10 steps, 181s)</summary>
+    <div class="inner">
+      <p class="sub">Python 3.12.8 · GPU NVIDIA RTX A6000 (x4, 49140 MiB each) · pandas 3.0.5, numpy 2.5.2, statsmodels 0.14.6, scipy 1.18.1, matplotlib installed</p>
+      <table>
+        <thead><tr><th>Step</th><th>What it did</th><th>Result</th><th>Time</th></tr></thead>
+        <tbody><tr><td>1</td><td>Create working copy, venv, install deps, make output dirs.</td><td class="st" style="color: #1a7f37">ok</td><td>40s</td></tr><tr><td>2</td><td>Reconstruct 51-unit state panel 1947-1990 from FRED/BLS.</td><td class="st" style="color: #1a7f37">ok</td><td>113s</td></tr><tr><td>3</td><td>Persistence &amp; convergence regressions (Figs 1,2,4,9).</td><td class="st" style="color: #1a7f37">ok</td><td>4s</td></tr><tr><td>4</td><td>State-national employment elasticities (Table 2) + region-year variance decomposition.</td><td class="st" style="color: #1a7f37">ok</td><td>3s</td></tr><tr><td>5</td><td>ADF unit-root tests on relative employment (trend, 4 lags) and relative wages (no trend, pcinc proxy), 1952-1990.</td><td class="st" style="color: #1a7f37">ok</td><td>3s</td></tr><tr><td>6</td><td>Pooled univariate models &amp; implied impulse responses (Table 1) + per-state long-run employment responses.</td><td class="st" style="color: #1a7f37">ok</td><td>3s</td></tr><tr><td>7</td><td>Unemployment persistence &amp; cross-state correlations (Figs 3,6,10), LAUS 1976-1990.</td><td class="st" style="color: #1a7f37">ok</td><td>3s</td></tr><tr><td>8</td><td>Trivariate VAR (emp, unemployment, participation) Fig 7 + Okun coefficient (C18).</td><td class="st" style="color: #1a7f37">ok</td><td>3s</td></tr><tr><td>9</td><td>Bivariate emp-wage &amp; emp-income systems (Figs 11,13,14).</td><td class="st" style="color: #1a7f37">ok</td><td>3s</td></tr><tr><td>10</td><td>Massachusetts case study (descriptive reconstructable parts).</td><td class="st" style="color: #1a7f37">ok</td><td>6s</td></tr></tbody>
+      </table>
+    </div>
+  </details>
+  
+
+  
+
+  <details>
+    <summary>Where to look (artifacts)</summary>
+    <div class="inner refs">
+      <p>The full machine-readable record is on disk next to this report:</p>
+      <ul>
+        <li><code>verify/verdicts.json</code> — every claim verdict, with the grader's cited rationale.</li>
+        <li><code>verify/replication_score.json</code> — the score and tier breakdown.</li>
+        <li><code>replication/replication_log.json</code> — step-by-step execution, with the fixes applied.</li>
+        <li><code>replication/codebase.diff</code> — every change made to the provided code.</li>
+        
+        
+        <li><code>replication/codebase/</code> — the patched code that was actually run.</li>
+      </ul>
+    </div>
+  </details>
+
+  <footer>Generated by Veritas</footer>
+</div>
+</body>
+</html>

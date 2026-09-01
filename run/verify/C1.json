@@ -1,0 +1,24 @@
+{
+  "claim_id": "C1",
+  "status": "match",
+  "structured": {
+    "replicated_value": {
+      "slope": 0.698,
+      "r_squared": 0.754
+    },
+    "paper_value": {
+      "r_squared": 0.75,
+      "slope": 0.7
+    },
+    "uncertainty": null,
+    "value_found": true
+  },
+  "rationale": "The run produced results/persistence_convergence.json with emp_persistence_slope=0.6976716605958123 and emp_persistence_r2=0.7542403243498497 over emp_persistence_n=51 units (the 50 states + DC), from step 3 (src/persistence_convergence.py) which regresses average annual log nonfarm employment growth 1970-90 on 1950-70 growth. The step-3 stdout in replication_log.json corroborates this: 'emp_persistence slope=0.698 R2=0.754 (paper 0.70/0.75)'. Slope 0.698 vs paper 0.70 is 0.3% relative error, and R^2 0.754 vs paper 0.75 is 0.6% relative error \u2014 both well within the 5% band for a match. The panel was reconstructed from FRED/BLS APIs rather than the paper's archival BLS source, but the persistence estimate is essentially identical. The one 'major' fix in fix_severity.json concerns a duplicated-year indexing bug in the state/national *elasticity* regression, a different analysis path that does not affect this cross-sectional persistence regression.",
+  "evidence_refs": [
+    "output/replication/codebase/results/persistence_convergence.json",
+    "output/replication/replication_log.json",
+    "output/analyze/replication_plan.json",
+    "output/assess/fix_severity.json"
+  ],
+  "graded_by": "agent"
+}

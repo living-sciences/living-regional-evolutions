@@ -1,0 +1,28 @@
+{
+  "claim_id": "C18",
+  "status": "no_match",
+  "structured": {
+    "replicated_value": {
+      "farm_states": 14.67,
+      "farm_t_stat": 4.42,
+      "typical_state": 18.27,
+      "typical_t_stat": 14.69
+    },
+    "paper_value": {
+      "farm_states": -0.22,
+      "farm_t_stat": 8.1,
+      "typical_state": -0.32,
+      "typical_t_stat": 17.5
+    },
+    "uncertainty": null,
+    "value_found": true
+  },
+  "rationale": "Step 8 produced results/trivariate_var.json with okun.all_states = {coef: 18.270, t: 14.687, n: 714} and okun.farm_states = {coef: 14.667, t: 4.424, n: 126}. The paper's pooled Okun coefficient is ~-0.32 (t=17.5) and the farm-state coefficient ~-0.22 (t=8.1). The produced coefficients are wrong-signed and off by roughly two orders of magnitude: okun() in src/trivariate_var.py (lines 97-110) regresses Delta(rel_urate) \u2014 in percentage points \u2014 on Delta(rel_emp_logdev) \u2014 a log deviation where 0.01 = 1% \u2014 so the slope is ~100x the paper's per-percentage-point convention. Rescaling by /100 gives ~0.183 (pooled) and ~0.147 (farm), which are still 33-43% away from 0.32 and 0.22 and thus not even within the partial band; and the produced values as reported (18.27, 14.67) are nowhere near -0.32/-0.22. The t-stats also miss: typical t=14.69 vs 17.5 (~16% low) and farm t=4.42 vs 8.1 (~45% low). Additionally the coefficient is computed as a simple bivariate OLS of Delta-urate on Delta-emp rather than extracted from the trivariate VAR system the claim specifies. Only the qualitative ordering matches \u2014 the farm-state coefficient (14.67) is closer to zero than the pooled one (18.27), consistent with the paper \u2014 but the numeric magnitudes and signs do not match, so this is a no_match.",
+  "evidence_refs": [
+    "output/replication/codebase/results/trivariate_var.json",
+    "output/replication/codebase/src/trivariate_var.py",
+    "output/replication/replication_log.json",
+    "output/analyze/replication_plan.json"
+  ],
+  "graded_by": "agent"
+}

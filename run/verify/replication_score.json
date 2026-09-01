@@ -1,0 +1,36 @@
+{
+  "score": 0.29577464788732394,
+  "headline": {
+    "match": 1,
+    "partial": 4,
+    "no_match": 2,
+    "not_attempted": 0,
+    "not_applicable": 0,
+    "out_of_scope": 0,
+    "missing": 0
+  },
+  "supporting": {
+    "match": 2,
+    "partial": 8,
+    "no_match": 6,
+    "not_attempted": 10,
+    "not_applicable": 0,
+    "out_of_scope": 2,
+    "missing": 0
+  },
+  "total_claims": 35,
+  "counted_claims": 32,
+  "missing_verdicts": [],
+  "coverage": {
+    "total_claims": 35,
+    "scored": 32,
+    "out_of_scope": 2,
+    "not_applicable": 0,
+    "excluded_infra": 1,
+    "missing": 0
+  },
+  "flags": [
+    "1 not_attempted claim(s) excluded from the denominator as run/tooling-limited (blocked_infra / no_evidence), not counted against the paper.",
+    "2 claim(s) marked out_of_scope (planner did not target them) \u2014 excluded from the score, not counted as failures. Score is over the 32 attempted/blocked claim(s)."
+  ]
+}

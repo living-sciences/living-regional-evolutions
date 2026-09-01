@@ -1,0 +1,33 @@
+{
+  "claim_id": "C10",
+  "status": "partial",
+  "structured": {
+    "replicated_value": {
+      "income_r_squared": 0.52,
+      "income_slope": -0.012,
+      "income_t_stat": 7.13,
+      "wage_r_squared": null,
+      "wage_slope": null,
+      "wage_t_stat": null
+    },
+    "paper_value": {
+      "income_r_squared": 0.5,
+      "income_slope": -0.01,
+      "income_t_stat": 6.8,
+      "wage_r_squared": 0.39,
+      "wage_slope": -0.01,
+      "wage_t_stat": 5.4
+    },
+    "uncertainty": null,
+    "value_found": true
+  },
+  "rationale": "The claim has two halves. (1) The personal-income-per-capita convergence regression (avg annual pcinc growth 1948-90 on log 1948 income) WAS reproduced in results/persistence_convergence.json: pcinc_convergence_slope=-0.01197 (paper -0.01; rounds to -0.01 at the paper's reported precision), pcinc_convergence_t=-7.13 i.e. |t|=7.13 (paper 6.8, ~4.9% off, within 5%), pcinc_convergence_r2=0.520 (paper 0.50, ~3.9% off, within 5%). This income half matches well. (2) The primary/named subject of the claim -- the manufacturing-wage convergence regression (slope -0.01, t=5.4, R^2=0.39) -- was NOT reproduced: mfg_wage_convergence_slope/_t/_r2 are all null, with mfg_wage_convergence_note stating 'Manufacturing production-worker AHE (1947-1990, SIC basis) is not reconstructable from free modern APIs' (confirmed in src/persistence_convergence.py lines 104-128, which set these to None and substitute the pcinc regression as the reconstructable analogue). Because half the claim's values (the income analogue) match within tolerance while the headline manufacturing-wage regression produced no value at all due to unavailable source data, the overall verdict is partial. fix_severity.json contained no entry bearing on this code path.",
+  "evidence_refs": [
+    "output/replication/codebase/results/persistence_convergence.json",
+    "output/replication/codebase/src/persistence_convergence.py",
+    "output/replication/codebase/figures/fig4_income_convergence.png",
+    "output/analyze/replication_plan.json",
+    "output/assess/fix_severity.json"
+  ],
+  "graded_by": "agent"
+}

@@ -1,0 +1,24 @@
+{
+  "claim_id": "C19",
+  "status": "no_match",
+  "structured": {
+    "replicated_value": {
+      "slope": 0.0016,
+      "t_stat": 0.16
+    },
+    "paper_value": {
+      "slope": -0.68,
+      "t_stat": 0.6
+    },
+    "uncertainty": null,
+    "value_found": true
+  },
+  "rationale": "The claim concerns Figure 9's regression of average employment growth on relative MANUFACTURING wages, 1950-90 (slope -0.68, t=0.6). The run could not reconstruct this: manufacturing production-worker AHE (SIC basis, 1947-1990) is flagged as not reconstructable from free modern APIs, so results/persistence_convergence.json reports mfg_wage_convergence_* = None and mfg_wage_convergence_note. What was actually produced (empgrowth_vs_relwage_slope=0.00164, empgrowth_vs_relwage_t=0.164, per its note) is a documented PROXY: employment growth 1970-90 regressed on mean relative per-capita income 1970-90 \u2014 a different variable (income, not mfg wages) over a different window (1970-90, not 1950-90). No output/figures/figure9.pdf was generated (only fig1,2,4,7,11,13,14 exist under figures/). Numerically the produced values do not match the paper's: the slope (0.0016) is a different sign and magnitude in incomparable units, and the t-stat (0.16) is ~4x smaller than 0.6 (well outside the 30% partial band). The proxy does qualitatively echo the paper's central point \u2014 'essentially no relationship' (t well below significance) \u2014 but the specific scalar values of the manufacturing-wage regression could not be reproduced.",
+  "evidence_refs": [
+    "output/replication/codebase/results/persistence_convergence.json",
+    "output/replication/replication_log.json",
+    "output/analyze/replication_plan.json",
+    "output/replication/codebase/figures/"
+  ],
+  "graded_by": "agent"
+}

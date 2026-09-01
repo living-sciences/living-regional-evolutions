@@ -1,0 +1,23 @@
+{
+  "claim_id": "C24",
+  "status": "partial",
+  "structured": {
+    "replicated_value": {
+      "with_wage_feedback": 1.17,
+      "without_wage_feedback": 1.46
+    },
+    "paper_value": {
+      "with_wage_feedback": 1.2,
+      "without_wage_feedback": 1.6
+    },
+    "uncertainty": null,
+    "value_found": true
+  },
+  "rationale": "The run produced results/bivariate_irfs.json with suppress_feedback = {employment_plateau_with_feedback: -0.011717, employment_plateau_without_feedback: -0.014579}, and the emp_wage IRF at year 0 gives the initial employment change of -0.01 (the -1% shock). Expressing plateaus as multiples of the initial change: with wage feedback -0.011717/-0.01 = 1.17x (paper 1.2, 2.4% relative error -> match) and without wage feedback -0.014579/-0.01 = 1.46x (paper 1.6, 8.9% relative error -> outside the 5% band but well within 30%). Both values reproduce the paper's qualitative finding that suppressing wage feedback raises the long-run employment response only modestly, but the without-feedback value falls in the partial (>5%, <30%) band, so the combined scalar claim is graded partial. The figure figures/fig14_suppress_feedback.png corresponds to this output.",
+  "evidence_refs": [
+    "output/replication/codebase/results/bivariate_irfs.json",
+    "output/replication/codebase/figures/fig14_suppress_feedback.png",
+    "output/analyze/replication_plan.json"
+  ],
+  "graded_by": "agent"
+}

@@ -1,0 +1,36 @@
+{
+  "paper": "Blanchard & Katz (1992), 'Regional Evolutions', BPEA 1:1992",
+  "status": "All 10 steps executed and produced artifacts. Panel reconstructed from scratch (provided repo was empty).",
+  "environment": {
+    "python_version": "3.12.8",
+    "gpu_available": true,
+    "gpu_model": "NVIDIA RTX A6000 (x4, 49140 MiB each)",
+    "gpu_used": false,
+    "gpu_note": "Task is econometric (small panel regressions and low-order VARs on a 51x44 panel); no GPU-capable step.",
+    "key_packages": {"pandas": "3.0.5", "numpy": "2.5.2", "statsmodels": "0.14.6", "scipy": "1.18.1", "matplotlib": "installed", "pyarrow": "installed", "pymupdf": "installed"}
+  },
+  "data_reconstruction": {
+    "units": 51,
+    "years": "1947-1990 (unemployment/participation 1976-1990)",
+    "sources": "FRED API (BLS CES/SAE state total nonfarm employment 1939+ = {POSTAL}NAN; BEA per-capita personal income 1929+ = {POSTAL}PCPI; Census/BEA population = {POSTAL}POP; BLS LAUS unemployment/labor-force 1976+ = {POSTAL}UR/{POSTAL}LF; national aggregates PAYNSA, UNRATENSA, A792RC0A052NBEA, POPTHM, CLF16OV)",
+    "known_gaps": [
+      "Manufacturing production-worker average hourly earnings 1947-1990 (the paper's headline wage series, from printed 'Employment and Earnings', SIC basis): NOT reconstructable from any free modern API -- BLS SM AHE series begin 2001 (NAICS), Census ASM API 1997, BEA industry wages need a registration key and begin 1969, QCEW open-data begins 1990. None overlap 1947-1990. Per-capita personal income (which the paper connects to wages via Barro & Sala-i-Martin) used as the reconstructable relative-wage proxy in wage-convergence/persistence/ADF/univariate/bivariate steps; every such field is labeled.",
+      "State unemployment before 1976: paper backfilled 1970-75 from LMA rates (provided by H. Courtney) normalized to the 1976 CPS; LAUS only begins 1976. Pre-1976 relative unemployment, participation, le and lp are NOT reconstructable. Unemployment/participation analyses run on 1976-1990 (univariate unemployment on 1978-1990; trivariate VAR on 1978-1990).",
+      "CPS worker-characteristic-controlled wage (1979-1989) and city house prices: not reconstructed (out of scope / archival)."
+    ],
+    "documented_approximations": [
+      "le/lp built by normalizing establishment nonfarm employment to LAUS employment in base year 1976 (per appendix); working-age population approximated by resident population (state CPS not-in-labor-force by year unavailable free).",
+      "Trivariate VAR: unemployment response approximated as -le; participation as lp."
+    ]
+  },
+  "key_validations_vs_paper": {
+    "figure1_employment_persistence": {"reconstructed_slope": 0.698, "paper_slope": 0.70, "reconstructed_r2": 0.754, "paper_r2": 0.75, "reconstructed_r2_ex_AZ_FL_NV": 0.610, "paper_r2_ex": 0.60, "verdict": "near-exact match -> reconstructed employment panel is correct"},
+    "table2_state_national": {"avg_adj_r2": 0.969, "paper_claim": "aggregate fluctuations account for most year-to-year state employment movement", "beta_median": 1.15},
+    "adf_relative_employment": {"reject_5pct_of_51": 4, "negative_level_coef": 50, "paper_claim": "relative employment contains a unit root"},
+    "table1_univariate_irf": {"employment_level_plateau": 1.53, "unemployment_dieout_years": "5-7", "paper_claim": "employment shock permanent; unemployment effect transitory (~half a decade)"},
+    "trivariate_var_fig7": {"employment_plateau_pct": -1.8, "unemployment_peak_pct": 0.2, "adjustment_shares": {"unemployment": 0.115, "participation": 0.284, "migration": 0.601}, "paper_claim": "state returns to normal via out-migration, not employment recovery; unemployment/participation die out in 5-7 years"},
+    "okun_farm_vs_all": {"all_states_coef": 18.3, "farm_states_coef": 14.7, "paper_claim": "farm-state Okun relationship weaker"},
+    "bivariate_suppress_feedback_fig14": {"plateau_with_feedback_pct": -1.17, "plateau_without_feedback_pct": -1.46, "paper_claim": "wage/price feedback aids employment recovery"},
+    "massachusetts": {"unemp_rel_us_mid1980s_pp": -3.09, "unemp_rel_us_1991_pp": 2.07, "paper_quote": "3 points below the national rate ... more than two points above", "years_below_us_1948_79": "29 of 32", "emp_growth_1990_pct": -4.27, "emp_growth_1991_pct": -5.62}
+  }
+}

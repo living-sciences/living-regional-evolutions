@@ -1,0 +1,33 @@
+{
+  "claim_id": "C16",
+  "status": "partial",
+  "structured": {
+    "replicated_value": {
+      "employment_peak_pct": -2.1,
+      "employment_plateau_pct": -1.8,
+      "unemployment_participation_disappear_years": [
+        11,
+        7
+      ]
+    },
+    "paper_value": {
+      "employment_peak_pct": -2.0,
+      "employment_plateau_pct": -1.3,
+      "unemployment_participation_disappear_years": [
+        5,
+        7
+      ]
+    },
+    "uncertainty": null,
+    "value_found": true
+  },
+  "rationale": "The trivariate VAR (step 8) produced results/trivariate_var.json and figures/fig7_trivariate_irf.png from the 1978-1990 LAUS window (n_obs=663). The employment IRF builds to a peak magnitude of -0.02121 (-2.1%) at year 3 (year 4 = -0.02069 = -2.1%), matching the paper's '-2.0 percent after four years' to within ~6% relative error (near the match threshold). The reported employment_plateau (year 12) is -0.01809 (-1.8%) versus the paper's -1.3%, a ~39% relative deviation (no_match on this component); the summary attributes some of this to the documented approximation that the unemployment/participation responses are proxied as -le/lp with working-age population proxied by resident population (see trivariate_var.json 'note' and evidence_summary documented_approximations). For the disappearance horizon, unemp_partic_dieout_year gives participation=7 (within the paper's 5-7 range) and unemployment=11 (beyond it) -- though the raw unemployment IRF is tiny throughout (peak ~0.002 = 0.2pp) and effectively near zero by year 5-6. Overall the qualitative structure and the peak match well and participation dieout matches, but the plateau magnitude and the unemployment horizon deviate, so the composite claim is graded partial. fix_severity.json records no critical fixes in this path (one minor networking patch, one major elasticity-alignment fix in a different step).",
+  "evidence_refs": [
+    "output/replication/codebase/results/trivariate_var.json",
+    "output/replication/codebase/figures/fig7_trivariate_irf.png",
+    "output/replication/evidence_summary.json",
+    "output/analyze/replication_plan.json",
+    "output/assess/fix_severity.json"
+  ],
+  "graded_by": "agent"
+}

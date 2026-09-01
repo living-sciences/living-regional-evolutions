@@ -1,0 +1,9 @@
+{
+  "claim_id": "C27",
+  "status": "not_attempted",
+  "structured": {},
+  "rationale": "No plan step targeted this claim; the planner marked it BLOCKED (counts as a reproducibility gap): The real-consumption-wage calculation is derived from the housing-price (C25) and CPI (C26) impulse responses; it inherits the blocked proprietary housing-price series and cannot be produced without it.",
+  "evidence_refs": [],
+  "not_attempted_reason": "authors_missing",
+  "graded_by": "deterministic"
+}

@@ -1,0 +1,24 @@
+{
+  "claim_id": "C14",
+  "status": "no_match",
+  "structured": {
+    "replicated_value": {
+      "slope": -33.31,
+      "t_stat": -1.71
+    },
+    "paper_value": {
+      "slope": -0.06,
+      "t_stat": 0.04
+    },
+    "uncertainty": null,
+    "value_found": true
+  },
+  "rationale": "The run produced the regression underlying Figure 6 in results/unemployment_cross_section.json under avg_urate_vs_empgrowth: slope = -33.31, t = -1.71, r2 = 0.056, n = 51, over window '1976-1990'. The paper reports slope -0.06 with t-stat 0.04 (essentially no relationship) over 1970-90. Neither number matches: the slope differs by orders of magnitude (partly a units/orientation difference, since the plan regresses average unemployment ON average employment growth), and \u2014 more tellingly \u2014 the t-statistic, which is invariant to regression orientation in a simple bivariate fit, is -1.71 here versus 0.04 in the paper, i.e. this run finds a weakly negative (though still non-significant) relationship rather than the paper's essentially null one. Both values fall far outside the match/partial bands. The deviation traces to a data-coverage limitation documented in notes/unemployment_notes.md: LAUS reconstructs state unemployment only for 1976-1990, so the intended 1970-90 window could not be reproduced. No figure6.pdf was emitted (figures/ contains no fig6 output), but the numeric regression evidence exists and is gradeable. fix_severity.json shows no fix touching this specific regression path.",
+  "evidence_refs": [
+    "output/replication/codebase/results/unemployment_cross_section.json",
+    "output/replication/codebase/notes/unemployment_notes.md",
+    "output/analyze/replication_plan.json",
+    "output/assess/fix_severity.json"
+  ],
+  "graded_by": "agent"
+}

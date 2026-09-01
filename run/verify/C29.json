@@ -1,0 +1,25 @@
+{
+  "claim_id": "C29",
+  "status": "partial",
+  "structured": {
+    "replicated_value": {
+      "excess_over_national_pp": 0.5,
+      "ma_1980_85_growth_pct": 2.0
+    },
+    "paper_value": {
+      "excess_over_national_pp": 0.6,
+      "ma_1980_85_growth_pct": 2.0
+    },
+    "uncertainty": null,
+    "value_found": true
+  },
+  "rationale": "The run executed step 10 (src/massachusetts_case.py, exit_code 0) and produced results/massachusetts.json with growth_1980_85 = 1.985% and gap_vs_us_1980_85 = 0.495 pp. The MA 1980-85 annual growth of ~1.98% matches the paper's 2.0% almost exactly (0.8% relative error \u2192 match). However the excess over the national average is replicated at 0.50 pp versus the paper's 0.6 pp \u2014 a 17.5% relative error, which falls in the partial band (>5%, <30%). For the descriptive tail, the code counted n_years_below_us_1948_79 = 29 out of 32 years (log stdout '29/32 yrs 1948-79 below US'), i.e. MA growth was below the U.S. rate in all but three years, close to the paper's 'all but four years' (28 of 32). Because the growth figure matches strongly but the headline excess-gap value is only within the partial tolerance (and the below-US year count is off by one), the overall claim is graded partial. Employment series were reconstructed from FRED MANAN/PAYNSA (annual mean of NSA monthly), a reasonable proxy noted in notes/mass_notes.md; no critical fix in fix_severity.json touched this path.",
+  "evidence_refs": [
+    "output/replication/codebase/results/massachusetts.json",
+    "output/replication/codebase/src/massachusetts_case.py",
+    "output/replication/codebase/notes/mass_notes.md",
+    "output/replication/replication_log.json",
+    "output/analyze/replication_plan.json"
+  ],
+  "graded_by": "agent"
+}

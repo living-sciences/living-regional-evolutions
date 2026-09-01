@@ -1,0 +1,9 @@
+parameter,symbol,basis,paper_era,y2026,moment_source,label
+migration share of yr-1 adjustment (sigma_m),sigma_m,household,0.383,0.276,trivariate VAR yr-1 pop share (001 C3),[ESTIMATED]
+migration share of yr-1 adjustment (sigma_m),sigma_m,payroll,0.77,0.63,trivariate VAR yr-1 pop share (001 C3_payroll),[ESTIMATED]
+migration elasticity to rel. unemployment (labor force),m_LF,direct FE reg,0.00474,0.00225,"FE regression d n* on u, state-clustered (this study)",[ESTIMATED]
+migration elasticity to rel. unemployment (population),m_POP,direct FE reg,0.00339,0.00118,"FE regression d pop on u, state-clustered (this study)",[ESTIMATED]
+UR gap half-life (years),H,household,3.0,3.0,AR UR impulse-response half-life (001 C3),[ESTIMATED]
+calibrated migration clearing rate,m,household,0.0791,0.057,calibrated: m=sigma_m*(1-0.5^(1/H)),[CALIBRATED]
+calibrated job-recovery clearing rate,a,household,0.1272,0.1493,calibrated: a=(1-sigma_m)*(1-0.5^(1/H)),[CALIBRATED]
+long-run rel-employment loss per unit shock,-m/S,household,-0.383,-0.276,model closed form,[CALIBRATED]

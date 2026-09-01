@@ -1,0 +1,30 @@
+{
+  "claim_id": "C5",
+  "status": "no_match",
+  "structured": {
+    "replicated_value": {
+      "MA": 9.807,
+      "MI": 1.452,
+      "MO": 2.315,
+      "WY": 3.156,
+      "states_in_1_to_2_range": 17
+    },
+    "paper_value": {
+      "MA": 3.3,
+      "MI": 0.95,
+      "MO": 0.86,
+      "WY": 3.15,
+      "states_in_1_to_2_range": 40
+    },
+    "uncertainty": null,
+    "value_found": true
+  },
+  "rationale": "The run produced per-state long-run employment responses in results/table1_irfs.json ('individual_long_run'), computed as the plateau 1/(1-sum_phi) of an AR(4) in relative-employment change. Of the four named outliers, only Wyoming reproduces (replicated 3.156 vs paper 3.15, <1% error). The other three are far off: Massachusetts is 9.807 vs 3.30 (~197% high), Missouri is 2.315 vs 0.86 (~169% high, and it is not even a low outlier here), and Michigan is 1.452 vs 0.95 (~53% high). More decisively, only 17 states fall in [1.0, 2.0] versus the paper's 40 \u2014 the produced distribution is systematically shifted upward (six states, including PA at 13.8 and several near 5-9, are flagged/near-'high'), indicating the univariate specification here does not reproduce the paper's tighter clustering. The employment proxy and specification (per notes/univariate_notes.md: AR(4) in Delta relative-employment, state FE, plateau via sum-phi) diverge enough from the paper's to break the central quantitative claims. No relevant critical code fix in fix_severity.json explains this. With 3 of 4 outliers and the headline count (17 vs 40) outside even the 30% partial band, this is a no_match.",
+  "evidence_refs": [
+    "replication/codebase/results/table1_irfs.json",
+    "replication/codebase/notes/univariate_notes.md",
+    "analyze/replication_plan.json",
+    "assess/fix_severity.json"
+  ],
+  "graded_by": "agent"
+}

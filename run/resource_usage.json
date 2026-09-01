@@ -1,0 +1,193 @@
+{
+  "phases": {
+    "analyze": {
+      "wall_seconds": 258.918382,
+      "input_tokens": 636391,
+      "output_tokens": 22456,
+      "tokens": {
+        "input_tokens": 20,
+        "output_tokens": 22456,
+        "cache_read_tokens": 569830,
+        "cache_write_tokens": 0,
+        "cache_write_1h_tokens": 66541,
+        "billed_input_tokens": 636391,
+        "reported_cost_usd": 1.514485,
+        "n_invocations": 1,
+        "n_generations": 0,
+        "source": "result"
+      },
+      "cost_usd": null
+    },
+    "codegen": {
+      "wall_seconds": null,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "tokens": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cache_read_tokens": 0,
+        "cache_write_tokens": 0,
+        "cache_write_1h_tokens": 0,
+        "billed_input_tokens": 0,
+        "reported_cost_usd": 0.0,
+        "n_invocations": 0,
+        "n_generations": 0,
+        "source": "none"
+      },
+      "cost_usd": null
+    },
+    "plan": {
+      "wall_seconds": 305.578825,
+      "input_tokens": 817381,
+      "output_tokens": 21553,
+      "tokens": {
+        "input_tokens": 26,
+        "output_tokens": 21553,
+        "cache_read_tokens": 734266,
+        "cache_write_tokens": 0,
+        "cache_write_1h_tokens": 83089,
+        "billed_input_tokens": 817381,
+        "reported_cost_usd": 1.743977,
+        "n_invocations": 1,
+        "n_generations": 0,
+        "source": "result"
+      },
+      "cost_usd": null
+    },
+    "resource_estimate": {
+      "wall_seconds": 55.155298,
+      "input_tokens": 137522,
+      "output_tokens": 3683,
+      "tokens": {
+        "input_tokens": 8,
+        "output_tokens": 3683,
+        "cache_read_tokens": 117957,
+        "cache_write_tokens": 0,
+        "cache_write_1h_tokens": 19557,
+        "billed_input_tokens": 137522,
+        "reported_cost_usd": 0.354766,
+        "n_invocations": 1,
+        "n_generations": 0,
+        "source": "result"
+      },
+      "cost_usd": null
+    },
+    "replicate": {
+      "wall_seconds": 1391.402483,
+      "input_tokens": 4880034,
+      "output_tokens": 85772,
+      "tokens": {
+        "input_tokens": 102,
+        "output_tokens": 85772,
+        "cache_read_tokens": 4751023,
+        "cache_write_tokens": 0,
+        "cache_write_1h_tokens": 128909,
+        "billed_input_tokens": 4880034,
+        "reported_cost_usd": 5.818849,
+        "n_invocations": 1,
+        "n_generations": 0,
+        "source": "result"
+      },
+      "cost_usd": null
+    },
+    "assess_fixes": {
+      "wall_seconds": 30.65999,
+      "input_tokens": 48415,
+      "output_tokens": 1856,
+      "tokens": {
+        "input_tokens": 4,
+        "output_tokens": 1856,
+        "cache_read_tokens": 41252,
+        "cache_write_tokens": 0,
+        "cache_write_1h_tokens": 7159,
+        "billed_input_tokens": 48415,
+        "reported_cost_usd": 0.140359,
+        "n_invocations": 1,
+        "n_generations": 0,
+        "source": "result"
+      },
+      "cost_usd": null
+    },
+    "citation_check": {
+      "wall_seconds": null,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "tokens": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cache_read_tokens": 0,
+        "cache_write_tokens": 0,
+        "cache_write_1h_tokens": 0,
+        "billed_input_tokens": 0,
+        "reported_cost_usd": 0.0,
+        "n_invocations": 0,
+        "n_generations": 0,
+        "source": "none"
+      },
+      "cost_usd": null
+    },
+    "citation_audit": {
+      "wall_seconds": null,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "tokens": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cache_read_tokens": 0,
+        "cache_write_tokens": 0,
+        "cache_write_1h_tokens": 0,
+        "billed_input_tokens": 0,
+        "reported_cost_usd": 0.0,
+        "n_invocations": 0,
+        "n_generations": 0,
+        "source": "none"
+      },
+      "cost_usd": null
+    },
+    "verify": {
+      "wall_seconds": 1759.884007,
+      "input_tokens": 5347431,
+      "output_tokens": 124068,
+      "tokens": {
+        "input_tokens": 336,
+        "output_tokens": 124068,
+        "cache_read_tokens": 4833547,
+        "cache_write_tokens": 0,
+        "cache_write_1h_tokens": 513548,
+        "billed_input_tokens": 5347431,
+        "reported_cost_usd": 10.750328,
+        "n_invocations": 27,
+        "n_generations": 0,
+        "source": "result"
+      },
+      "cost_usd": null
+    }
+  },
+  "totals": {
+    "wall_seconds": 3801.598985,
+    "input_tokens": 11867174,
+    "output_tokens": 259388,
+    "disk_bytes": 24942221,
+    "cost_usd": null,
+    "provider_reported_cost_usd": 20.322764,
+    "pricing_model": "claude-opus-4-8",
+    "pricing_source": null,
+    "n_generations": 0,
+    "gpu": {
+      "gpu_count": 4,
+      "gpu_names": [
+        "NVIDIA RTX A6000"
+      ],
+      "wall_seconds": 3801.62,
+      "gpu_seconds": 15206.47,
+      "busy_gpu_seconds": 0.0,
+      "busy_fraction": 0.0,
+      "mean_utilization_pct": 0.0,
+      "peak_memory_mib": 42572.0,
+      "memory_total_mib": 49140.0,
+      "n_samples": 252,
+      "interval_s": 15.0
+    },
+    "estimated_cost_usd_approximate": null
+  }
+}

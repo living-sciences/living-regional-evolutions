@@ -1,0 +1,100 @@
+{
+  "window": "1978-1990 (LAUS)",
+  "n_obs": 663,
+  "irf": {
+    "0": {
+      "employment": -0.01,
+      "unemployment": 0.0016404596281388536,
+      "participation": -0.003196041224045432
+    },
+    "1": {
+      "employment": -0.017306766177269388,
+      "unemployment": 0.001994520587944889,
+      "participation": -0.004916662124750236
+    },
+    "2": {
+      "employment": -0.020551924490882906,
+      "unemployment": 0.0020364056240235774,
+      "participation": -0.00515729841185528
+    },
+    "3": {
+      "employment": -0.021214843992276747,
+      "unemployment": 0.0016753290924556388,
+      "participation": -0.00454146496422064
+    },
+    "4": {
+      "employment": -0.02069196729887898,
+      "unemployment": 0.0010243305273323878,
+      "participation": -0.0034518239288589083
+    },
+    "5": {
+      "employment": -0.019800127834586116,
+      "unemployment": 0.00032702344477416635,
+      "participation": -0.0021680453284563207
+    },
+    "6": {
+      "employment": -0.01893962843789608,
+      "unemployment": -0.00022114640699894483,
+      "participation": -0.0009416807667952938
+    },
+    "7": {
+      "employment": -0.01828464580366355,
+      "unemployment": -0.0005350469716474944,
+      "participation": 3.2910631618875835e-05
+    },
+    "8": {
+      "employment": -0.017888452905145145,
+      "unemployment": -0.0006229066171197143,
+      "participation": 0.0006556687156161449
+    },
+    "9": {
+      "employment": -0.01773394522495044,
+      "unemployment": -0.0005454121744013127,
+      "participation": 0.0009242933122003533
+    },
+    "10": {
+      "employment": -0.017764065329951714,
+      "unemployment": -0.00037897362656905907,
+      "participation": 0.0009082766815410474
+    },
+    "11": {
+      "employment": -0.017905999320426316,
+      "unemployment": -0.00019152275163002923,
+      "participation": 0.0007116343777540584
+    },
+    "12": {
+      "employment": -0.018090448538171322,
+      "unemployment": -3.0581488931127096e-05,
+      "participation": 0.0004392962909788847
+    }
+  },
+  "year1": {
+    "unemployment_response": 0.001994520587944889,
+    "participation_response": -0.004916662124750236
+  },
+  "employment_peak": -0.021214843992276747,
+  "employment_plateau": -0.018090448538171322,
+  "unemp_partic_dieout_year": {
+    "unemployment": 11,
+    "participation": 7
+  },
+  "per_worker": {
+    "unemployment": 0.11524513404268913,
+    "participation": 0.2840890131865162,
+    "implied_net_migration": 0.6006658527707947,
+    "basis": "shares of the year-1 employment response"
+  },
+  "okun": {
+    "all_states": {
+      "coef": 18.270286818345728,
+      "t": 14.687029350914177,
+      "n": 714
+    },
+    "farm_states": {
+      "coef": 14.667263622152321,
+      "t": 4.423617877824642,
+      "n": 126
+    }
+  },
+  "note": "unemployment response approximated as -le; participation as lp; working-age population proxied by resident population (see data_sources.md)."
+}

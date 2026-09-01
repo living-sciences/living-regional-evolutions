@@ -1,0 +1,9 @@
+{
+  "claim_id": "C25",
+  "status": "not_attempted",
+  "structured": {},
+  "rationale": "No plan step targeted this claim; the planner marked it BLOCKED (counts as a reproducibility gap): Requires NAR Home Sales Yearbook median metro house prices (39 MSAs, 1969-90) that Poterba supplied privately to the authors; this proprietary historical series is not freely reachable from the container (checked: no data files ship with the empty repo, and NAR historical metro medians are not a free public feed).",
+  "evidence_refs": [],
+  "not_attempted_reason": "authors_missing",
+  "graded_by": "deterministic"
+}

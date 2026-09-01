@@ -1,0 +1,722 @@
+{
+  "paper": {
+    "title": "Regional Evolutions",
+    "arxiv_id": null,
+    "year": 1992,
+    "authors": [
+      "Blanchard",
+      "Katz"
+    ]
+  },
+  "claims": [
+    {
+      "id": "C1",
+      "description": "State relative employment growth rates are highly persistent: a regression of average annual nonfarm employment growth 1970-90 on average annual growth 1950-70 has a slope of 0.70 and an R^2 of 0.75.",
+      "type": "scalar",
+      "tier": "headline",
+      "verification": "From the regression underlying Figure 1 (average annual log employment growth 1970-90 regressed on 1950-70), read the estimated slope coefficient and R^2 from the produced regression output or figure-generating script. Confirm slope near 0.70 and R^2 near 0.75.",
+      "paper_value": {
+        "slope": 0.7,
+        "r_squared": 0.75
+      },
+      "expected_output_file": "output/figures/figure1.pdf",
+      "provenance": {
+        "section": "Trends and Fluctuations in Relative Employment",
+        "page": 5,
+        "quote": "The line is a regression line and has a slope of 0.70 and an R^2 of 0.75."
+      },
+      "notes": "Figure 1 is a scatter with a fitted regression line across the 51 states/DC."
+    },
+    {
+      "id": "C2",
+      "description": "Even excluding the fast-growing outlier states Arizona, Florida, and Nevada, the persistence regression of employment growth (1970-90 on 1950-70) still has an R^2 of 0.60.",
+      "type": "scalar",
+      "tier": "supporting",
+      "verification": "Re-run the Figure 1 persistence regression dropping Arizona, Florida, and Nevada; read the R^2 from the produced regression output and confirm it is near 0.60.",
+      "paper_value": {
+        "r_squared": 0.6
+      },
+      "provenance": {
+        "section": "Trends and Fluctuations in Relative Employment",
+        "page": 5,
+        "quote": "Even leaving these states out, the R^2 is still equal to 0.60."
+      }
+    },
+    {
+      "id": "C3",
+      "description": "Augmented Dickey-Fuller unit-root tests on relative employment (equation 1, four lags, 1952-90) reject the unit root at the 5 percent level for only three states: Massachusetts, South Dakota, and Wyoming; the coefficient on the lagged level is negative in all states.",
+      "type": "qualitative",
+      "tier": "supporting",
+      "verification": "From the ADF-test output for equation (1) estimated state by state, check that the coefficient on the lagged relative-employment level is negative for all states and that its t-statistic is significant at 5% for only three states, which should be Massachusetts, South Dakota, and Wyoming.",
+      "paper_value": "Unit root rejected at 5% only for MA, SD, WY (3 of 51); lagged-level coefficient negative in all states.",
+      "provenance": {
+        "section": "Trends and Fluctuations in Relative Employment",
+        "page": 7,
+        "quote": "But in only three states-Massachusetts, South Dakota, and Wyoming-is it significant at the 5 percent level."
+      }
+    },
+    {
+      "id": "C4",
+      "description": "Pooled univariate impulse responses (Table 1): in response to a unit innovation, relative employment rises to a hump around 1.67 by year 4 and plateaus near 1.5; relative unemployment decays from 1.0 to about 0.29 by year 5 and ~0.04 by year 10; relative wages hump slightly to 1.07 by year 2 then decline to 0.57 by year 10 and 0.19 by year 20.",
+      "type": "table",
+      "tier": "headline",
+      "verification": "Open the produced Table 1 output (impulse-response rows for Years 1,2,3,4,5,10,20). Compare the three columns (relative employment change, unemployment rate, relative wage) against the paper_value grid. The employment column should hump near 1.67 at year 4 and settle near 1.5; unemployment should decay toward zero by year 10; wage should decline to ~0.19 by year 20.",
+      "paper_value": {
+        "columns": [
+          "Log employment change",
+          "Unemployment rate",
+          "Log wage"
+        ],
+        "rows": [
+          {
+            "label": "Year 1",
+            "values": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "label": "Year 2",
+            "values": [
+              1.49,
+              0.9,
+              1.07
+            ]
+          },
+          {
+            "label": "Year 3",
+            "values": [
+              1.63,
+              0.65,
+              1.02
+            ]
+          },
+          {
+            "label": "Year 4",
+            "values": [
+              1.67,
+              0.44,
+              1.01
+            ]
+          },
+          {
+            "label": "Year 5",
+            "values": [
+              1.62,
+              0.29,
+              0.94
+            ]
+          },
+          {
+            "label": "Year 10",
+            "values": [
+              1.52,
+              0.04,
+              0.57
+            ]
+          },
+          {
+            "label": "Year 20",
+            "values": [
+              1.53,
+              0.01,
+              0.19
+            ]
+          }
+        ]
+      },
+      "units": "response of level to a unit (1.0) innovation",
+      "expected_output_file": "output/tables/table1.csv",
+      "provenance": {
+        "section": "Trends and Fluctuations in Relative Employment",
+        "page": 10,
+        "quote": "employment increases to about 1.67 after four years and then in the long run reaches a plateau at about 1.5. This hump shape is present in nearly all states"
+      },
+      "notes": "Table 1 also reports pooled AR coefficients (employment: 0.492, -0.099, 0.010, -0.054; unemployment: 0.899, -0.159; wage: 1.072, -0.129, 0.057, -0.074) with standard errors; the impulse responses are derived from these. Estimation periods: 1952-90 for employment and wages, 1972-90 for unemployment."
+    },
+    {
+      "id": "C5",
+      "description": "When individual-state long-run employment impulse responses are estimated, the long-run response lies between 1.0 and 2.0 for 40 states; the notable outliers are Massachusetts (3.30) and Wyoming (3.15) on the high side and Missouri (0.86) and Michigan (0.95) on the low side.",
+      "type": "scalar",
+      "tier": "supporting",
+      "verification": "From the per-state estimated univariate employment impulse responses, count how many states have long-run responses in [1.0, 2.0] (should be ~40) and read the long-run values for MA, WY, MO, MI, confirming they match the reported outlier values.",
+      "paper_value": {
+        "MA": 3.3,
+        "WY": 3.15,
+        "MO": 0.86,
+        "MI": 0.95,
+        "states_in_1_to_2_range": 40
+      },
+      "units": "long-run response of relative employment level to a unit innovation",
+      "provenance": {
+        "section": "Trends and Fluctuations in Relative Employment",
+        "page": 10,
+        "quote": "The long-run response lies between 1.0 and 2.0 for 40 states... Massachusetts (3.30) and Wyoming (3.15) are on the high side, while Missouri (0.86) and Michigan (0.95) are on the low side."
+      }
+    },
+    {
+      "id": "C6",
+      "description": "Relative unemployment rates show low persistence: the regression of the 1985 relative state unemployment rate on the 1975 rate (Figure 3) has a slope of 0.03, a t-statistic of 0.2, and an R^2 of 0.00.",
+      "type": "scalar",
+      "tier": "supporting",
+      "verification": "From the regression underlying Figure 3 (1985 relative unemployment rate on 1975 relative unemployment rate), read slope, t-statistic, and R^2 from the produced output and confirm they are near 0.03, 0.2, and 0.00.",
+      "paper_value": {
+        "slope": 0.03,
+        "t_stat": 0.2,
+        "r_squared": 0.0
+      },
+      "expected_output_file": "output/figures/figure3.pdf",
+      "provenance": {
+        "section": "The Low Persistence of Relative Unemployment Rates",
+        "page": 12,
+        "quote": "The line is a regression line with a slope of 0.03, a t statistic of 0.2 and an R^2 of 0.00."
+      }
+    },
+    {
+      "id": "C7",
+      "description": "Using relative unemployment rates 10 years apart in 1970 and 1990 (instead of 1975/1985) yields a regression coefficient of 0.41 (t=3.8, R^2=0.23); excluding farm states from that regression drops the coefficient to 0.24 (R^2=0.11).",
+      "type": "scalar",
+      "tier": "supporting",
+      "verification": "Reproduce the relative-unemployment persistence regression using 1970 and 1990 endpoints; read coefficient (~0.41), t (~3.8), R^2 (~0.23). Then re-run excluding farm states and confirm the coefficient falls to ~0.24 with R^2 ~0.11.",
+      "paper_value": {
+        "coef_1970_1990": 0.41,
+        "t_stat": 3.8,
+        "r_squared": 0.23,
+        "coef_excl_farm": 0.24,
+        "r_squared_excl_farm": 0.11
+      },
+      "provenance": {
+        "section": "The Low Persistence of Relative Unemployment Rates",
+        "page": 12,
+        "quote": "the regression coefficient would be 0.41, with a t statistic of 3.8 and an R^2 of 0.23... The coefficient then drops to 0.24, with an R^2 of 0.11."
+      }
+    },
+    {
+      "id": "C8",
+      "description": "The pooled AR(2) impulse response for relative unemployment (Table 1) shows the effect of a shock falling to only about 29 percent of the initial shock within five years and essentially zero within ten years.",
+      "type": "scalar",
+      "tier": "headline",
+      "verification": "From the produced relative-unemployment impulse response (Table 1 unemployment column or the AR(2) IRF), confirm the response at year 5 is about 0.29 of the initial and near zero by year 10.",
+      "paper_value": {
+        "fraction_remaining_year5": 0.29,
+        "fraction_remaining_year10": 0.0
+      },
+      "units": "fraction of initial shock remaining",
+      "provenance": {
+        "section": "The Low Persistence of Relative Unemployment Rates",
+        "page": 13,
+        "quote": "The effect of a shock falls to only 29 percent of the initial shock within five years and is essentially equal to zero within ten years."
+      },
+      "notes": "This is the paper's central 'low persistence of relative unemployment' result; relative unemployment returns to mean within 5-10 years."
+    },
+    {
+      "id": "C9",
+      "description": "Relative wages are close to a unit root: in the ADF-style regression (equation 3 specification with four lags, 1952-90), the coefficient on the lagged relative-wage level is negative in 46 of the 51 states, and the unit root is rejected at the 5 percent level for only 3 states.",
+      "type": "qualitative",
+      "tier": "supporting",
+      "verification": "From per-state ADF regressions on relative wages, count the number of states with a negative lagged-level coefficient (should be 46/51) and the number where the unit root is rejected at 5% (should be 3).",
+      "paper_value": "Lagged-level coefficient negative in 46 of 51 states; unit root rejected at 5% for only 3 states.",
+      "provenance": {
+        "section": "The Convergence of Wages",
+        "page": 15,
+        "quote": "The coefficients on the lagged level of relative wage are negative in 46 of the 51 states, but the hypothesis of a unit root is rejected at the 5 percent level only for 3 states."
+      }
+    },
+    {
+      "id": "C10",
+      "description": "Manufacturing wages converge across states: a regression of average annual manufacturing wage growth 1950-90 on the log 1950 wage (Figure 4) has slope -0.01, t-statistic 5.4, and R^2 0.39; the analogous personal-income-per-capita regression 1948-90 has slope -0.01, t=6.8, R^2=0.50.",
+      "type": "scalar",
+      "tier": "headline",
+      "verification": "From the regression underlying Figure 4 (manufacturing wage growth 1950-90 on log 1950 wage), read slope (~-0.01), t (~5.4), R^2 (~0.39). Also reproduce the personal-income-per-capita convergence regression and confirm slope ~-0.01, t ~6.8, R^2 ~0.50.",
+      "paper_value": {
+        "wage_slope": -0.01,
+        "wage_t_stat": 5.4,
+        "wage_r_squared": 0.39,
+        "income_slope": -0.01,
+        "income_t_stat": 6.8,
+        "income_r_squared": 0.5
+      },
+      "expected_output_file": "output/figures/figure4.pdf",
+      "provenance": {
+        "section": "The Convergence of Wages",
+        "page": 14,
+        "quote": "The line is the regression line with a slope of -0.01, a t statistic of 5.4, and an R^2 of 0.39. By comparison, a similar regression of the average growth rate of personal income per capita from 1948 to 1990... slope of -0.01, a t statistic of 6.8, and an R^2 of 0.50."
+      }
+    },
+    {
+      "id": "C11",
+      "description": "Wage growth persistence is much weaker than employment growth persistence: the correlation of average manufacturing wage growth 1950-70 with that of 1970-90 is only 0.13.",
+      "type": "scalar",
+      "tier": "supporting",
+      "verification": "Compute the cross-state correlation between average manufacturing wage growth in 1950-70 and in 1970-90 from the produced series; confirm it is near 0.13.",
+      "paper_value": {
+        "correlation": 0.13
+      },
+      "provenance": {
+        "section": "The Convergence of Wages (footnote 16)",
+        "page": 14,
+        "quote": "the correlation of the growth rate of average hourly manufacturing wages from 1950 to 1970 with that from 1970 to 1990 is only 0.13."
+      }
+    },
+    {
+      "id": "C12",
+      "description": "Regressions of state employment growth on national employment growth 1948-90 (Table 2) yield an average adjusted R^2 of 0.66; thirteen states have elasticities (beta) significantly different from 1, with Michigan (1.72) and Indiana (1.51) high, North Dakota (0.14) and South Dakota (0.45) low, and Alaska at -1.24.",
+      "type": "scalar",
+      "tier": "supporting",
+      "verification": "From produced Table 2 (per-state regressions of log state employment change on log national employment change, 1948-90), compute the average adjusted R^2 (~0.66), count states with beta significantly different from 1 (~13), and confirm the beta values for MI, IN, ND, SD, and AK.",
+      "paper_value": {
+        "avg_adjusted_r_squared": 0.66,
+        "states_beta_ne_1": 13,
+        "MI": 1.72,
+        "IN": 1.51,
+        "ND": 0.14,
+        "SD": 0.45,
+        "AK": -1.24
+      },
+      "units": "beta = elasticity of state to national employment",
+      "expected_output_file": "output/tables/table2.csv",
+      "provenance": {
+        "section": "Clearing Some Empirical Underbrush",
+        "page": 27,
+        "quote": "The average adjusted R^2 is equal to 0.66... Thirteen states have elasticities significantly different from 1... Michigan and Indiana, which have elasticities of 1.72 and 1.51... North Dakota and South Dakota have elasticities of 0.14 and 0.45"
+      },
+      "notes": "Alaska's elasticity of -1.24 is for the 1961-90 period."
+    },
+    {
+      "id": "C13",
+      "description": "Pooled region-year interaction regressions indicate that about 38 percent of annual state relative employment variation is common to Census divisions and about 26 percent is common to Census regions.",
+      "type": "scalar",
+      "tier": "supporting",
+      "verification": "From the pooled regressions with region-year interaction dummies over 1948-90, read the share of variance explained (R^2 attributable to region-year effects) at the Census-division level (~38%) and Census-region level (~26%).",
+      "paper_value": {
+        "common_to_census_divisions_pct": 38,
+        "common_to_census_regions_pct": 26
+      },
+      "units": "percent",
+      "provenance": {
+        "section": "Clearing Some Empirical Underbrush",
+        "page": 29,
+        "quote": "The regressions indicate that about 38 percent of annual state relative employment variation is common to Census divisions and about 26 percent is common to Census regions."
+      }
+    },
+    {
+      "id": "C14",
+      "description": "There is no clear relationship between average unemployment rates and employment growth across states 1970-90 (Figure 6): the regression slope is -0.06 with a t-statistic of 0.04.",
+      "type": "scalar",
+      "tier": "supporting",
+      "verification": "From the regression underlying Figure 6 (average unemployment rate on average employment growth, 1970-90), read the slope (~-0.06) and t-statistic (~0.04) from the produced output.",
+      "paper_value": {
+        "slope": -0.06,
+        "t_stat": 0.04
+      },
+      "expected_output_file": "output/figures/figure6.pdf",
+      "provenance": {
+        "section": "Average Unemployment and Employment Growth Rates",
+        "page": 30,
+        "quote": "The slope of the regression line is equal to -0.06, with a t statistic of 0.04."
+      }
+    },
+    {
+      "id": "C15",
+      "description": "In the trivariate VAR impulse response (Figure 7, all 51 states), a first-year decrease in relative employment of 1 percent is associated with a rise in the relative unemployment rate of 0.32 percentage points and a decline in the relative participation rate of 0.17 percentage points.",
+      "type": "scalar",
+      "tier": "headline",
+      "verification": "From the produced trivariate impulse responses (Figure 7 data), read the year-1 responses of the unemployment rate (~+0.32 pp) and participation rate (~-0.17 pp) to a -1% shock to relative employment.",
+      "paper_value": {
+        "unemployment_rise_pp": 0.32,
+        "participation_decline_pp": 0.17
+      },
+      "units": "percentage points, first-year response to a 1% employment decrease",
+      "expected_output_file": "output/figures/figure7.pdf",
+      "provenance": {
+        "section": "Dynamic Responses",
+        "page": 33,
+        "quote": "a decrease in employment of 1 percent is reflected in an increase in the unemployment rate of 0.32 percentage points and a decrease in the participation rate of 0.17 percentage points."
+      }
+    },
+    {
+      "id": "C16",
+      "description": "In the trivariate impulse response (Figure 7), the relative employment effect builds to a peak of about -2.0 percent after four years and a plateau of about -1.3 percent; the effects on unemployment and participation steadily decline and disappear after five to seven years.",
+      "type": "scalar",
+      "tier": "headline",
+      "verification": "From the produced Figure 7 impulse responses, confirm the employment response reaches ~-2.0% at year 4 and plateaus near -1.3%, and that unemployment and participation responses return to about zero within 5-7 years.",
+      "paper_value": {
+        "employment_peak_pct": -2.0,
+        "employment_plateau_pct": -1.3,
+        "unemployment_participation_disappear_years": [
+          5,
+          7
+        ]
+      },
+      "units": "percent (employment), years (adjustment horizon)",
+      "expected_output_file": "output/figures/figure7.pdf",
+      "provenance": {
+        "section": "Dynamic Responses",
+        "page": 34,
+        "quote": "reach a peak of -2.0 percent after four years and a plateau of about -1.3 percent. The effects on unemployment and participation steadily decline and disappear after five to seven years."
+      }
+    },
+    {
+      "id": "C17",
+      "description": "Expressed in numbers of workers, a first-year decrease of 1 employed worker is associated with an increase of 0.3 in unemployment, a decrease of 0.05 in participation, and thus an implied increase in net out-migration of 0.65 workers; by five to seven years the employment response consists entirely of the migration of workers.",
+      "type": "scalar",
+      "tier": "headline",
+      "verification": "From the produced impulse responses converted to worker counts, confirm that a 1-worker employment decline decomposes in year 1 into ~0.3 additional unemployed, ~0.05 fewer participants, and ~0.65 net out-migration; and that by 5-7 years essentially all of the adjustment is migration. This is the paper's central adjustment-mechanism result.",
+      "paper_value": {
+        "unemployment": 0.3,
+        "participation": 0.05,
+        "net_out_migration": 0.65
+      },
+      "units": "workers per 1-worker employment decrease (first year)",
+      "provenance": {
+        "section": "Dynamic Responses",
+        "page": 34,
+        "quote": "A decrease in employment of 1 worker in the initial year is associated with an increase in unemployment of 0.3 workers, a decrease in participation of 0.05 workers, and thus an implied increase in net out-migration of 0.65 workers."
+      }
+    },
+    {
+      "id": "C18",
+      "description": "The estimated 'Okun coefficient' (negative of the response of unemployment to employment) from the trivariate system 1978-90 is about -0.32 (t=17.5) pooled across all states, and closer to zero in the farm states at -0.22 (t=8.1).",
+      "type": "scalar",
+      "tier": "supporting",
+      "verification": "From the trivariate-system estimates (1978-90), read the pooled Okun coefficient (~-0.32, t~17.5) and the farm-states Okun coefficient (~-0.22, t~8.1) from the produced output.",
+      "paper_value": {
+        "typical_state": -0.32,
+        "typical_t_stat": 17.5,
+        "farm_states": -0.22,
+        "farm_t_stat": 8.1
+      },
+      "provenance": {
+        "section": "Okun's Coefficients and Shocks to Labor Demand and Supply",
+        "page": 35,
+        "quote": "The estimated Okun coefficient is closer to zero in the farm states (-0.22 with a t statistic of 8.1) than in the typical state (-0.32 with a t statistic of 17.5 in a regression pooled across all states)."
+      },
+      "notes": "Some individual border states (e.g. TN, CA) show wrong-sign (positive) Okun coefficients, consistent with migration shocks."
+    },
+    {
+      "id": "C19",
+      "description": "There is essentially no relationship between average employment growth and relative manufacturing wages across states 1950-90 (Figure 9): the regression slope is -0.68 with a t-statistic of only 0.6.",
+      "type": "scalar",
+      "tier": "supporting",
+      "verification": "From the regression underlying Figure 9 (average employment growth vs average manufacturing wage level, 1950-90), read the slope (~-0.68) and t-statistic (~0.6).",
+      "paper_value": {
+        "slope": -0.68,
+        "t_stat": 0.6
+      },
+      "expected_output_file": "output/figures/figure9.pdf",
+      "provenance": {
+        "section": "Employment Growth, Unemployment, and Wages",
+        "page": 38,
+        "quote": "the estimated slope is -0.68, with a t statistic of only 0.6."
+      }
+    },
+    {
+      "id": "C20",
+      "description": "The correlation between average unemployment rates and wages across states 1970-90 (Figure 10) is positive, with a regression t-statistic of 3.1 and an R^2 of 0.16.",
+      "type": "scalar",
+      "tier": "supporting",
+      "verification": "From the regression underlying Figure 10 (average manufacturing wage on average unemployment rate, 1970-90), confirm a positive relationship with t ~3.1 and R^2 ~0.16.",
+      "paper_value": {
+        "t_stat": 3.1,
+        "r_squared": 0.16
+      },
+      "expected_output_file": "output/figures/figure10.pdf",
+      "provenance": {
+        "section": "Employment Growth, Unemployment, and Wages",
+        "page": 38,
+        "quote": "The correlation between average unemployment rates and wages is positive... with a t statistic of 3.1, and the R^2 is 0.16."
+      }
+    },
+    {
+      "id": "C21",
+      "description": "In the employment-wage bivariate impulse response (Figure 11, manufacturing wages, 1952-90), employment decreases to about 1.7 times its initial response and plateaus at about -1.2 percent, unemployment rises by up to 0.37 percent after two years, and wages decrease by up to 0.4 percent after about six years, implying an elasticity of relative wages to relative unemployment of approximately unity.",
+      "type": "scalar",
+      "tier": "supporting",
+      "verification": "From the produced Figure 11 impulse responses, confirm the employment trough is ~1.7x the initial shock with plateau near -1.2%, the implied unemployment response peaks near +0.37% at year 2, and manufacturing wages reach a minimum near -0.4% around year 6.",
+      "paper_value": {
+        "employment_multiple": 1.7,
+        "employment_plateau_pct": -1.2,
+        "unemployment_rise_pct": 0.37,
+        "wage_decrease_pct": -0.4,
+        "wage_min_year": 6,
+        "wage_unemployment_elasticity": 1.0
+      },
+      "units": "percent / years / elasticity",
+      "expected_output_file": "output/figures/figure11.pdf",
+      "provenance": {
+        "section": "Dynamic Responses of Employment and Wages",
+        "page": 40,
+        "quote": "employment decreasing to 1.7 times its initial response, to eventually plateau at -1.2 percent... increases the unemployment rate by up to 0.37 percent after two years and decreases wages by up to 0.4 percent after about six years"
+      }
+    },
+    {
+      "id": "C22",
+      "description": "Using the industry-and-worker-characteristic-controlled CPS wage series (Figure 12, 1979-89), in response to an initial 1 percent employment decrease the relative wage decreases by about 0.5 percent and employment decreases by 1.7 percent after three years, with employment recovering more substantially than with manufacturing wages.",
+      "type": "scalar",
+      "tier": "supporting",
+      "verification": "From the produced Figure 12 impulse responses (CPS adjusted wage), confirm the relative wage trough is about -0.5% and employment falls ~1.7% by year 3, then recovers.",
+      "paper_value": {
+        "wage_decrease_pct": -0.5,
+        "employment_decrease_pct": -1.7,
+        "horizon_years": 3
+      },
+      "units": "percent (3-year response)",
+      "expected_output_file": "output/figures/figure12.pdf",
+      "provenance": {
+        "section": "Dynamic Responses of Employment and Wages",
+        "page": 42,
+        "quote": "the relative wage decreases by about 0.5 percent and increases slowly later. Employment decreases by 1.7 percent after three years"
+      }
+    },
+    {
+      "id": "C23",
+      "description": "In the employment-personal-income impulse response (Figure 13, 1952-90), personal income per capita decreases by about 0.9 percent after two years and returns slowly to zero.",
+      "type": "scalar",
+      "tier": "supporting",
+      "verification": "From the produced Figure 13 impulse responses, confirm the per-capita personal income response reaches about -0.9% around year 2 and returns toward zero.",
+      "paper_value": {
+        "income_decrease_pct": -0.9,
+        "horizon_years": 2
+      },
+      "units": "percent",
+      "expected_output_file": "output/figures/figure13.pdf",
+      "provenance": {
+        "section": "Dynamic Responses of Employment and Wages",
+        "page": 42,
+        "quote": "It decreases by 0.9 percent after two years and returns slowly to zero over time."
+      }
+    },
+    {
+      "id": "C24",
+      "description": "Suppressing wage feedback in the estimated employment-wage system (Figure 14) shows wage adjustment dampens the employment response only slightly: without wage feedback employment ends at 1.6 times its initial change, compared with 1.2 with wage feedback.",
+      "type": "scalar",
+      "tier": "supporting",
+      "verification": "From the produced Figure 14 impulse responses, confirm the long-run employment response is ~1.6x initial without wage feedback and ~1.2x initial with wage feedback.",
+      "paper_value": {
+        "without_wage_feedback": 1.6,
+        "with_wage_feedback": 1.2
+      },
+      "units": "multiple of initial employment change",
+      "expected_output_file": "output/figures/figure14.pdf",
+      "provenance": {
+        "section": "Suppressing the Effects of Wages",
+        "page": 44,
+        "quote": "employment would end at 1.6 times its initial change, compared to 1.2 with wage feedback."
+      }
+    },
+    {
+      "id": "C25",
+      "description": "In the employment-housing-price impulse response (Figure 15, 39 MSAs), relative housing prices decline to a trough of about 2 percent after four to five years then recover; nominal wages trough at about -0.5 percent while housing prices trough at about -2 percent in response to a 1 percent employment decrease.",
+      "type": "scalar",
+      "tier": "supporting",
+      "verification": "From the produced Figure 15 impulse responses (bivariate employment and MSA housing prices), confirm relative housing prices reach a trough near -2% around years 4-5, and (per page 46) that nominal wages trough near -0.5% versus housing near -2%.",
+      "paper_value": {
+        "housing_trough_pct": -2.0,
+        "housing_trough_years": [
+          4,
+          5
+        ],
+        "wage_trough_pct": -0.5
+      },
+      "units": "percent",
+      "expected_output_file": "output/figures/figure15.pdf",
+      "provenance": {
+        "section": "Nominal versus Consumption Wages",
+        "page": 45,
+        "quote": "relative housing prices decrease steadily to reach a trough of 2 percent after four to five years, and then return to their previous level over time."
+      }
+    },
+    {
+      "id": "C26",
+      "description": "In the employment-consumer-price impulse response (Figure 16, 23 MSAs, 1968-88), consumer prices eventually decrease by about 0.38 percent after six years in response to an initial 1 percent decrease in employment, with the effect essentially gone after about 15 years.",
+      "type": "scalar",
+      "tier": "supporting",
+      "verification": "From the produced Figure 16 impulse responses (bivariate employment and MSA CPI), confirm the consumer price response reaches about -0.38% around year 6 and dissipates by ~15 years.",
+      "paper_value": {
+        "cpi_decrease_pct": -0.38,
+        "horizon_years": 6,
+        "effect_gone_years": 15
+      },
+      "units": "percent",
+      "expected_output_file": "output/figures/figure16.pdf",
+      "provenance": {
+        "section": "Nominal versus Consumption Wages",
+        "page": 47,
+        "quote": "Consumer prices respond slowly to a shock to employment and eventually decrease by 0.38 percent after six years in response to an initial 1 percent decrease in employment."
+      }
+    },
+    {
+      "id": "C27",
+      "description": "Because housing and nontradable prices fall with wages, real consumption wages decrease only by about 0.2 percent (roughly 40 percent of the decrease in nominal wages) in response to an employment shock.",
+      "type": "scalar",
+      "tier": "supporting",
+      "verification": "From the combined wage and price impulse responses, confirm the implied real consumption wage decline is about -0.2%, roughly 40% of the ~-0.5% nominal wage decline.",
+      "paper_value": {
+        "consumption_wage_decrease_pct": -0.2,
+        "fraction_of_nominal": 0.4
+      },
+      "units": "percent",
+      "provenance": {
+        "section": "Nominal versus Consumption Wages",
+        "page": 47,
+        "quote": "consumption wages decrease only by about 0.2 percent, or 40 percent of the decrease in nominal wages."
+      }
+    },
+    {
+      "id": "C28",
+      "description": "The response of unemployment to an employment shock estimated by OLS, by IV using defense (military-contract) spending, and by IV using the industry-mix instrument (Figure 17) yields similar hump-shaped responses, peaking around 0.30-0.36 percent in year 1 and decaying to near zero by year 8, though the IV estimates are less precise.",
+      "type": "figure",
+      "tier": "supporting",
+      "verification": "Inspect the produced Figure 17: it should show three curves (OLS, IV military contracts, IV industry mix) for the unemployment response to a -1% employment shock over years 0-8, all hump-shaped, peaking near year 1 (roughly 0.29 OLS, 0.36 IV industry-mix, lower for IV military) and decaying to near zero by year 8, with similar overall shapes.",
+      "paper_value": {
+        "peak_year1_range": [
+          0.29,
+          0.36
+        ]
+      },
+      "units": "percent",
+      "expected_output_file": "output/figures/figure17.pdf",
+      "provenance": {
+        "section": "The Effects of Observable Demand Shocks",
+        "page": 51,
+        "quote": "the shapes of the estimated response of unemployment to an employment shock are rather similar for all three approaches, although the two instrumental variables approaches lead to substantially less precise estimates."
+      }
+    },
+    {
+      "id": "C29",
+      "description": "For the Massachusetts case study, from 1980 to 1985 annual employment growth was 2.0 percent, about 0.6 percentage points higher than the national average; employment growth had been below the U.S. rate for all but four years from 1948 to 1979.",
+      "type": "scalar",
+      "tier": "supporting",
+      "verification": "From the constructed Massachusetts employment series, confirm 1980-85 average annual employment growth is ~2.0%, about 0.6 pp above national, and that MA growth was below the U.S. rate for all but four years in 1948-79.",
+      "paper_value": {
+        "ma_1980_85_growth_pct": 2.0,
+        "excess_over_national_pp": 0.6
+      },
+      "units": "percent",
+      "provenance": {
+        "section": "The Case of Massachusetts",
+        "page": 52,
+        "quote": "from 1980 to 1985 annual employment growth was 2.0 percent-0.6 percent higher than the national average."
+      }
+    },
+    {
+      "id": "C30",
+      "description": "Massachusetts relative labor-market variables improved sharply in the mid-1980s boom: the unemployment rate went from equal to the national rate in 1979 to 3.6 percentage points below it in 1985; relative manufacturing wages went from 11 percent below the national average in 1979 to only 5 percent below by 1985; CPS relative wages went from about 3 percent below in 1979 to 1 percent above in 1985.",
+      "type": "scalar",
+      "tier": "supporting",
+      "verification": "From the constructed MA relative series, confirm: relative unemployment ~-3.6 pp in 1985 (0 in 1979); relative manufacturing wage -11% in 1979 to -5% in 1985; relative CPS wage ~-3% in 1979 to ~+1% in 1985.",
+      "paper_value": {
+        "unemployment_below_national_1985_pp": 3.6,
+        "mfg_wage_below_1979_pct": 11,
+        "mfg_wage_below_1985_pct": 5,
+        "cps_wage_1979_pct": -3,
+        "cps_wage_1985_pct": 1
+      },
+      "units": "percent / percentage points relative to national",
+      "provenance": {
+        "section": "The Case of Massachusetts",
+        "page": 52,
+        "quote": "The unemployment rate, which was equal to the national rate in 1979, stood at 3.6 percent below the national average in 1985. Relative wages in manufacturing, which were 11 percent below the national average in 1979, were only 5 percent below the national average by 1985."
+      }
+    },
+    {
+      "id": "C31",
+      "description": "Boston relative housing prices rose from 17 percent above the national average in 1979 to 57 percent above in 1985, peaked at 72 percent above in 1987, and decreased to 60 percent above in 1990.",
+      "type": "scalar",
+      "tier": "supporting",
+      "verification": "From the constructed Boston relative housing price series, confirm the relative levels: +17% (1979), +57% (1985), +72% peak (1987), +60% (1990).",
+      "paper_value": {
+        "y1979": 17,
+        "y1985": 57,
+        "peak_1987": 72,
+        "y1990": 60
+      },
+      "units": "percent above national average",
+      "provenance": {
+        "section": "The Case of Massachusetts",
+        "page": 52,
+        "quote": "Housing prices in Boston increased from 17 percent above the national average in 1979 to 57 percent above the national average in 1985... peaking at 72 percent above the national average in 1987 and decreasing to 60 percent above average in 1990."
+      }
+    },
+    {
+      "id": "C32",
+      "description": "In the late-1980s Massachusetts bust, employment growth was lower than the national average in every year from 1985 to 1991, averaging -0.1 percent per year (about 2.2 percent below the national average), with particularly sharp declines of -4 percent in 1990 and -6 percent in 1991; by 1991 the unemployment rate stood 2 percentage points above the national average.",
+      "type": "scalar",
+      "tier": "supporting",
+      "verification": "From the constructed MA employment series, confirm 1985-91 average annual growth ~-0.1% (~2.2 pp below national), 1990 growth ~-4%, 1991 growth ~-6%, and relative unemployment ~+2 pp by 1991.",
+      "paper_value": {
+        "avg_growth_1985_91_pct": -0.1,
+        "below_national_pp": 2.2,
+        "growth_1990_pct": -4,
+        "growth_1991_pct": -6,
+        "unemployment_above_national_1991_pp": 2
+      },
+      "units": "percent",
+      "provenance": {
+        "section": "The Case of Massachusetts",
+        "page": 52,
+        "quote": "In every year from 1985 to 1991, employment growth was lower than the national average, averaging -0.1 percent a year, or about 2.2 percent below the national average. The decline in employment was particularly sharp in 1990 and 1991: -4 percent and -6 percent, respectively."
+      }
+    },
+    {
+      "id": "C33",
+      "description": "A simulation using the pooled-estimated equations shows the Massachusetts boom exceeded typical responses: actual manufacturing nominal wage growth 1986-90 was 20 percent, twice its predicted value of 10 percent; actual Boston housing price increase 1979-86 was 87 percent versus a predicted 47 percent, while 1986-90 both actual and predicted increases were 9 percent.",
+      "type": "scalar",
+      "tier": "supporting",
+      "verification": "From the MA prediction-error simulation (wages and housing prices simulated from pooled-data equations along the actual employment path), confirm: manufacturing wage growth 1986-90 actual 20% vs predicted 10%; Boston housing 1979-86 actual 87% vs predicted 47%; 1986-90 actual and predicted both 9%.",
+      "paper_value": {
+        "wage_growth_1986_90_actual_pct": 20,
+        "wage_growth_1986_90_predicted_pct": 10,
+        "housing_1979_86_actual_pct": 87,
+        "housing_1979_86_predicted_pct": 47,
+        "housing_1986_90_actual_pct": 9,
+        "housing_1986_90_predicted_pct": 9
+      },
+      "units": "percent",
+      "provenance": {
+        "section": "The Case of Massachusetts",
+        "page": 53,
+        "quote": "From 1986 to 1990, actual nominal wage growth was 20 percent, twice its predicted value of 10 percent... From 1979 to 1986, the actual increase in housing prices was 87 percent, compared to a predicted 47 percent. From 1986 to 1990, both the actual and predicted increases were 9 percent."
+      }
+    },
+    {
+      "id": "C34",
+      "description": "The defense-spending (military prime contract awards) series exhibits substantial variation across states and time: from 1951 to 1988 it accounts for more than 6 percent of state income for four states plus DC (California, Connecticut, Massachusetts, Missouri, and the District of Columbia), and the standard deviation of forecast errors from a simple univariate process averages 14 percent, with some forecast errors exceeding 30 percent.",
+      "type": "scalar",
+      "tier": "supporting",
+      "verification": "From the constructed defense-spending series (real military prime contract awards by state, 1951-88), confirm the states where it exceeds 6% of state income (CA, CT, MA, MO, DC) and that the average standard deviation of univariate forecast errors is ~14% with some exceeding 30%.",
+      "paper_value": {
+        "share_over_6pct_states": [
+          "CA",
+          "CT",
+          "MA",
+          "MO",
+          "DC"
+        ],
+        "avg_forecast_error_sd_pct": 14,
+        "max_forecast_error_pct": 30
+      },
+      "units": "percent",
+      "provenance": {
+        "section": "The Effects of Observable Demand Shocks",
+        "page": 49,
+        "quote": "it accounts for more than 6 percent of state income for four states-California, Connecticut, Massachusetts, and Missouri-and the District of Columbia... the standard deviation of forecast errors from a simple univariate process is on average equal to 14 percent; some forecast errors exceed 30 percent."
+      }
+    },
+    {
+      "id": "C35",
+      "description": "Figure 2 shows cumulative employment growth of U.S. states relative to the national average 1947-90: New England, Mid-Atlantic, and Rust Belt states exhibit large sustained relative declines (e.g., West Virginia and New York losing 50-70+ percent), Sun Belt states (Nevada, Arizona, Florida) grow consistently by 120-160+ percent, and farm and oil states show large fluctuations rather than trends.",
+      "type": "figure",
+      "tier": "supporting",
+      "verification": "Inspect the produced Figure 2 (six panels: New England, Middle Atlantic and coal country, Rust Belt, Sun Belt, Farm states, Oil states). Confirm cumulative relative log-employment paths: sustained declines for NE/Mid-Atlantic/Rust Belt (NY, PA, WV to roughly -50% to -70%; MA a small blip on a downward trend), strong sustained Sun Belt growth (NV/AZ ~150%+, FL ~120%), and fluctuating (non-trending) farm and oil states with the oil boom in the 1970s and bust in the 1980s.",
+      "expected_output_file": "output/figures/figure2.pdf",
+      "provenance": {
+        "section": "Trends and Fluctuations in Relative Employment",
+        "page": 8,
+        "quote": "Figure 2 gives a sense of regional trends as well as fluctuations by showing the evolution of employment for a number of states... measured relative to U.S. aggregate employment."
+      },
+      "notes": "Note the differing vertical-axis scales across panels."
+    }
+  ]
+}
