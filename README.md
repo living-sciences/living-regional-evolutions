@@ -34,3 +34,14 @@ Replication scores measure whether claims reproduce under our agents' effort,
 not whether authors did anything wrong. Read the referee report's Notes and
 the per-claim verdicts in `run/verify/verdicts.json` before quoting any
 number.
+
+## Data sources for the extension studies
+
+The extension studies pulled fresh public data on August 24, 2026, all of it from FRED (Federal Reserve Bank of St. Louis). In full:
+
+- U.S. Bureau of Labor Statistics, Local Area Unemployment Statistics: state unemployment rate, state civilian labor force, and state labor force participation rate, 50 states and DC, monthly, seasonally adjusted, 1976 to 2026, retrieved from FRED.
+- U.S. Bureau of Labor Statistics, State and Area Employment: total nonfarm employees by state, monthly, 1939 to 2026, retrieved from FRED.
+- U.S. Bureau of Labor Statistics, national series PAYEMS (total nonfarm payrolls, from 1939) and the Current Population Survey series CE16OV, CLF16OV, CIVPART and UNRATE (from 1948), retrieved from FRED.
+- U.S. Bureau of Economic Analysis, per capita personal income by state (annual, 1929 to 2025) and for the United States (series A792RC0A052NBEA), retrieved from FRED.
+
+The original paper's data files are not distributed anywhere we could find, so the paper-side comparisons use the published numbers themselves. The theory update fetched no new data; it works entirely from the living update's panel.
